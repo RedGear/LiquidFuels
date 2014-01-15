@@ -12,7 +12,6 @@ import redgear.core.render.ProgressBar;
 import redgear.core.tile.TileEntityElectricMachine;
 import redgear.core.util.SimpleItem;
 import redgear.liquidfuels.api.recipes.MasherRecipe;
-import redgear.liquidfuels.core.LiquidFuels;
 
 public class TileEntityMasher extends TileEntityElectricMachine {
 	public final int waterTank;
@@ -72,8 +71,6 @@ public class TileEntityMasher extends TileEntityElectricMachine {
 
 			if (currRecipe != null && getTank(waterTank).canDrain(currRecipe.water)
 					&& getTank(biomassTank).canFill(currRecipe.output)) {
-				LiquidFuels.inst.logDebug("Found recipe: ", currRecipe.item, " Water: ", currRecipe.water, " Fluid: ", currRecipe.output.amount, currRecipe.output.getFluid(), " Power: ", currRecipe.power);
-				
 				addWork(currRecipe.work, currRecipe.power);
 				decrStackSize(i, 1);
 				getTank(waterTank).drain(currRecipe.water, true);// use water
