@@ -2,17 +2,16 @@ package redgear.liquidfuels.core;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-import redgear.core.compat.ModConfigHelper;
-import redgear.core.compat.Mods;
 import redgear.core.mod.IPlugin;
 import redgear.core.mod.ModUtils;
+import redgear.core.mod.Mods;
 import redgear.core.recipes.LeveledRecipe;
 import redgear.core.recipes.RecipeMap;
 import redgear.core.util.SimpleItem;
@@ -36,7 +35,7 @@ public class LiquidFuelsRecipes implements IPlugin {
 
 	@Override
 	public void postInit(ModUtils inst) {
-		
+
 	}
 
 	private void initMasher() {
@@ -44,19 +43,19 @@ public class LiquidFuelsRecipes implements IPlugin {
 		for (ItemStack sapling : items)
 			addMasher(new SimpleItem(sapling), 100, 45024000L, 5, LiquidFuels.biomassFluid, 150);
 
-		addMasher(new SimpleItem(Item.wheat), 100, 45024000L, 5, LiquidFuels.biomassFluid, 150);
-		addMasher(new SimpleItem(Item.carrot), 150, 67536000L, 5, LiquidFuels.biomassFluid, 150);
-		addMasher(new SimpleItem(Item.netherStalkSeeds), 200, 135072000, 5, LiquidFuels.biomassFluid, 100);
-		addMasher(new SimpleItem(Item.potato), 150, 67536000L, 5, LiquidFuels.biomassFluid, 200);
-		addMasher(new SimpleItem(Item.melon), 20, 45024000L, 5, LiquidFuels.biomassFluid, 40);
-		addMasher(new SimpleItem(Block.cactus), 20, 45024000l, 5, LiquidFuels.biomassFluid, 40);
-		
+		addMasher(new SimpleItem(Items.wheat), 100, 45024000L, 5, LiquidFuels.biomassFluid, 150);
+		addMasher(new SimpleItem(Items.carrot), 150, 67536000L, 5, LiquidFuels.biomassFluid, 150);
+		addMasher(new SimpleItem(Items.nether_wart), 200, 135072000, 5, LiquidFuels.biomassFluid, 100);
+		addMasher(new SimpleItem(Items.potato), 150, 67536000L, 5, LiquidFuels.biomassFluid, 200);
+		addMasher(new SimpleItem(Items.melon), 20, 45024000L, 5, LiquidFuels.biomassFluid, 40);
+		addMasher(new SimpleItem(Blocks.cactus), 20, 45024000l, 5, LiquidFuels.biomassFluid, 40);
+
 		items = OreDictionary.getOres("treeLeaves");
 		for (ItemStack leaves : items)
 			addMasher(new SimpleItem(leaves), 100, 45024000L, 5, LiquidFuels.biomassFluid, 150);
 
-		addMasher(new SimpleItem(Item.reed), 10, 50652000L, 5, LiquidFuels.mashFluid, 150);
-		addMasher(new SimpleItem(Item.sugar), 10, 50652000L, 5, LiquidFuels.mashFluid, 150);
+		addMasher(new SimpleItem(Items.reeds), 10, 50652000L, 5, LiquidFuels.mashFluid, 150);
+		addMasher(new SimpleItem(Items.sugar), 10, 50652000L, 5, LiquidFuels.mashFluid, 150);
 	}
 
 	private void addMasher(SimpleItem item, int water, long power, int work, Fluid fluid, int amount) {
@@ -69,33 +68,33 @@ public class LiquidFuelsRecipes implements IPlugin {
 	}
 
 	private void initCrafting(ModUtils inst) {
-		GameRegistry.addShapelessRecipe(LiquidFuels.asphaltBlock.getStack(16), new Object[] {Block.gravel,
-				Block.gravel, Block.gravel, Block.gravel, Block.gravel, Block.gravel, Block.gravel, Block.gravel,
-				LiquidFuels.asphaltBucket.getStack() });
+		GameRegistry.addShapelessRecipe(LiquidFuels.asphaltBlock.getStack(16), new Object[] {Blocks.gravel,
+				Blocks.gravel, Blocks.gravel, Blocks.gravel, Blocks.gravel, Blocks.gravel, Blocks.gravel,
+				Blocks.gravel, LiquidFuels.asphaltBucket.getStack() });
 
 		boolean hasSteel = inOreDict("blockSteel");
-		ItemStack buildcraftTank = ModConfigHelper.get("tile.tankBlock");
-		ItemStack bcIronGear = ModConfigHelper.get("item.ironGearItem");
-		ItemStack bcPower = ModConfigHelper.get("item.PipePowerGold");
-		ItemStack bcLogic = ModConfigHelper.get("item.pipeGate");
+		ItemStack buildcraftTank = null; //ModConfigHelper.get("tile.tankBlock");
+		ItemStack bcIronGear = null; //ModConfigHelper.get("item.ironGearItem");
+		ItemStack bcPower = null; //ModConfigHelper.get("item.PipePowerGold");
+		ItemStack bcLogic = null; //ModConfigHelper.get("item.pipeGate");
 
-		ItemStack forestryMachine = ModConfigHelper.get("item.sturdyMachine");
+		ItemStack forestryMachine = null; //ModConfigHelper.get("item.sturdyMachine");
 
-		ItemStack thermalMachine = ModConfigHelper.get("tile.thermalexpansion.machine");
-		ItemStack thermalPower = ModConfigHelper.get("tile.thermalexpansion.conduit");
+		ItemStack thermalMachine = null; //ModConfigHelper.get("tile.thermalexpansion.machine");
+		ItemStack thermalPower = null; //ModConfigHelper.get("tile.thermalexpansion.conduit");
 
-		ItemStack ic2Machine = ModConfigHelper.get("blockMachine", 0);
-		ItemStack ic2Cable = ModConfigHelper.get("itemCable", 0);
-		ItemStack ic2Logic = ModConfigHelper.get("itemPartCircuit");
-		ItemStack ic2Motor = ModConfigHelper.get("itemRecipePart", 1);
+		ItemStack ic2Machine = null; //ModConfigHelper.get("blockMachine", 0);
+		ItemStack ic2Cable = null; //ModConfigHelper.get("itemCable", 0);
+		ItemStack ic2Logic = null; //ModConfigHelper.get("itemPartCircuit");
+		ItemStack ic2Motor = null; //ModConfigHelper.get("itemRecipePart", 1);
 
 		LeveledRecipe bladesRecipe = new LeveledRecipe(new RecipeMap(new String[] {"I I", " I ", "III" }, new Object[] {
-				'I', Item.ingotIron }));
+				'I', Items.iron_ingot }));
 		bladesRecipe.addLevel(inOreDict("ingotSteel"), new Object[] {'I', "ingotSteel" });
 		GameRegistry.addRecipe(new ShapedOreRecipe(LiquidFuels.masherBlades.getStack(), bladesRecipe.register()));
 
 		LeveledRecipe multiTankRecipe = new LeveledRecipe(new RecipeMap(new String[] {"RTR", "RBR", "RRR" },
-				new Object[] {'R', Item.leather, 'T', Item.bucketEmpty, 'B', Block.blockIron }));
+				new Object[] {'R', Items.leather, 'T', Items.bucket, 'B', Blocks.iron_block }));
 		multiTankRecipe.addLevel(hasSteel, new Object[] {'B', "blockSteel" });
 		multiTankRecipe.addLevel(Mods.BuildcraftCore.isIn(), new Object[] {'T', buildcraftTank });
 		multiTankRecipe.addLevel(Mods.Forestry.isIn(), new Object[] {'B', forestryMachine });
@@ -107,8 +106,8 @@ public class LiquidFuelsRecipes implements IPlugin {
 				.addRecipe(new ShapedOreRecipe(LiquidFuels.bioReactorMulit.getStack(4), multiTankRecipe.register()));
 
 		LeveledRecipe masherRecipe = new LeveledRecipe(new RecipeMap(new String[] {"GRG", "BIB", "PMP" }, new Object[] {
-				'G', Item.ingotGold, 'R', Block.blockRedstone, 'B', Item.bucketEmpty, 'I', Block.blockIron, 'P',
-				Block.pistonBase, 'M', LiquidFuels.masherBlades.getStack() }));
+				'G', Items.gold_ingot, 'R', Blocks.redstone_block, 'B', Items.bucket, 'I', Blocks.iron_block, 'P',
+				Blocks.piston, 'M', LiquidFuels.masherBlades.getStack() }));
 		masherRecipe.addLevel(hasSteel, new Object[] {'I', "blockSteel" });
 		masherRecipe.addLevel(Mods.BuildcraftCore.isIn(), new Object[] {'G', bcPower, 'P', bcIronGear, 'R', bcLogic,
 				'B', buildcraftTank });
@@ -121,9 +120,9 @@ public class LiquidFuelsRecipes implements IPlugin {
 		GameRegistry.addRecipe(new ShapedOreRecipe(LiquidFuels.masherBlock.getStack(), masherRecipe.register()));
 
 		LeveledRecipe bioReactorRecipe = new LeveledRecipe(new RecipeMap(new String[] {"GRG", "BIB", "WPW" },
-				new Object[] {'G', Item.ingotGold, 'R', Block.blockRedstone, 'B',
-						LiquidFuels.bioReactorMulit.getStack(), 'I', Block.blockIron, 'P', Block.pistonBase, 'W',
-						Block.mushroomBrown }));
+				new Object[] {'G', Items.gold_ingot, 'R', Blocks.redstone_block, 'B',
+						LiquidFuels.bioReactorMulit.getStack(), 'I', Blocks.iron_block, 'P', Blocks.piston, 'W',
+						Blocks.brown_mushroom }));
 		bioReactorRecipe.addLevel(hasSteel, new Object[] {'I', "blockSteel" });
 		bioReactorRecipe.addLevel(Mods.BuildcraftCore.isIn(),
 				new Object[] {'G', bcPower, 'P', bcIronGear, 'R', bcLogic });
@@ -137,8 +136,8 @@ public class LiquidFuelsRecipes implements IPlugin {
 				.addRecipe(new ShapedOreRecipe(LiquidFuels.bioReactorBlock.getStack(), bioReactorRecipe.register()));
 
 		LeveledRecipe fermenterRecipe = new LeveledRecipe(new RecipeMap(new String[] {"GRG", "BIB", "WPW" },
-				new Object[] {'G', Item.ingotGold, 'R', Block.blockRedstone, 'B', Item.bucketEmpty, 'I',
-						Block.blockIron, 'P', Block.pistonBase, 'W', Block.mushroomBrown }));
+				new Object[] {'G', Items.gold_ingot, 'R', Blocks.redstone_block, 'B', Items.bucket, 'I',
+						Blocks.iron_block, 'P', Blocks.piston, 'W', Blocks.brown_mushroom }));
 		fermenterRecipe.addLevel(hasSteel, new Object[] {'I', "blockSteel" });
 		fermenterRecipe.addLevel(Mods.BuildcraftCore.isIn(), new Object[] {'G', bcPower, 'P', bcIronGear, 'R', bcLogic,
 				'B', buildcraftTank });
@@ -151,8 +150,8 @@ public class LiquidFuelsRecipes implements IPlugin {
 		GameRegistry.addRecipe(new ShapedOreRecipe(LiquidFuels.fermenterBlock.getStack(), fermenterRecipe.register()));
 
 		LeveledRecipe stillRecipe = new LeveledRecipe(new RecipeMap(new String[] {"GRG", "BIB", "WPW" }, new Object[] {
-				'G', Item.ingotGold, 'R', Block.blockRedstone, 'B', Item.bucketEmpty, 'I', Block.blockIron, 'P',
-				Block.pistonBase, 'W', Block.glass }));
+				'G', Items.gold_ingot, 'R', Blocks.redstone_block, 'B', Items.bucket, 'I', Blocks.iron_block, 'P',
+				Blocks.piston, 'W', Blocks.glass }));
 		stillRecipe.addLevel(hasSteel, new Object[] {'I', "blockSteel" });
 		stillRecipe.addLevel(Mods.BuildcraftCore.isIn(), new Object[] {'G', bcPower, 'P', bcIronGear, 'R', bcLogic,
 				'B', buildcraftTank });
@@ -165,8 +164,8 @@ public class LiquidFuelsRecipes implements IPlugin {
 		GameRegistry.addRecipe(new ShapedOreRecipe(LiquidFuels.stillBlock.getStack(), stillRecipe.register()));
 
 		LeveledRecipe boilerRecipe = new LeveledRecipe(new RecipeMap(new String[] {"GRG", "BIB", "WPW" }, new Object[] {
-				'G', Item.ingotGold, 'R', Block.blockRedstone, 'B', Item.bucketEmpty, 'I', Block.blockIron, 'P',
-				Block.pistonBase, 'W', Item.blazePowder }));
+				'G', Items.gold_ingot, 'R', Blocks.redstone_block, 'B', Items.bucket, 'I', Blocks.iron_block, 'P',
+				Blocks.piston, 'W', Items.blaze_powder }));
 		boilerRecipe.addLevel(hasSteel, new Object[] {'I', "blockSteel" });
 		boilerRecipe.addLevel(Mods.BuildcraftCore.isIn(), new Object[] {'G', bcPower, 'P', bcIronGear, 'R', bcLogic,
 				'B', buildcraftTank });
@@ -180,8 +179,8 @@ public class LiquidFuelsRecipes implements IPlugin {
 
 		if (inst.getBoolean("WaterGenCraftable")) {
 			LeveledRecipe waterGenRecipe = new LeveledRecipe(new RecipeMap(new String[] {"GRG", "BIB", "WPW" },
-					new Object[] {'G', Item.ingotGold, 'R', Block.blockRedstone, 'B', Item.bucketEmpty, 'I',
-							Block.blockIron, 'P', Block.pistonBase, 'W', Item.bucketWater }));
+					new Object[] {'G', Items.gold_ingot, 'R', Blocks.redstone_block, 'B', Items.bucket, 'I',
+							Blocks.iron_block, 'P', Blocks.piston, 'W', Items.water_bucket }));
 			waterGenRecipe.addLevel(hasSteel, new Object[] {'I', "blockSteel" });
 			waterGenRecipe.addLevel(Mods.BuildcraftCore.isIn(), new Object[] {'G', bcPower, 'P', bcIronGear, 'R',
 					bcLogic, 'B', buildcraftTank });
@@ -195,8 +194,8 @@ public class LiquidFuelsRecipes implements IPlugin {
 					.addRecipe(new ShapedOreRecipe(LiquidFuels.waterGenBlock.getStack(), waterGenRecipe.register()));
 		}
 		LeveledRecipe dryerRecipe = new LeveledRecipe(new RecipeMap(new String[] {"GRG", "BIB", "WPW" }, new Object[] {
-				'G', Item.ingotGold, 'R', Block.blockRedstone, 'B', Item.bucketEmpty, 'I', Block.blockIron, 'P',
-				Block.pistonBase, 'W', Block.chest }));
+				'G', Items.gold_ingot, 'R', Blocks.redstone_block, 'B', Items.bucket, 'I', Blocks.iron_block, 'P',
+				Blocks.piston, 'W', Blocks.chest }));
 		dryerRecipe.addLevel(hasSteel, new Object[] {'I', "blockSteel" });
 		dryerRecipe.addLevel(Mods.BuildcraftCore.isIn(), new Object[] {'G', bcPower, 'P', bcIronGear, 'R', bcLogic,
 				'B', buildcraftTank });
@@ -209,8 +208,8 @@ public class LiquidFuelsRecipes implements IPlugin {
 		GameRegistry.addRecipe(new ShapedOreRecipe(LiquidFuels.dryerBlock.getStack(), dryerRecipe.register()));
 
 		LeveledRecipe crackingBaseRecipe = new LeveledRecipe(new RecipeMap(new String[] {"GRG", "BIB", "WPW" },
-				new Object[] {'G', Item.ingotGold, 'R', Block.blockRedstone, 'B', Item.bucketEmpty, 'I',
-						Block.blockIron, 'P', Block.pistonBase, 'W', Block.furnaceIdle }));
+				new Object[] {'G', Items.gold_ingot, 'R', Blocks.redstone_block, 'B', Items.bucket, 'I',
+						Blocks.iron_block, 'P', Blocks.piston, 'W', Blocks.furnace }));
 		crackingBaseRecipe.addLevel(hasSteel, new Object[] {'I', "blockSteel" });
 		crackingBaseRecipe.addLevel(Mods.BuildcraftCore.isIn(), new Object[] {'G', bcPower, 'P', bcIronGear, 'R',
 				bcLogic, 'B', buildcraftTank });
@@ -224,7 +223,7 @@ public class LiquidFuelsRecipes implements IPlugin {
 				.register()));
 
 		LeveledRecipe crackingTowerRecipe = new LeveledRecipe(new RecipeMap(new String[] {"RTR", "RBR", "RPR" },
-				new Object[] {'R', Item.leather, 'T', Item.bucketEmpty, 'P', Block.pistonBase, 'B', Block.blockIron }));
+				new Object[] {'R', Items.leather, 'T', Items.bucket, 'P', Blocks.piston, 'B', Blocks.iron_block }));
 		crackingTowerRecipe.addLevel(hasSteel, new Object[] {'B', "blockSteel" });
 		crackingTowerRecipe.addLevel(Mods.BuildcraftCore.isIn(), new Object[] {'T', buildcraftTank, 'P', bcIronGear });
 		crackingTowerRecipe.addLevel(Mods.Forestry.isIn(), new Object[] {'B', forestryMachine, 'P', "gearCopper" });

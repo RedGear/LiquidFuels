@@ -4,9 +4,9 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import buildcraft.api.fuels.IronEngineFuel;
 import buildcraft.api.recipes.RefineryRecipes;
-import redgear.core.compat.Mods;
 import redgear.core.mod.IPlugin;
 import redgear.core.mod.ModUtils;
+import redgear.core.mod.Mods;
 import redgear.liquidfuels.core.LiquidFuels;
 
 public class BuildcraftPlugin implements IPlugin {

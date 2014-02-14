@@ -1,9 +1,9 @@
 package redgear.liquidfuels.plugins;
 
 import net.minecraftforge.fluids.Fluid;
-import redgear.core.compat.Mods;
 import redgear.core.mod.IPlugin;
 import redgear.core.mod.ModUtils;
+import redgear.core.mod.Mods;
 import redgear.liquidfuels.core.LiquidFuels;
 import cpw.mods.fml.common.event.FMLInterModComms;
 

@@ -2,9 +2,9 @@ package redgear.liquidfuels.plugins;
 
 import ic2.api.recipe.Recipes;
 import net.minecraftforge.fluids.Fluid;
-import redgear.core.compat.Mods;
 import redgear.core.mod.IPlugin;
 import redgear.core.mod.ModUtils;
+import redgear.core.mod.Mods;
 import redgear.liquidfuels.core.LiquidFuels;
 
 public class IC2Plugin implements IPlugin {
