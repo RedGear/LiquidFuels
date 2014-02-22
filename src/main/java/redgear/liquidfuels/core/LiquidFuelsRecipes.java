@@ -17,9 +17,25 @@ import redgear.core.recipes.RecipeMap;
 import redgear.core.util.SimpleItem;
 import redgear.liquidfuels.api.recipes.FermenterRecipe;
 import redgear.liquidfuels.api.recipes.MasherRecipe;
+import cpw.mods.fml.common.LoaderState.ModState;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class LiquidFuelsRecipes implements IPlugin {
+	
+	@Override
+	public String getName() {
+		return "Recipes";
+	}
+
+	@Override
+	public boolean shouldRun(ModUtils inst, ModState state) {
+		return true;
+	}
+
+	@Override
+	public boolean isRequired() {
+		return true;
+	}
 
 	@Override
 	public void preInit(ModUtils inst) {
@@ -239,5 +255,4 @@ public class LiquidFuelsRecipes implements IPlugin {
 	private boolean inOreDict(String ore) {
 		return !OreDictionary.getOres(ore).isEmpty();
 	}
-
 }
