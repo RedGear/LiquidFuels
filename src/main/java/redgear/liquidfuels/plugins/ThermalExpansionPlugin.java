@@ -47,6 +47,6 @@ public class ThermalExpansionPlugin implements IPlugin {
 		NBTTagCompound toSend = new NBTTagCompound();
 		toSend.setString("fluidName", fluid.getName());
 		toSend.setInteger("energy", value);
-		FMLInterModComms.sendMessage("ThermalExpansion", "CompressionFuel", toSend);
+		FMLInterModComms.sendMessage(Mods.ThermalExpansion.getId(), "CompressionFuel", toSend);
 	}
 }
