@@ -87,12 +87,12 @@ public class LiquidFuelsRecipes implements IPlugin {
 				LiquidFuels.stillageFluid, 1000));
 	}
 
-	private void initCrafting(ModUtils inst) {
+	private void initCrafting(ModUtils mod) {
 		GameRegistry.addShapelessRecipe(LiquidFuels.asphaltBlock.getStack(16), new Object[] {Blocks.gravel,
 				Blocks.gravel, Blocks.gravel, Blocks.gravel, Blocks.gravel, Blocks.gravel, Blocks.gravel,
 				Blocks.gravel, LiquidFuels.asphaltBucket.getStack() });
 
-		boolean hasSteel = inOreDict("blockSteel");
+		boolean hasSteel = mod.inOreDict("blockSteel");
 		SimpleItem buildcraftTank = ItemRegUtil.findItem(Mods.BCFactory, "tankBlock");
 		SimpleItem bcIronGear = ItemRegUtil.findItem(Mods.BCCore, "ironGearItem");
 		SimpleItem bcPower = ItemRegUtil.findItem(Mods.BCTransport, "item.buildcraftPipe.pipepowergold");
@@ -111,7 +111,7 @@ public class LiquidFuelsRecipes implements IPlugin {
 
 		LeveledRecipe bladesRecipe = new LeveledRecipe("I I", " I ", "III");
 		bladesRecipe.addLevel(true, 'I', Items.iron_ingot);
-		bladesRecipe.addLevel(inOreDict("ingotSteel"), 'I', "ingotSteel" );
+		bladesRecipe.addLevel(mod.inOreDict("ingotSteel"), 'I', "ingotSteel" );
 		bladesRecipe.registerShaped(LiquidFuels.masherBlades);
 
 		LeveledRecipe multiTankRecipe = new LeveledRecipe("RTR", "RBR", "RRR");
@@ -121,7 +121,7 @@ public class LiquidFuelsRecipes implements IPlugin {
 		multiTankRecipe.addLevel(Mods.Forestry.isIn(), 'B', forestryMachine );
 		multiTankRecipe.addLevel(Mods.ThermalExpansion.isIn(),'B', thermalMachine );
 		multiTankRecipe.addLevel(Mods.IC2.isIn(), 'B', ic2Machine );
-		multiTankRecipe.addLevel(inOreDict("itemRubber"), 'R', "itemRubber" );
+		multiTankRecipe.addLevel(mod.inOreDict("itemRubber"), 'R', "itemRubber" );
 		multiTankRecipe.addLevel(Mods.Greg.isIn(), 'B', "craftingRawMachineTier00" );
 		multiTankRecipe.registerShaped(LiquidFuels.bioReactorMulit, 4);
 
@@ -175,7 +175,7 @@ public class LiquidFuelsRecipes implements IPlugin {
 		boilerRecipe.addLevel(Mods.Greg.isIn(), 'I', "craftingRawMachineTier00" );
 		boilerRecipe.registerShaped(LiquidFuels.boilerBlock);
 
-		if (inst.getBoolean("WaterGenCraftable")) {
+		if (mod.getBoolean("WaterGenCraftable")) {
 			LeveledRecipe waterGenRecipe = new LeveledRecipe("GRG", "BIB", "WPW");
 			waterGenRecipe.addLevel(true, 'G', Items.gold_ingot, 'R', Blocks.redstone_block, 'B', Items.bucket, 'I',Blocks.iron_block, 'P', Blocks.piston, 'W', Items.water_bucket);
 			waterGenRecipe.addLevel(hasSteel, 'I', "blockSteel");
@@ -214,12 +214,8 @@ public class LiquidFuelsRecipes implements IPlugin {
 		crackingTowerRecipe.addLevel(Mods.Forestry.isIn(), 'B', forestryMachine, 'P', "gearCopper" );
 		crackingTowerRecipe.addLevel(Mods.ThermalExpansion.isIn(),'B', thermalMachine, 'P', "gearCopper" );
 		crackingTowerRecipe.addLevel(Mods.IC2.isIn(), 'B', ic2Machine, 'P', ic2Motor );
-		crackingTowerRecipe.addLevel(inOreDict("itemRubber"), 'R', "itemRubber" );
+		crackingTowerRecipe.addLevel(mod.inOreDict("itemRubber"), 'R', "itemRubber" );
 		crackingTowerRecipe.addLevel(Mods.Greg.isIn(), 'B', "craftingRawMachineTier00" );
 		crackingTowerRecipe.registerShaped(LiquidFuels.crackingTowerBlock);
-	}
-
-	private boolean inOreDict(String ore) {
-		return !OreDictionary.getOres(ore).isEmpty();
 	}
 }
