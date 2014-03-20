@@ -82,12 +82,12 @@ public class LiquidFuelsRecipes implements IPlugin {
 		ItemStack forestryMachine = ModConfigHelper.get("item.sturdyMachine");
 
 		ItemStack thermalMachine = ModConfigHelper.get("tile.thermalexpansion.machine");
-		ItemStack thermalPower = ModConfigHelper.get("tile.thermalexpansion.conduit");
+		ItemStack thermalPower = GameRegistry.findItemStack("ThermalExpansion", "conduitEnergyHardened", 1);;
 
-		ItemStack ic2Machine = ModConfigHelper.get("blockMachine", 0);
-		ItemStack ic2Cable = ModConfigHelper.get("itemCable", 0);
-		ItemStack ic2Logic = ModConfigHelper.get("itemPartCircuit");
-		ItemStack ic2Motor = ModConfigHelper.get("itemRecipePart", 1);
+		ItemStack ic2Machine = getIc2Item("machine");
+		ItemStack ic2Cable = getIc2Item("insulatedCopperCableItem");
+		ItemStack ic2Logic = getIc2Item("electronicCircuit");
+		ItemStack ic2Motor = getIc2Item("elemotor");
 
 		LeveledRecipe bladesRecipe = new LeveledRecipe(new RecipeMap(new String[] {"I I", " I ", "III" }, new Object[] {
 				'I', Item.ingotIron }));
@@ -240,5 +240,22 @@ public class LiquidFuelsRecipes implements IPlugin {
 	private boolean inOreDict(String ore) {
 		return !OreDictionary.getOres(ore).isEmpty();
 	}
+	
+	
+	public static ItemStack getIc2Item(String name) {
+		try {
+			Class<?> Ic2Items = Class.forName("ic2.core.Ic2Items");
 
+			Object ret = Ic2Items.getField(name).get(null);
+
+			if (ret instanceof ItemStack) {
+				return (ItemStack) ret;
+			}
+			return null;
+		} catch (Exception e) {
+			System.out.println("IC2 API: Call getItem failed for "+name);
+
+			return null;
+		}
+	}
 }
