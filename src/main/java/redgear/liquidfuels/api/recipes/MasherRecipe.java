@@ -9,7 +9,6 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import redgear.core.api.item.ISimpleItem;
 import redgear.core.api.item.SimpleItemFactory;
-import redgear.liquidfuels.core.LiquidFuels;
 
 public class MasherRecipe {
 
@@ -27,7 +26,6 @@ public class MasherRecipe {
 		this.power = power;
 		this.work = work;
 		this.output = output;
-		LiquidFuels.inst.logDebug("Adding Masher Recpie for item: ", item);
 	}
 
 	@Override
@@ -46,15 +44,16 @@ public class MasherRecipe {
 	public static MasherRecipe addMasherRecipe(MasherRecipe recipe) {
 		return recipes.put(recipe.item, recipe);
 	}
-	
+
 	public static MasherRecipe addMasherRecipe(ItemStack item, int water, long power, int work, Fluid output, int amount) {
 		return addMasherRecipe(SimpleItemFactory.create(item), water, power, work, new FluidStack(output, amount));
 	}
 
-	public static MasherRecipe addMasherRecipe(ISimpleItem item, int water, long power, int work, Fluid output, int amount) {
+	public static MasherRecipe addMasherRecipe(ISimpleItem item, int water, long power, int work, Fluid output,
+			int amount) {
 		return addMasherRecipe(item, water, power, work, new FluidStack(output, amount));
 	}
-	
+
 	public static MasherRecipe addMasherRecipe(ItemStack item, int water, long power, int work, FluidStack output) {
 		return addMasherRecipe(SimpleItemFactory.create(item), water, power, work, output);
 	}
@@ -67,9 +66,8 @@ public class MasherRecipe {
 	}
 
 	public static MasherRecipe getMasherRecipe(ISimpleItem input) {
-		//return recipes.get(input);
-		for(Entry<ISimpleItem, MasherRecipe> entry : recipes.entrySet())
-			if(entry.getKey().equals(input))
+		for (Entry<ISimpleItem, MasherRecipe> entry : recipes.entrySet())
+			if (entry.getKey().equals(input))
 				return entry.getValue();
 		return null;
 	}

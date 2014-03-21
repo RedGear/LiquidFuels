@@ -37,10 +37,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = "RedGear|LiquidFuels", name = "Liquid Fuels", version = "@ModVersion@", dependencies = "required-after:RedGear|Core;after:Forestry; after:BuildCraft|Core")
+@Mod(modid = "redgear_liquidfuels", name = "Liquid Fuels", version = "@ModVersion@", dependencies = "required-after:redgear_core;after:Forestry; after:BuildCraft|Core")
 public class LiquidFuels extends ModUtils {
 
-	@Instance("RedGear|LiquidFuels")
+	@Instance("redgear_liquidfuels")
 	public static ModUtils inst;
 
 	public static MetaTile machines;
@@ -81,7 +81,6 @@ public class LiquidFuels extends ModUtils {
 	private static final String machineTexture = "Machine";
 
 	public LiquidFuels() {
-		super(2600, 24500);
 		addPlugin(new LiquidFuelsRecipes());
 		addPlugin(new RailcraftPlugin());
 		addPlugin(new ThermalExpansionPlugin());
@@ -91,14 +90,14 @@ public class LiquidFuels extends ModUtils {
 
 	@Override
 	public void PreInit(FMLPreInitializationEvent event) {
-		items = new MetaItem(getItemId("items"), "RedGear.LiquidFuels.Items");
+		items = new MetaItem("RedGear.LiquidFuels.Items");
 		masherBlades = items.addMetaItem(new SubItem("masherBlades"));
 		ptCoke = items.addMetaItem(new SubItem("ptCoke"));
 
 		CoreFuelHandler.addFuel(ptCoke, 3200);
 
-		machines = new MetaTile(getBlockId("machines"), Material.iron, "RedGear.LiquidFuels.Machine");
-		machines.setHardness(5.0F).setResistance(10.0F).setStepSound(Block.soundMetalFootstep);
+		machines = new MetaTile(Material.iron, "RedGear.LiquidFuels.Machine");
+		machines.setHardness(5.0F).setResistance(10.0F).setStepSound(Block.soundTypeMetal);
 
 		masherBlock = machines.addMetaBlock(new SubTileMachine("Masher", machineTexture, TileEntityMasher.class,
 				CoreGuiHandler.addGuiMap("Masher")));
@@ -131,7 +130,7 @@ public class LiquidFuels extends ModUtils {
 		keroseneFluid = FluidUtil.createFluid("Kerosene");
 		gasolineFluid = FluidUtil.createFluid("Gasoline");
 
-		buckets = new MetaItemBucket(getItemId("buckets"), "RedGear.LiquidFuels.Buckets");
+		buckets = new MetaItemBucket("RedGear.LiquidFuels.Buckets");
 		buckets.addMetaItem(new SubItemBucket("bucketBiomass", biomassFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketMash", mashFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketStillage", stillageFluid));
@@ -143,8 +142,8 @@ public class LiquidFuels extends ModUtils {
 		buckets.addMetaItem(new SubItemBucket("bucketKerosene", keroseneFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketGasoline", gasolineFluid));
 
-		blocks = new MetaBlock(getBlockId("blocks"), Material.iron, "RedGear.LiquidFuels.Blocks");
-		blocks.setHardness(5.0F).setStepSound(Block.soundMetalFootstep);
+		blocks = new MetaBlock(Material.iron, "RedGear.LiquidFuels.Blocks");
+		blocks.setHardness(5.0F).setStepSound(Block.soundTypeMetal);
 		bioReactorMulit = blocks.addMetaBlock(new SubBlock("BioReactorMulti"));
 		asphaltBlock = blocks.addMetaBlock(new SubBlock("Asphalt"));
 	}

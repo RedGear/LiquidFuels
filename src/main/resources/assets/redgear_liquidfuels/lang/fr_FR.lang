@@ -1,0 +1,38 @@
+item.RedGear.LiquidFuels.Items.masherBlades.name=Lames de Presse-Purée
+item.RedGear.LiquidFuels.Items.ptCoke.name=Le Coke de Pétrole
+	
+tile.RedGear.LiquidFuels.Machine.Masher.name=Pilon
+tile.RedGear.LiquidFuels.Machine.BioReactor.name=Bioréacteur
+tile.RedGear.LiquidFuels.Machine.Fermenter.name=Fermenteur
+tile.RedGear.LiquidFuels.Machine.Boiler.name=Chaudière
+tile.RedGear.LiquidFuels.Machine.Still.name=Encore
+tile.RedGear.LiquidFuels.Machine.WaterGen.name=Génération de L'eau
+tile.RedGear.LiquidFuels.Machine.CrackingBase.name=Fissuration Base de la Tour
+tile.RedGear.LiquidFuels.Machine.CrackingTower.name=Tour de Craquage
+tile.RedGear.LiquidFuels.Machine.Dryer.name=Séchoir
+	
+tile.RedGear.LiquidFuels.Blocks.BioReactorMulti.name=Réservoir de Bioréacteur
+tile.RedGear.LiquidFuels.Blocks.Asphalt.name=Asphalte
+	
+item.RedGear.LiquidFuels.Buckets.bucketBiomass.name=Biomasse Seau
+item.RedGear.LiquidFuels.Buckets.bucketMash.name=Purée Seau
+item.RedGear.LiquidFuels.Buckets.bucketStillage.name=Vinasse Seau
+item.RedGear.LiquidFuels.Buckets.bucketEthanol.name=Godet D'éthanol
+item.RedGear.LiquidFuels.Buckets.bucketOil.name=Seau à Huile
+item.RedGear.LiquidFuels.Buckets.bucketAsphalt.name=Asphalte Seau
+item.RedGear.LiquidFuels.Buckets.bucketPtCoke.name=Coke de Pétrole Liquide Seau
+item.RedGear.LiquidFuels.Buckets.bucketDiesel.name=Diesel Seau
+item.RedGear.LiquidFuels.Buckets.bucketKerosene.name=Kérosène Seau
+item.RedGear.LiquidFuels.Buckets.bucketGasoline.name=Essence Seau
+	
+fluid.RedGear.LiquidFuels.LFbiomass=Biomasse
+fluid.RedGear.LiquidFuels.Mash=Mash
+fluid.RedGear.LiquidFuels.Stillage=Vinasse
+fluid.RedGear.LiquidFuels.Steam=Vapeur
+fluid.RedGear.LiquidFuels.bioethanol=L'éthanol
+fluid.RedGear.LiquidFuels.Oil=Huile
+fluid.RedGear.LiquidFuels.Asphalt=Asphalte
+fluid.RedGear.LiquidFuels.ptCoke=Fluide de Coke de Pétrole
+fluid.RedGear.LiquidFuels.Diesel=Diesel
+fluid.RedGear.LiquidFuels.Kerosene=Kérosène
+fluid.RedGear.LiquidFuels.Gasoline=Essence

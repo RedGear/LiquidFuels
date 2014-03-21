@@ -1,5 +1,6 @@
 package redgear.liquidfuels.machines;
 
+import net.minecraft.init.Blocks;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import redgear.core.fluids.AdvFluidTank;
@@ -40,7 +41,7 @@ public class TileEntityBioReactor extends TileEntityElectricMachine {
 		multi = new MultiBlockMap(36);
 
 		SimpleItem block = LiquidFuels.bioReactorMulit;
-		SimpleItem air = new SimpleItem(0, 0);
+		SimpleItem air = new SimpleItem(Blocks.air, 0);
 
 		for (int x = -1; x <= 1; x++)
 			for (int z = -1; z <= 1; z++)
