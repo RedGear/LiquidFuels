@@ -26,7 +26,7 @@ public class TileEntityCrackingBase extends TileEntityElectricMachine {
 	private static final MultiBlockMap multi;
 
 	public TileEntityCrackingBase() {
-		super(4, 281400000L);
+		super(4, 281400L);
 
 		slotInput = addSlot(new TankSlot(this, 120, 21, true, -1)); //input
 		slotOutput = addSlot(new TankSlot(this, 120, 49, false, 1)); //output
@@ -55,13 +55,13 @@ public class TileEntityCrackingBase extends TileEntityElectricMachine {
 	protected void checkWork() {
 		if (checkMulitBlock() && oilTank.getAmount() >= oilRate && steamTank.getAmount() >= steamRate) {
 			for (int i = 0; i <= outputMap.length - 1; i++)
-				if (!(((TileEntityCrackingTower) worldObj.getBlockTileEntity(xCoord, yCoord + 1 + i, zCoord))
-						.getTank(0).canFill(outputMap[i])))
+				if (!(((TileEntityCrackingTower) worldObj.getBlockTileEntity(xCoord, yCoord + 1 + i, zCoord)).getTank(0).canFill(outputMap[i])))
 					return;
+				
 
 			oilTank.drain(oilRate, true);
 			steamTank.drain(steamRate, true);
-			addWork(1, 52903200L);
+			addWork(1, 52903L);
 		}
 	}
 
@@ -73,6 +73,7 @@ public class TileEntityCrackingBase extends TileEntityElectricMachine {
 	}
 
 	private boolean checkMulitBlock() {
-		return multi.check(worldObj, xCoord, yCoord, zCoord);
+		boolean test = multi.check(worldObj, xCoord, yCoord, zCoord);
+		return test;
 	}
 }

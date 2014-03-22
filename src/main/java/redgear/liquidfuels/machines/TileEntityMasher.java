@@ -28,7 +28,7 @@ public class TileEntityMasher extends TileEntityElectricMachine {
 	private FluidStack output = null;
 
 	public TileEntityMasher() {
-		super(8, 562800000L);
+		super(8, 562800L);
 
 		addSlot(80, 39); //masher bottom
 		addSlot(62, 21); //masher left

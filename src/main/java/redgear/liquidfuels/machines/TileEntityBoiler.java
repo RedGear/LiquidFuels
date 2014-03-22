@@ -17,11 +17,11 @@ public class TileEntityBoiler extends TileEntityElectricMachine {
 	private final int slotWaterFull;
 	private final int slotWaterEmpty;
 	private final int steamRatio = 36; //1 water = 36 steam
-	private final long powerRatio = 13507200;
+	private final long powerRatio = 13507;
 	private int rate = 5; //use 5 water at a time
 
 	public TileEntityBoiler() {
-		super(4, 1407000000L);
+		super(4, 1407000L);
 
 		slotWaterFull = addSlot(new TankSlot(this, 63, 20, true, -1)); //water full
 		slotWaterEmpty = addSlot(new TankSlot(this, 63, 48, false, 1)); //water empty

@@ -27,7 +27,7 @@ public class MasherRecipe {
 		this.power = power;
 		this.work = work;
 		this.output = output;
-		LiquidFuels.inst.logDebug("Adding Masher Recpie for item: ", item);
+		//LiquidFuels.inst.logDebug("Adding Masher Recpie for item: ", item);
 	}
 
 	@Override
