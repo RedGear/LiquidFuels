@@ -22,7 +22,7 @@ public class TileEntityStill extends TileEntityElectricMachine {
 	private final int ethanolRatio = 160; //Amount of ethanol made each doWork.
 
 	public TileEntityStill() {
-		super(4, 562800000L);
+		super(4, 100000);
 
 		stillageInput = addSlot(new TankSlot(this, 76, 21, true, -1)); //stillage full
 		stillageOutput = addSlot(new TankSlot(this, 76, 49, false, 1)); //stillage empty
@@ -55,7 +55,7 @@ public class TileEntityStill extends TileEntityElectricMachine {
 	protected void checkWork() {
 		if (ethanolTank.canFill(ethanolRatio) && steamTank.canDrain(steamRatio)
 				&& stillageTank.canDrain(stillageRatio * ethanolRatio))
-			addWork(1, 844200L);
+			addWork(1, 150);
 	}
 
 	@Override

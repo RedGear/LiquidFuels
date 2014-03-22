@@ -14,13 +14,13 @@ public class MasherRecipe {
 
 	private static Map<ISimpleItem, MasherRecipe> recipes = new HashMap<ISimpleItem, MasherRecipe>();
 
-	public final long power;
+	public final int power;
 	public final int water;
 	public final int work;
 	public final ISimpleItem item;
 	public final FluidStack output;
 
-	public MasherRecipe(ISimpleItem item, int water, long power, int work, FluidStack output) {
+	public MasherRecipe(ISimpleItem item, int water, int power, int work, FluidStack output) {
 		this.item = item;
 		this.water = water;
 		this.power = power;
@@ -45,20 +45,20 @@ public class MasherRecipe {
 		return recipes.put(recipe.item, recipe);
 	}
 
-	public static MasherRecipe addMasherRecipe(ItemStack item, int water, long power, int work, Fluid output, int amount) {
+	public static MasherRecipe addMasherRecipe(ItemStack item, int water, int power, int work, Fluid output, int amount) {
 		return addMasherRecipe(SimpleItemFactory.create(item), water, power, work, new FluidStack(output, amount));
 	}
 
-	public static MasherRecipe addMasherRecipe(ISimpleItem item, int water, long power, int work, Fluid output,
+	public static MasherRecipe addMasherRecipe(ISimpleItem item, int water, int power, int work, Fluid output,
 			int amount) {
 		return addMasherRecipe(item, water, power, work, new FluidStack(output, amount));
 	}
 
-	public static MasherRecipe addMasherRecipe(ItemStack item, int water, long power, int work, FluidStack output) {
+	public static MasherRecipe addMasherRecipe(ItemStack item, int water, int power, int work, FluidStack output) {
 		return addMasherRecipe(SimpleItemFactory.create(item), water, power, work, output);
 	}
 
-	public static MasherRecipe addMasherRecipe(ISimpleItem item, int water, long power, int work, FluidStack output) {
+	public static MasherRecipe addMasherRecipe(ISimpleItem item, int water, int power, int work, FluidStack output) {
 		if (item != null && water > 0 && work > 0 && output != null && output.amount > 0)
 			return addMasherRecipe(new MasherRecipe(item, water, power, work, output));
 		else

@@ -14,9 +14,9 @@ public class FermenterRecipe {
 	public final FluidStack input;
 	public final FluidStack output;
 	public final int work;
-	public final long power;
+	public final int power;
 
-	public FermenterRecipe(FluidStack input, int work, long power, FluidStack output) {
+	public FermenterRecipe(FluidStack input, int work, int power, FluidStack output) {
 		this.input = input;
 		this.work = work;
 		this.power = power;
@@ -40,7 +40,7 @@ public class FermenterRecipe {
 		return recipes.put(recipe.input.fluidID, recipe);
 	}
 
-	public static FermenterRecipe addFermenterRecipe(FluidStack input, int work, long power, FluidStack output) {
+	public static FermenterRecipe addFermenterRecipe(FluidStack input, int work, int power, FluidStack output) {
 		if (input == null || input.amount <= 0 || output == null || output.amount <= 0)
 			return null;
 		else

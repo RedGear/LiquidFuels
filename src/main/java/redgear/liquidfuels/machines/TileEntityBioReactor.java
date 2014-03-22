@@ -23,7 +23,7 @@ public class TileEntityBioReactor extends TileEntityElectricMachine {
 	private static final MultiBlockMap multi;
 
 	public TileEntityBioReactor() {
-		super(60, 562800000L);
+		super(60, 100000);
 
 		inputSlot = addSlot(new TankSlot(this, 92, 21, true, true)); //masher bottom
 		outputSlot = addSlot(new TankSlot(this, 92, 49, true, true)); //masher left
@@ -65,7 +65,7 @@ public class TileEntityBioReactor extends TileEntityElectricMachine {
 	@Override
 	protected void checkWork() {
 		if (tank.canDrain(LiquidFuels.biomassFluid) && tank.isFull())
-			addWork(workCycle, 3376800L);
+			addWork(workCycle, 600);
 	}
 
 	@Override

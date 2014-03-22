@@ -57,33 +57,33 @@ public class LiquidFuelsRecipes implements IPlugin {
 	private void initMasher() {
 		List<ItemStack> items = OreDictionary.getOres("treeSapling"); //            water   power   work output amount
 		for (ItemStack sapling : items)
-			addMasher(new SimpleItem(sapling), 100, 45024000L, 5, LiquidFuels.biomassFluid, 150);
+			addMasher(new SimpleItem(sapling), 100, 8000, 5, LiquidFuels.biomassFluid, 150);
 
-		addMasher(Items.wheat, 100, 45024000L, 5, LiquidFuels.biomassFluid, 150);
-		addMasher(Items.carrot, 150, 67536000L, 5, LiquidFuels.biomassFluid, 150);
-		addMasher(Items.nether_wart, 200, 135072000, 5, LiquidFuels.biomassFluid, 100);
-		addMasher(Items.potato, 150, 67536000L, 5, LiquidFuels.biomassFluid, 200);
-		addMasher(Items.melon, 20, 45024000L, 5, LiquidFuels.biomassFluid, 40);
-		addMasher(new SimpleItem(Blocks.cactus), 20, 45024000l, 5, LiquidFuels.biomassFluid, 40);
+		addMasher(Items.wheat, 100, 8000, 5, LiquidFuels.biomassFluid, 150);
+		addMasher(Items.carrot, 150, 12000, 5, LiquidFuels.biomassFluid, 150);
+		addMasher(Items.nether_wart, 200, 24000, 5, LiquidFuels.biomassFluid, 100);
+		addMasher(Items.potato, 150, 12000, 5, LiquidFuels.biomassFluid, 200);
+		addMasher(Items.melon, 20, 8000, 5, LiquidFuels.biomassFluid, 40);
+		addMasher(new SimpleItem(Blocks.cactus), 20, 8000, 5, LiquidFuels.biomassFluid, 40);
 
 		items = OreDictionary.getOres("treeLeaves");
 		for (ItemStack leaves : items)
-			addMasher(new SimpleItem(leaves), 100, 45024000L, 5, LiquidFuels.biomassFluid, 150);
+			addMasher(new SimpleItem(leaves), 100, 8000, 5, LiquidFuels.biomassFluid, 150);
 
-		addMasher(new SimpleItem(Items.reeds), 10, 50652000L, 5, LiquidFuels.mashFluid, 150);
-		addMasher(new SimpleItem(Items.sugar), 10, 50652000L, 5, LiquidFuels.mashFluid, 150);
+		addMasher(new SimpleItem(Items.reeds), 10, 9000, 5, LiquidFuels.mashFluid, 150);
+		addMasher(new SimpleItem(Items.sugar), 10, 9000, 5, LiquidFuels.mashFluid, 150);
 	}
 	
-	private void addMasher(Item item, int water, long power, int work, Fluid fluid, int amount) {
+	private void addMasher(Item item, int water, int power, int work, Fluid fluid, int amount) {
 		addMasher(new SimpleItem(item), water, power, work, fluid, amount);
 	}
 
-	private void addMasher(SimpleItem item, int water, long power, int work, Fluid fluid, int amount) {
+	private void addMasher(SimpleItem item, int water, int power, int work, Fluid fluid, int amount) {
 		MasherRecipe.addMasherRecipe(item, water, power, work, new FluidStack(fluid, amount));
 	}
 
 	private void initFermenter() {
-		FermenterRecipe.addFermenterRecipe(new FluidStack(LiquidFuels.mashFluid, 1000), 6, 1688400L, new FluidStack(
+		FermenterRecipe.addFermenterRecipe(new FluidStack(LiquidFuels.mashFluid, 1000), 6, 300, new FluidStack(
 				LiquidFuels.stillageFluid, 1000));
 	}
 

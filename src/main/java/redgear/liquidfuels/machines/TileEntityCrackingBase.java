@@ -26,7 +26,7 @@ public class TileEntityCrackingBase extends TileEntityElectricMachine {
 	private static final MultiBlockMap multi;
 
 	public TileEntityCrackingBase() {
-		super(4, 281400000L);
+		super(4, 50000);
 
 		slotInput = addSlot(new TankSlot(this, 120, 21, true, -1)); //input
 		slotOutput = addSlot(new TankSlot(this, 120, 49, false, 1)); //output
@@ -61,7 +61,7 @@ public class TileEntityCrackingBase extends TileEntityElectricMachine {
 
 			oilTank.drain(oilRate, true);
 			steamTank.drain(steamRate, true);
-			addWork(1, 52903200L);
+			addWork(1, 9400);
 		}
 	}
 

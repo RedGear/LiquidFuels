@@ -23,7 +23,7 @@ public class TileEntityFermenter extends TileEntityElectricMachine {
 	private FluidStack output;
 
 	public TileEntityFermenter() {
-		super(10, 562800000L);
+		super(10, 100000);
 
 		recipeInputSlot = addSlot(new TankSlot(this, 50, 21, true, -1)); //recipe input
 		recipeOutputSlot = addSlot(new TankSlot(this, 50, 49, false, 1)); //recipe output
