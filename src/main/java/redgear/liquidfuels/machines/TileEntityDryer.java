@@ -47,7 +47,7 @@ public class TileEntityDryer extends TileEntityFreeMachine {
 	protected void checkWork() {
 		if (tank.getAmount() > fluidRate && canAddStack(LiquidFuels.ptCoke.getStack(1))) {
 			tank.drain(fluidRate, true);
-			addWork(workCycle, 0);
+			addWork(workCycle);
 		}
 	}
 

@@ -61,7 +61,7 @@ public class TileEntityCrackingBase extends TileEntityElectricMachine {
 
 			oilTank.drain(oilRate, true);
 			steamTank.drain(steamRate, true);
-			addWork(1, 9400);
+			addWork(1);//, 9400
 		}
 	}
 

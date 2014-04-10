@@ -17,13 +17,13 @@ public class TileEntityBioReactor extends TileEntityElectricMachine {
 	private final AdvFluidTank tank;
 	private final int inputSlot;
 	private final int outputSlot;
-	private final int workCycle = 120;//length of work always the same for this machine (unlike some others)
+	private final int workCycle = 7200;//length of work always the same for this machine (unlike some others)
 	private final int mainProgressBar;
 
 	private static final MultiBlockMap multi;
 
 	public TileEntityBioReactor() {
-		super(60, 100000);
+		super(60);
 
 		inputSlot = addSlot(new TankSlot(this, 92, 21, true, true)); //masher bottom
 		outputSlot = addSlot(new TankSlot(this, 92, 49, true, true)); //masher left
@@ -35,6 +35,8 @@ public class TileEntityBioReactor extends TileEntityElectricMachine {
 		addTank(tank, 69, 13, 16, 60);
 
 		mainProgressBar = addProgressBar(60, 13, 3, 60);
+		
+		this.setEnergyRate(60);
 	}
 
 	static {
@@ -65,7 +67,7 @@ public class TileEntityBioReactor extends TileEntityElectricMachine {
 	@Override
 	protected void checkWork() {
 		if (tank.canDrain(LiquidFuels.biomassFluid) && tank.isFull())
-			addWork(workCycle, 600);
+			addWork(workCycle);
 	}
 
 	@Override

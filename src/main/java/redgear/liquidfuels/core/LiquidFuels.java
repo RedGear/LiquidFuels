@@ -27,7 +27,10 @@ import redgear.liquidfuels.machines.TileEntityMasher;
 import redgear.liquidfuels.machines.TileEntityStill;
 import redgear.liquidfuels.machines.TileEntityWaterGenerator;
 import redgear.liquidfuels.plugins.BuildcraftPlugin;
+import redgear.liquidfuels.plugins.CraftingRecipes;
+import redgear.liquidfuels.plugins.FermenterRecipes;
 import redgear.liquidfuels.plugins.IC2Plugin;
+import redgear.liquidfuels.plugins.MasherRecipes;
 import redgear.liquidfuels.plugins.RailcraftPlugin;
 import redgear.liquidfuels.plugins.ThermalExpansionPlugin;
 import cpw.mods.fml.common.Mod;
@@ -80,16 +83,19 @@ public class LiquidFuels extends ModUtils {
 
 	private static final String machineTexture = "Machine";
 
-	public LiquidFuels() {
-		addPlugin(new LiquidFuelsRecipes());
+	@Override
+	public void PreInit(FMLPreInitializationEvent event) {
+		addPlugin(new CraftingRecipes());
+		addPlugin(new MasherRecipes());
+		addPlugin(new FermenterRecipes());
 		addPlugin(new RailcraftPlugin());
 		addPlugin(new ThermalExpansionPlugin());
 		addPlugin(new IC2Plugin());
 		addPlugin(new BuildcraftPlugin());
-	}
-
-	@Override
-	public void PreInit(FMLPreInitializationEvent event) {
+		
+		
+		
+		
 		items = new MetaItem("RedGear.LiquidFuels.Items");
 		masherBlades = items.addMetaItem(new SubItem("masherBlades"));
 		ptCoke = items.addMetaItem(new SubItem("ptCoke"));
@@ -118,7 +124,7 @@ public class LiquidFuels extends ModUtils {
 		dryerBlock = machines.addMetaBlock(new SubTileMachine("Dryer", machineTexture, TileEntityDryer.class,
 				CoreGuiHandler.addGuiMap("Dryer")));
 
-		biomassFluid = FluidUtil.createFluid("LFbiomass");
+		biomassFluid = FluidUtil.createFluid("biomass");
 		mashFluid = FluidUtil.createFluid("Mash");
 		stillageFluid = FluidUtil.createFluid("Stillage");
 		steamFluid = FluidUtil.createFluid("Steam");

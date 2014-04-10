@@ -28,7 +28,7 @@ public class TileEntityMasher extends TileEntityElectricMachine {
 	private FluidStack output = null;
 
 	public TileEntityMasher() {
-		super(8, 100000);
+		super(8);
 
 		addSlot(80, 39); //masher bottom
 		addSlot(62, 21); //masher left
@@ -71,7 +71,8 @@ public class TileEntityMasher extends TileEntityElectricMachine {
 
 			if (currRecipe != null && getTank(waterTank).canDrain(currRecipe.water)
 					&& getTank(biomassTank).canFill(currRecipe.output)) {
-				addWork(currRecipe.work, currRecipe.power);
+				addWork(currRecipe.work);
+				setEnergyRate(currRecipe.power / currRecipe.work);
 				decrStackSize(i, 1);
 				getTank(waterTank).drain(currRecipe.water, true);// use water
 				output = currRecipe.output;

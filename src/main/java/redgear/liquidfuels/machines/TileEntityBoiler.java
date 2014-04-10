@@ -16,12 +16,12 @@ public class TileEntityBoiler extends TileEntityElectricMachine {
 	private final AdvFluidTank steamTank;
 	private final int slotWaterFull;
 	private final int slotWaterEmpty;
-	private final int steamRatio = 36; //1 water = 36 steam
-	private final int powerRatio = 2400;
-	private int rate = 5; //use 5 water at a time
+	private final int waterRate = 4; // amount of water needed for each cycle
+	private final int steamRate = 160; // amount of steam made each cycle
+	private final int powerRatio = 80; // energy per mb of steam
 
 	public TileEntityBoiler() {
-		super(4, 250000);
+		super(8);
 
 		slotWaterFull = addSlot(new TankSlot(this, 63, 20, true, -1)); //water full
 		slotWaterEmpty = addSlot(new TankSlot(this, 63, 48, false, 1)); //water empty
@@ -33,6 +33,8 @@ public class TileEntityBoiler extends TileEntityElectricMachine {
 		steamTank = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 16);
 		steamTank.addFluidMap(LiquidFuels.steamFluid, TransferRule.OUTPUT);
 		addTank(steamTank, 120, 12, 16, 60);
+		
+		this.setEnergyRate(powerRatio);
 	}
 
 	@Override
@@ -43,17 +45,17 @@ public class TileEntityBoiler extends TileEntityElectricMachine {
 
 	@Override
 	protected void checkWork() {
-		rate = (int) Math.min(getEnergyAmount() / powerRatio,
-				Math.min(steamTank.getSpace() / steamRatio, waterTank.getAmount()));
-
-		if (rate >= 1)
-			addWork(1, powerRatio * rate);
+		if(steamTank.getCapacity() >= steamRate){
+			if(waterTank.getAmount() >= waterRate){
+				addWork(1);
+				waterTank.drain(waterRate, true);
+			}
+		}
 	}
 
 	@Override
 	protected void doPostWork() {
-		steamTank.fill(new FluidStack(LiquidFuels.steamFluid, steamRatio * rate), true);
-		waterTank.drain(1, true);
+		steamTank.fill(new FluidStack(LiquidFuels.steamFluid, steamRate), true);
 	}
 
 	/**
@@ -63,7 +65,6 @@ public class TileEntityBoiler extends TileEntityElectricMachine {
 	@Override
 	public void writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
-		tag.setInteger("rate", rate);
 	}
 
 	/**
@@ -73,7 +74,6 @@ public class TileEntityBoiler extends TileEntityElectricMachine {
 	@Override
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
-		rate = tag.getInteger("rate");
 	}
 
 }
