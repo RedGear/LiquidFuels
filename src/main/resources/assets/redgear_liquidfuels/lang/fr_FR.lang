@@ -25,7 +25,7 @@ item.RedGear.LiquidFuels.Buckets.bucketDiesel.name=Diesel Seau
 item.RedGear.LiquidFuels.Buckets.bucketKerosene.name=Kérosène Seau
 item.RedGear.LiquidFuels.Buckets.bucketGasoline.name=Essence Seau
 	
-fluid.RedGear.LiquidFuels.LFbiomass=Biomasse
+fluid.RedGear.LiquidFuels.biomass=Biomasse
 fluid.RedGear.LiquidFuels.Mash=Mash
 fluid.RedGear.LiquidFuels.Stillage=Vinasse
 fluid.RedGear.LiquidFuels.Steam=Vapeur

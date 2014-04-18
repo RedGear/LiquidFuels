@@ -3,6 +3,7 @@ package redgear.liquidfuels.core;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fluids.Fluid;
+import redgear.core.block.BlockGeneric;
 import redgear.core.block.MetaBlock;
 import redgear.core.block.MetaTile;
 import redgear.core.block.SubBlock;
@@ -14,6 +15,7 @@ import redgear.core.item.MetaItemBucket;
 import redgear.core.item.SubItem;
 import redgear.core.item.SubItemBucket;
 import redgear.core.mod.ModUtils;
+import redgear.core.mod.Mods;
 import redgear.core.network.CoreGuiHandler;
 import redgear.core.util.CoreFuelHandler;
 import redgear.core.util.SimpleItem;
@@ -33,12 +35,15 @@ import redgear.liquidfuels.plugins.IC2Plugin;
 import redgear.liquidfuels.plugins.MasherRecipes;
 import redgear.liquidfuels.plugins.RailcraftPlugin;
 import redgear.liquidfuels.plugins.ThermalExpansionPlugin;
+import redgear.liquidfuels.world.MineOilSands;
+import redgear.liquidfuels.world.OilSandsGenerator;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid = "redgear_liquidfuels", name = "Liquid Fuels", version = "@ModVersion@", dependencies = "required-after:redgear_core;after:Forestry; after:BuildCraft|Core")
 public class LiquidFuels extends ModUtils {
@@ -50,6 +55,7 @@ public class LiquidFuels extends ModUtils {
 	public static MetaItem items;
 	public static MetaItemBucket buckets;
 	public static MetaBlock blocks;
+	public static Block oilSands;
 
 	public static SimpleItem bioReactorMulit;
 	public static SimpleItem asphaltBlock;
@@ -92,10 +98,7 @@ public class LiquidFuels extends ModUtils {
 		addPlugin(new ThermalExpansionPlugin());
 		addPlugin(new IC2Plugin());
 		addPlugin(new BuildcraftPlugin());
-		
-		
-		
-		
+
 		items = new MetaItem("RedGear.LiquidFuels.Items");
 		masherBlades = items.addMetaItem(new SubItem("masherBlades"));
 		ptCoke = items.addMetaItem(new SubItem("ptCoke"));
@@ -152,6 +155,13 @@ public class LiquidFuels extends ModUtils {
 		blocks.setHardness(5.0F).setStepSound(Block.soundTypeMetal);
 		bioReactorMulit = blocks.addMetaBlock(new SubBlock("BioReactorMulti"));
 		asphaltBlock = blocks.addMetaBlock(new SubBlock("Asphalt"));
+
+		oilSands = new BlockGeneric(Material.rock, "OilSands");
+
+		if (Mods.Geocraft.isIn())
+			MineOilSands.register();
+		else
+			GameRegistry.registerWorldGenerator(new OilSandsGenerator(), 0);
 	}
 
 	@Override

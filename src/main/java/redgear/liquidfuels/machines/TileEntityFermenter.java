@@ -53,8 +53,8 @@ public class TileEntityFermenter extends TileEntityElectricMachine {
 
 			if (currRecipe == null) //somehow the tank has something it shouldn't; get rid of it. 
 				inputTank.drain(inputTank.getCapacity(), true);
-			else if (inputTank.canDrain(currRecipe.input)
-					&& outputTank.canFill(currRecipe.output)) {
+			else if (inputTank.canDrain(currRecipe.input, true)
+					&& outputTank.canFill(currRecipe.output, true)) {
 				inputTank.drain(currRecipe.input.amount, true);
 				output = currRecipe.output;
 				addWork(currRecipe.work);

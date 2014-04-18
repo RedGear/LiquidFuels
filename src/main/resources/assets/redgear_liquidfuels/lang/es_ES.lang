@@ -25,7 +25,7 @@ item.RedGear.LiquidFuels.Buckets.bucketDiesel.name=Cubo Diesel
 item.RedGear.LiquidFuels.Buckets.bucketKerosene.name=Cubo de Queroseno
 item.RedGear.LiquidFuels.Buckets.bucketGasoline.name=Cubo de Gasolina
 	
-fluid.RedGear.LiquidFuels.LFbiomass=Biomasa
+fluid.RedGear.LiquidFuels.biomass=Biomasa
 fluid.RedGear.LiquidFuels.Mash=Pasta
 fluid.RedGear.LiquidFuels.Stillage=Vinaza
 fluid.RedGear.LiquidFuels.Steam=Vapor

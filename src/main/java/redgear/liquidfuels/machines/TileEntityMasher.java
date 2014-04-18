@@ -70,7 +70,7 @@ public class TileEntityMasher extends TileEntityElectricMachine {
 			currRecipe = MasherRecipe.getMasherRecipe(new SimpleItem(stack));
 
 			if (currRecipe != null && getTank(waterTank).canDrain(currRecipe.water)
-					&& getTank(biomassTank).canFill(currRecipe.output)) {
+					&& getTank(biomassTank).canFill(currRecipe.output, true)) {
 				addWork(currRecipe.work);
 				setEnergyRate(currRecipe.power / currRecipe.work);
 				decrStackSize(i, 1);

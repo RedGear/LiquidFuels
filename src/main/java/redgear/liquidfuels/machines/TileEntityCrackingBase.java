@@ -56,7 +56,7 @@ public class TileEntityCrackingBase extends TileEntityElectricMachine {
 		if (checkMulitBlock() && oilTank.getAmount() >= oilRate && steamTank.getAmount() >= steamRate) {
 			for (int i = 0; i <= outputMap.length - 1; i++)
 				if (!(((TileEntityCrackingTower) worldObj.getTileEntity(xCoord, yCoord + 1 + i, zCoord))
-						.getTank(0).canFill(outputMap[i])))
+						.getTank(0).canFill(outputMap[i], true)))
 					return;
 
 			oilTank.drain(oilRate, true);

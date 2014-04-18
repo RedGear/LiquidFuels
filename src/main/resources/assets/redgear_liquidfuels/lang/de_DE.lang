@@ -25,7 +25,7 @@ item.RedGear.LiquidFuels.Buckets.bucketDiesel.name=Diesel-Eimer
 item.RedGear.LiquidFuels.Buckets.bucketKerosene.name=Kerosin Eimer
 item.RedGear.LiquidFuels.Buckets.bucketGasoline.name=Benzin-Eimer
 	
-fluid.RedGear.LiquidFuels.LFbiomass=Biomasse
+fluid.RedGear.LiquidFuels.biomass=Biomasse
 fluid.RedGear.LiquidFuels.Mash=Maische
 fluid.RedGear.LiquidFuels.Stillage=Schlempe
 fluid.RedGear.LiquidFuels.Steam=Dampf
