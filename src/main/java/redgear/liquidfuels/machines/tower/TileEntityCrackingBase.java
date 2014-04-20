@@ -1,43 +1,43 @@
-package redgear.liquidfuels.machines;
+package redgear.liquidfuels.machines.tower;
 
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import redgear.core.fluids.AdvFluidTank;
 import redgear.core.inventory.TankSlot;
 import redgear.core.inventory.TransferRule;
-import redgear.core.tile.TileEntityElectricMachine;
 import redgear.core.world.MultiBlockMap;
 import redgear.liquidfuels.core.LiquidFuels;
+import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
 
-public class TileEntityCrackingBase extends TileEntityElectricMachine {
+public class TileEntityCrackingBase extends TileEntityElectricFluidMachine {
 
-	private final AdvFluidTank steamTank;
-	private final AdvFluidTank oilTank;
-	private static final int towerHeight = 5;
+	final AdvFluidTank steamTank;
+	final AdvFluidTank oilTank;
+	static final int towerHeight = 5;
 
-	private static final int oilRate = 42;
-	private static final int steamRate = 21;
-	private final int slotInput;
-	private final int slotOutput;
-	private static final FluidStack[] outputMap = {new FluidStack(LiquidFuels.asphaltFluid, 2),
+	static final int oilRate = 42;
+	static final int steamRate = 21;
+	final int slotInput;
+	final int slotOutput;
+	static final FluidStack[] outputMap = {new FluidStack(LiquidFuels.asphaltFluid, 2),
 			new FluidStack(LiquidFuels.petroleumCokeFluid, 5), new FluidStack(LiquidFuels.dieselFluid, 10),
 			new FluidStack(LiquidFuels.keroseneFluid, 5), new FluidStack(LiquidFuels.gasolineFluid, 20), };
 
-	private static final MultiBlockMap multi;
+	static final MultiBlockMap multi;
 
 	public TileEntityCrackingBase() {
-		super(4, 50000);
+		super(8);
 
 		slotInput = addSlot(new TankSlot(this, 120, 21, true, -1)); //input
 		slotOutput = addSlot(new TankSlot(this, 120, 49, false, 1)); //output
 
 		steamTank = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 8);
 		steamTank.addFluidMap(LiquidFuels.steamFluid, TransferRule.INPUT);
-		addTank(steamTank, 48, 13, 16, 60);
+		addTank(steamTank);//, 48, 13, 16, 60
 
 		oilTank = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 4);
 		oilTank.addFluidMap(LiquidFuels.oilFluid, TransferRule.INPUT);
-		addTank(oilTank, 97, 13, 16, 60);
+		addTank(oilTank);//, 97, 13, 16, 60
 	}
 
 	static {
@@ -47,32 +47,40 @@ public class TileEntityCrackingBase extends TileEntityElectricMachine {
 	}
 
 	@Override
-	protected void doPreWork() {
-		fillTank(slotInput, slotOutput, oilTank);
+	protected boolean doPreWork() {
+		return fillTank(slotInput, slotOutput, oilTank);
 	}
 
 	@Override
-	protected void checkWork() {
+	protected int checkWork() {
 		if (checkMulitBlock() && oilTank.getAmount() >= oilRate && steamTank.getAmount() >= steamRate) {
 			for (int i = 0; i <= outputMap.length - 1; i++)
 				if (!(((TileEntityCrackingTower) worldObj.getTileEntity(xCoord, yCoord + 1 + i, zCoord))
 						.getTank(0).canFill(outputMap[i], true)))
-					return;
+					return 0;
 
 			oilTank.drain(oilRate, true);
 			steamTank.drain(steamRate, true);
-			addWork(1);//, 9400
+			return 1;//, 9400
 		}
+		
+		return 0;
+	}
+	
+	@Override
+	protected boolean doWork() {
+		return false;
 	}
 
 	@Override
-	protected void doPostWork() {
+	protected boolean doPostWork() {
 		for (int i = 0; i <= outputMap.length - 1; i++)
 			((TileEntityCrackingTower) worldObj.getTileEntity(xCoord, yCoord + 1 + i, zCoord)).getTank(0)
 					.fill(outputMap[i], true);
+		return false;
 	}
 
-	private boolean checkMulitBlock() {
+	boolean checkMulitBlock() {
 		return multi.check(worldObj, xCoord, yCoord, zCoord);
 	}
 }

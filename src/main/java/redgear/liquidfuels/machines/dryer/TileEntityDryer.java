@@ -1,23 +1,21 @@
-package redgear.liquidfuels.machines;
+package redgear.liquidfuels.machines.dryer;
 
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import redgear.core.fluids.AdvFluidTank;
 import redgear.core.inventory.TankSlot;
 import redgear.core.inventory.TransferRule;
-import redgear.core.render.ProgressBar;
-import redgear.core.tile.TileEntityFreeMachine;
+import redgear.core.tile.TileEntityTank;
 import redgear.core.util.ItemStackUtil;
 import redgear.liquidfuels.core.LiquidFuels;
 
-public class TileEntityDryer extends TileEntityFreeMachine {
+public class TileEntityDryer extends TileEntityTank {
 
-	private final AdvFluidTank tank;
+	final AdvFluidTank tank;
 
-	private static final int fluidRate = 1000;
-	private static final int workCycle = 10;
-	private final int slotInput;
-	private final int slotOutput;
-	public static int mainProgressBar;
+	static final int fluidRate = 1000;
+	static final int workCycle = 10;
+	final int slotInput;
+	final int slotOutput;
 
 	public TileEntityDryer() {
 		super(10);
@@ -33,36 +31,38 @@ public class TileEntityDryer extends TileEntityFreeMachine {
 
 		tank = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 4);
 		tank.addFluidMap(LiquidFuels.petroleumCokeFluid, TransferRule.INPUT);
-		addTank(tank, 33, 13, 16, 60);
+		addTank(tank);//, 33, 13, 16, 60
 
-		mainProgressBar = addProgressBar(24, 13, 3, 60);
+		//mainProgressBar = addProgressBar(24, 13, 3, 60);
 	}
 
 	@Override
-	protected void doPreWork() {
-		fillTank(slotInput, slotOutput, 0);
+	protected boolean doPreWork() {
+		return fillTank(slotInput, slotOutput, 0);
 	}
 
 	@Override
-	protected void checkWork() {
+	protected int checkWork() {
 		if (tank.getAmount() > fluidRate && canAddStack(LiquidFuels.ptCoke.getStack(1))) {
 			tank.drain(fluidRate, true);
-			addWork(workCycle);
+			return workCycle;
 		}
+		return 0;
 	}
 
 	@Override
-	protected void doPostWork() {
+	protected boolean doPostWork() {
 		ItemStackUtil.dropItemStack(worldObj, xCoord, yCoord, zCoord, addStack(LiquidFuels.ptCoke.getStack(1))); //Throw it on the ground if it doesn't fit
+		return true;
 	}
 
 	@Override
-	public ProgressBar updateProgressBars(ProgressBar prog) {
-		if (prog.id == mainProgressBar) {
-			prog.total = workCycle;
-			prog.value = work;
-		}
+	protected boolean doWork() {
+		return false;
+	}
 
-		return prog;
+	@Override
+	protected boolean tryUseEnergy(int energy) {
+		return true;
 	}
 }

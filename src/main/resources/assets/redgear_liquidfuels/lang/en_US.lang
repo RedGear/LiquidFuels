@@ -13,6 +13,8 @@ tile.RedGear.LiquidFuels.Machine.Dryer.name=Dryer
 	
 tile.RedGear.LiquidFuels.Blocks.BioReactorMulti.name=Bio Reactor Tank
 tile.RedGear.LiquidFuels.Blocks.Asphalt.name=Asphalt
+
+tile.OilSands.name=Oil Sands
 	
 item.RedGear.LiquidFuels.Buckets.bucketBiomass.name=Biomass Bucket
 item.RedGear.LiquidFuels.Buckets.bucketMash.name=Mash Bucket
@@ -36,3 +38,13 @@ fluid.redgear.liquidfuels.ptCoke=Petroleum Coke Fluid
 fluid.redgear.liquidfuels.Diesel=Diesel
 fluid.redgear.liquidfuels.Kerosene=Kerosene
 fluid.redgear.liquidfuels.Gasoline=Gasoline
+
+gui.bioreactor.title=Bio Reactor
+gui.boiler.title=Electric Boiler
+gui.cracking.base.title=Cracking Tower
+gui.cracking.tower.title=Cracking Tower
+gui.dryer.title=Dryer
+gui.fermenter.title=Fermenter
+gui.masher.title=Fermenter
+gui.still.title=Still
+gui.watergen.title=Water Generator

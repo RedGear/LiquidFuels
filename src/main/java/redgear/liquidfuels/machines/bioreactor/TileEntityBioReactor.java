@@ -1,4 +1,4 @@
-package redgear.liquidfuels.machines;
+package redgear.liquidfuels.machines.bioreactor;
 
 import net.minecraft.init.Blocks;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -6,19 +6,17 @@ import net.minecraftforge.fluids.FluidStack;
 import redgear.core.fluids.AdvFluidTank;
 import redgear.core.inventory.TankSlot;
 import redgear.core.inventory.TransferRule;
-import redgear.core.render.ProgressBar;
-import redgear.core.tile.TileEntityElectricMachine;
 import redgear.core.util.SimpleItem;
 import redgear.core.world.Location;
 import redgear.core.world.MultiBlockMap;
 import redgear.liquidfuels.core.LiquidFuels;
+import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
 
-public class TileEntityBioReactor extends TileEntityElectricMachine {
-	private final AdvFluidTank tank;
-	private final int inputSlot;
-	private final int outputSlot;
-	private final int workCycle = 7200;//length of work always the same for this machine (unlike some others)
-	private final int mainProgressBar;
+public class TileEntityBioReactor extends TileEntityElectricFluidMachine {
+	final AdvFluidTank tank;
+	final int inputSlot;
+	final int outputSlot;
+	final int workCycle = 7200;//length of work always the same for this machine (unlike some others)
 
 	private static final MultiBlockMap multi;
 
@@ -32,9 +30,9 @@ public class TileEntityBioReactor extends TileEntityElectricMachine {
 
 		tank.addFluidMap(LiquidFuels.biomassFluid, TransferRule.INPUT);
 		tank.addFluidMap(LiquidFuels.mashFluid, TransferRule.OUTPUT);
-		addTank(tank, 69, 13, 16, 60);
+		addTank(tank);//, 69, 13, 16, 60
 
-		mainProgressBar = addProgressBar(60, 13, 3, 60);
+		//mainProgressBar = addProgressBar(60, 13, 3, 60);
 		
 		this.setEnergyRate(60);
 	}
@@ -52,37 +50,39 @@ public class TileEntityBioReactor extends TileEntityElectricMachine {
 	}
 
 	@Override
-	protected void doPreWork() {
+	protected boolean doPreWork() {
+		boolean check = false;
+		
 		if (!checkMulitBlock()) {
 			tank.drain(tank.getCapacity(), true); //if the tank isn't formed, destroy all contents.
 			work = 0;
-			return;
+			check = true;
 		}
 
-		fillTank(inputSlot, outputSlot, 0);
-		emptyTank(inputSlot, outputSlot, 0);
-		ejectAllFluids();
+		check |= fillTank(inputSlot, outputSlot, 0);
+		check |= emptyTank(inputSlot, outputSlot, 0);
+		check |= ejectAllFluids();
+		
+		return check;
 	}
-
+	
 	@Override
-	protected void checkWork() {
+	protected int checkWork() {
 		if (tank.canDrain(LiquidFuels.biomassFluid) && tank.isFull())
-			addWork(workCycle);
+			return workCycle;
+		else
+			return 0;
+	}
+	
+	@Override
+	protected boolean doWork() {
+		return false;
 	}
 
 	@Override
-	protected void doPostWork() {
+	protected boolean doPostWork() {
 		tank.fill(new FluidStack(LiquidFuels.mashFluid, tank.drain(tank.getCapacity(), true).amount), true);
-	}
-
-	@Override
-	public ProgressBar updateProgressBars(ProgressBar prog) {
-		if (prog.id == mainProgressBar) {
-			prog.total = workCycle;
-			prog.value = work;
-		}
-
-		return prog;
+		return true;
 	}
 
 	private boolean checkMulitBlock() {

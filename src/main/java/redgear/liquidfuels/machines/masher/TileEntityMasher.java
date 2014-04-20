@@ -1,4 +1,4 @@
-package redgear.liquidfuels.machines;
+package redgear.liquidfuels.machines.masher;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -8,24 +8,21 @@ import net.minecraftforge.fluids.FluidStack;
 import redgear.core.fluids.AdvFluidTank;
 import redgear.core.inventory.TankSlot;
 import redgear.core.inventory.TransferRule;
-import redgear.core.render.ProgressBar;
-import redgear.core.tile.TileEntityElectricMachine;
 import redgear.core.util.SimpleItem;
 import redgear.liquidfuels.api.recipes.MasherRecipe;
+import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
 
-public class TileEntityMasher extends TileEntityElectricMachine {
-	public final int waterTank;
-	public final int biomassTank;
+public class TileEntityMasher extends TileEntityElectricFluidMachine {
+	final AdvFluidTank waterTank;
+	final AdvFluidTank biomassTank;
 
-	private final int slotWaterFull;
-	private final int slotWaterEmpty;
+	final int slotWaterFull;
+	final int slotWaterEmpty;
 
-	private final int slotBiomassEmpty;
-	private final int slotBiomassFull;
+	final int slotBiomassEmpty;
+	final int slotBiomassFull;
 
-	private final int mainProgressBar;
-
-	private FluidStack output = null;
+	FluidStack output = null;
 
 	public TileEntityMasher() {
 		super(8);
@@ -39,26 +36,28 @@ public class TileEntityMasher extends TileEntityElectricMachine {
 		slotBiomassEmpty = addSlot(new TankSlot(this, 126, 21, false, -1)); //biomass empty
 		slotBiomassFull = addSlot(new TankSlot(this, 126, 49, true, 1)); //biomass full
 
-		AdvFluidTank water = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 4).addFluidMap(
+		waterTank = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 4).addFluidMap(
 				FluidRegistry.WATER, TransferRule.INPUT);
-		AdvFluidTank biomass = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 4).addFluidMap(-1,
+		biomassTank = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 4).addFluidMap(-1,
 				TransferRule.OUTPUT);
 
-		waterTank = addTank(water, 11, 13, 16, 60);
-		biomassTank = addTank(biomass, 149, 13, 16, 60);
+		addTank(waterTank);//, 11, 13, 16, 60
+		addTank(biomassTank);//, 149, 13, 16, 60
 
-		mainProgressBar = addProgressBar(86, 59, 3, 20);
+		//mainProgressBar = addProgressBar(86, 59, 3, 20);
 	}
 
 	@Override
-	protected void doPreWork() {
-		fillTank(slotWaterFull, slotWaterEmpty, waterTank);
-		emptyTank(slotBiomassEmpty, slotBiomassFull, biomassTank);
-		ejectFluidAllSides(biomassTank);
+	protected boolean doPreWork() {
+		boolean check = false;
+		check |= fillTank(slotWaterFull, slotWaterEmpty, waterTank);
+		check |= emptyTank(slotBiomassEmpty, slotBiomassFull, biomassTank);
+		check |= ejectFluidAllSides(biomassTank);
+		return check;
 	}
 
 	@Override
-	protected void checkWork() {
+	protected int checkWork() {
 		MasherRecipe currRecipe;
 		ItemStack stack;
 		for (int i = 0; i <= 3; i++) {
@@ -69,33 +68,25 @@ public class TileEntityMasher extends TileEntityElectricMachine {
 
 			currRecipe = MasherRecipe.getMasherRecipe(new SimpleItem(stack));
 
-			if (currRecipe != null && getTank(waterTank).canDrain(currRecipe.water)
-					&& getTank(biomassTank).canFill(currRecipe.output, true)) {
-				addWork(currRecipe.work);
+			if (currRecipe != null && waterTank.canDrain(currRecipe.water)
+					&& biomassTank.canFill(currRecipe.output, true)) {
 				setEnergyRate(currRecipe.power / currRecipe.work);
 				decrStackSize(i, 1);
-				getTank(waterTank).drain(currRecipe.water, true);// use water
+				waterTank.drain(currRecipe.water, true);// use water
 				output = currRecipe.output;
-				return;
+				return currRecipe.work;
 			}
 
 		}
+
+		return 0;
 	}
 
 	@Override
-	protected void doPostWork() {
-		getTank(biomassTank).fill(output, true);
+	protected boolean doPostWork() {
+		biomassTank.fill(output, true);
 		output = null;
-	}
-
-	@Override
-	public ProgressBar updateProgressBars(ProgressBar prog) {
-		if (prog.id == mainProgressBar) {
-			prog.total = workTotal;
-			prog.value = work;
-		}
-
-		return prog;
+		return true;
 	}
 
 	/**
@@ -116,5 +107,10 @@ public class TileEntityMasher extends TileEntityElectricMachine {
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
 		output = readFluidStack(tag, "output");
+	}
+
+	@Override
+	protected boolean doWork() {
+		return false;
 	}
 }

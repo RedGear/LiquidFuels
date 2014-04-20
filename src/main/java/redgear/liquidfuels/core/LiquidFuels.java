@@ -16,18 +16,17 @@ import redgear.core.item.SubItem;
 import redgear.core.item.SubItemBucket;
 import redgear.core.mod.ModUtils;
 import redgear.core.mod.Mods;
-import redgear.core.network.CoreGuiHandler;
 import redgear.core.util.CoreFuelHandler;
 import redgear.core.util.SimpleItem;
-import redgear.liquidfuels.machines.TileEntityBioReactor;
-import redgear.liquidfuels.machines.TileEntityBoiler;
-import redgear.liquidfuels.machines.TileEntityCrackingBase;
-import redgear.liquidfuels.machines.TileEntityCrackingTower;
-import redgear.liquidfuels.machines.TileEntityDryer;
-import redgear.liquidfuels.machines.TileEntityFermenter;
-import redgear.liquidfuels.machines.TileEntityMasher;
-import redgear.liquidfuels.machines.TileEntityStill;
-import redgear.liquidfuels.machines.TileEntityWaterGenerator;
+import redgear.liquidfuels.machines.bioreactor.TileFactoryBioReactor;
+import redgear.liquidfuels.machines.boiler.TileFactoryBoiler;
+import redgear.liquidfuels.machines.dryer.TileFactoryDryer;
+import redgear.liquidfuels.machines.fermenter.TileFactoryFermenter;
+import redgear.liquidfuels.machines.masher.TileFactoryMasher;
+import redgear.liquidfuels.machines.still.TileFactoryStill;
+import redgear.liquidfuels.machines.tower.TileFactoryCrackingBase;
+import redgear.liquidfuels.machines.tower.TileFactoryCrackingTower;
+import redgear.liquidfuels.machines.watergen.TileFactoryWaterGen;
 import redgear.liquidfuels.plugins.BuildcraftPlugin;
 import redgear.liquidfuels.plugins.CraftingRecipes;
 import redgear.liquidfuels.plugins.FermenterRecipes;
@@ -108,24 +107,15 @@ public class LiquidFuels extends ModUtils {
 		machines = new MetaTile(Material.iron, "RedGear.LiquidFuels.Machine");
 		machines.setHardness(5.0F).setResistance(10.0F).setStepSound(Block.soundTypeMetal);
 
-		masherBlock = machines.addMetaBlock(new SubTileMachine("Masher", machineTexture, TileEntityMasher.class,
-				CoreGuiHandler.addGuiMap("Masher")));
-		bioReactorBlock = machines.addMetaBlock(new SubTileMachine("BioReactor", machineTexture,
-				TileEntityBioReactor.class, CoreGuiHandler.addGuiMap("BioReactor", "Bio Reactor")));
-		fermenterBlock = machines.addMetaBlock(new SubTileMachine("Fermenter", machineTexture,
-				TileEntityFermenter.class, CoreGuiHandler.addGuiMap("Fermenter")));
-		boilerBlock = machines.addMetaBlock(new SubTileMachine("Boiler", machineTexture, TileEntityBoiler.class,
-				CoreGuiHandler.addGuiMap("Boiler", "Electric Boiler")));
-		stillBlock = machines.addMetaBlock(new SubTileMachine("Still", machineTexture, TileEntityStill.class,
-				CoreGuiHandler.addGuiMap("Still")));
-		waterGenBlock = machines.addMetaBlock(new SubTileMachine("WaterGen", machineTexture,
-				TileEntityWaterGenerator.class, CoreGuiHandler.addGuiMap("WaterGen", "Water Generator")));
-		crackingBaseBlock = machines.addMetaBlock(new SubTileMachine("CrackingBase", machineTexture,
-				TileEntityCrackingBase.class, CoreGuiHandler.addGuiMap("CrackingBase", "Cracking Tower Base")));
-		crackingTowerBlock = machines.addMetaBlock(new SubTile("CrackingTower", TileEntityCrackingTower.class,
-				CoreGuiHandler.addGuiMap("WaterGen", "Cracking Tower")));
-		dryerBlock = machines.addMetaBlock(new SubTileMachine("Dryer", machineTexture, TileEntityDryer.class,
-				CoreGuiHandler.addGuiMap("Dryer")));
+		masherBlock = machines.addMetaBlock(new SubTileMachine("Masher", machineTexture, new TileFactoryMasher()));
+		bioReactorBlock = machines.addMetaBlock(new SubTileMachine("BioReactor", machineTexture, new TileFactoryBioReactor()));
+		fermenterBlock = machines.addMetaBlock(new SubTileMachine("Fermenter", machineTexture, new TileFactoryFermenter()));
+		boilerBlock = machines.addMetaBlock(new SubTileMachine("Boiler", machineTexture, new TileFactoryBoiler()));
+		stillBlock = machines.addMetaBlock(new SubTileMachine("Still", machineTexture, new TileFactoryStill()));
+		waterGenBlock = machines.addMetaBlock(new SubTileMachine("WaterGen", machineTexture, new TileFactoryWaterGen()));
+		crackingBaseBlock = machines.addMetaBlock(new SubTileMachine("CrackingBase", machineTexture,new TileFactoryCrackingBase()));
+		crackingTowerBlock = machines.addMetaBlock(new SubTile("CrackingTower", new TileFactoryCrackingTower()));
+		dryerBlock = machines.addMetaBlock(new SubTileMachine("Dryer", machineTexture, new TileFactoryDryer()));
 
 		biomassFluid = FluidUtil.createFluid("biomass");
 		mashFluid = FluidUtil.createFluid("Mash");
