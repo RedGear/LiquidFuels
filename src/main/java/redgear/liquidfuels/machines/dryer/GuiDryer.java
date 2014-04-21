@@ -2,7 +2,7 @@ package redgear.liquidfuels.machines.dryer;
 
 import net.minecraft.util.ResourceLocation;
 import redgear.core.render.GuiBase;
-import redgear.core.render.gui.element.ElementFluidTank;
+import redgear.core.render.gui.element.ElementFluidTankWithGlass;
 
 public class GuiDryer extends GuiBase<ContainerDryer>{
 	
@@ -18,7 +18,7 @@ public class GuiDryer extends GuiBase<ContainerDryer>{
 	public void initGui() {
 		super.initGui();
 
-		addElement(new ElementFluidTank(this, 33, 13, myContainer.myTile.tank));
+		addElement(new ElementFluidTankWithGlass(this, 33, 13, myContainer.myTile.tank));
 	}
 
 	@Override

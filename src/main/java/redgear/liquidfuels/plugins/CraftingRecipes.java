@@ -2,6 +2,7 @@ package redgear.liquidfuels.plugins;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import redgear.core.mod.IPlugin;
 import redgear.core.mod.ModUtils;
 import redgear.core.mod.Mods;
@@ -36,7 +37,7 @@ public class CraftingRecipes implements IPlugin {
 
 	@Override
 	public void Init(ModUtils mod) {
-		GameRegistry.addShapelessRecipe(LiquidFuels.asphaltBlock.getStack(16), new Object[] {Blocks.gravel,
+		GameRegistry.addShapelessRecipe(new ItemStack(LiquidFuels.asphaltBlock, 16), new Object[] {Blocks.gravel,
 				Blocks.gravel, Blocks.gravel, Blocks.gravel, Blocks.gravel, Blocks.gravel, Blocks.gravel,
 				Blocks.gravel, LiquidFuels.asphaltBucket.getStack() });
 
@@ -70,7 +71,7 @@ public class CraftingRecipes implements IPlugin {
 		multiTankRecipe.addLevel(Mods.IC2.isIn(), 'B', ic2Machine);
 		multiTankRecipe.addLevel(mod.inOreDict("itemRubber"), 'R', "itemRubber");
 		multiTankRecipe.addLevel(Mods.Greg.isIn(), 'B', "craftingRawMachineTier00");
-		multiTankRecipe.registerShaped(LiquidFuels.bioReactorMulit, 4);
+		multiTankRecipe.registerShaped(new SimpleItem(LiquidFuels.bioReactorMulit), 4);
 
 		LeveledRecipe masherRecipe = new LeveledRecipe("GRG", "BIB", "PMP");
 		masherRecipe.addLevel(true, 'G', Items.gold_ingot, 'R', Blocks.redstone_block, 'B', Items.bucket, 'I',
@@ -85,7 +86,7 @@ public class CraftingRecipes implements IPlugin {
 
 		LeveledRecipe bioReactorRecipe = new LeveledRecipe("GRG", "BIB", "WPW");
 		bioReactorRecipe.addLevel(true, 'G', Items.gold_ingot, 'R', Blocks.redstone_block, 'B',
-				LiquidFuels.bioReactorMulit.getStack(), 'I', Blocks.iron_block, 'P', Blocks.piston, 'W',
+				new ItemStack(LiquidFuels.bioReactorMulit, 1), 'I', Blocks.iron_block, 'P', Blocks.piston, 'W',
 				Blocks.brown_mushroom);
 		bioReactorRecipe.addLevel(hasSteel, 'I', "blockSteel");
 		bioReactorRecipe.addLevel(Mods.BCCore.isIn(), 'G', bcPower, 'P', bcIronGear, 'R', bcLogic);

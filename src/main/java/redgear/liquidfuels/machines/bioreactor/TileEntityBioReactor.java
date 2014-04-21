@@ -40,7 +40,7 @@ public class TileEntityBioReactor extends TileEntityElectricFluidMachine {
 	static {
 		multi = new MultiBlockMap(36);
 
-		SimpleItem block = LiquidFuels.bioReactorMulit;
+		SimpleItem block = new SimpleItem(LiquidFuels.bioReactorMulit);
 		SimpleItem air = new SimpleItem(Blocks.air, 0);
 
 		for (int x = -1; x <= 1; x++)

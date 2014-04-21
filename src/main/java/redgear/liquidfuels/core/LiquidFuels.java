@@ -4,9 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraftforge.fluids.Fluid;
 import redgear.core.block.BlockGeneric;
-import redgear.core.block.MetaBlock;
 import redgear.core.block.MetaTile;
-import redgear.core.block.SubBlock;
 import redgear.core.block.SubTile;
 import redgear.core.block.SubTileMachine;
 import redgear.core.fluids.FluidUtil;
@@ -53,11 +51,10 @@ public class LiquidFuels extends ModUtils {
 	public static MetaTile machines;
 	public static MetaItem items;
 	public static MetaItemBucket buckets;
-	public static MetaBlock blocks;
 	public static Block oilSands;
 
-	public static SimpleItem bioReactorMulit;
-	public static SimpleItem asphaltBlock;
+	public static Block bioReactorMulit;
+	public static Block asphaltBlock;
 
 	public static SimpleItem asphaltBucket;
 
@@ -140,13 +137,15 @@ public class LiquidFuels extends ModUtils {
 		buckets.addMetaItem(new SubItemBucket("bucketDiesel", dieselFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketKerosene", keroseneFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketGasoline", gasolineFluid));
-
-		blocks = new MetaBlock(Material.iron, "RedGear.LiquidFuels.Blocks");
-		blocks.setHardness(5.0F).setStepSound(Block.soundTypeMetal);
-		bioReactorMulit = blocks.addMetaBlock(new SubBlock("BioReactorMulti"));
-		asphaltBlock = blocks.addMetaBlock(new SubBlock("Asphalt"));
+		
+		bioReactorMulit = new BlockGeneric(Material.iron, "BioReactorMulti");
+		bioReactorMulit.setHardness(5.0F).setStepSound(Block.soundTypeMetal);
+		
+		asphaltBlock = new BlockGeneric(Material.rock,  "Asphalt");
+		asphaltBlock.setHardness(5f).setStepSound(Block.soundTypeStone).setHarvestLevel("pickaxe", 1);
 
 		oilSands = new BlockGeneric(Material.rock, "OilSands");
+		oilSands.setHardness(3f).setStepSound(Block.soundTypeStone).setHarvestLevel("pickaxe", 1);
 
 		if (Mods.Geocraft.isIn())
 			MineOilSands.register();

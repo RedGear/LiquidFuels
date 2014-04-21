@@ -2,7 +2,7 @@ package redgear.liquidfuels.machines.bioreactor;
 
 import net.minecraft.util.ResourceLocation;
 import redgear.core.render.GuiBase;
-import redgear.core.render.gui.element.ElementFluidTank;
+import redgear.core.render.gui.element.ElementFluidTankWithGlass;
 
 public class GuiBioReactor extends GuiBase<ContainerBioReactor> {
 
@@ -18,7 +18,7 @@ public class GuiBioReactor extends GuiBase<ContainerBioReactor> {
 	public void initGui() {
 		super.initGui();
 
-		addElement(new ElementFluidTank(this, 69, 13, myContainer.myTile.tank).setGauge(1));
+		addElement(new ElementFluidTankWithGlass(this, 69, 13, myContainer.myTile.tank).setGauge(1));
 	}
 
 	@Override

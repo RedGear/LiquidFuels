@@ -38,6 +38,8 @@ public class TileEntityCrackingBase extends TileEntityElectricFluidMachine {
 		oilTank = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 4);
 		oilTank.addFluidMap(LiquidFuels.oilFluid, TransferRule.INPUT);
 		addTank(oilTank);//, 97, 13, 16, 60
+		
+		this.setEnergyRate(4);
 	}
 
 	static {
@@ -61,7 +63,7 @@ public class TileEntityCrackingBase extends TileEntityElectricFluidMachine {
 
 			oilTank.drain(oilRate, true);
 			steamTank.drain(steamRate, true);
-			return 1;//, 9400
+			return 4;//, 9400
 		}
 		
 		return 0;
@@ -75,9 +77,13 @@ public class TileEntityCrackingBase extends TileEntityElectricFluidMachine {
 	@Override
 	protected boolean doPostWork() {
 		for (int i = 0; i <= outputMap.length - 1; i++)
-			((TileEntityCrackingTower) worldObj.getTileEntity(xCoord, yCoord + 1 + i, zCoord)).getTank(0)
-					.fill(outputMap[i], true);
+			fillTower((TileEntityCrackingTower) worldObj.getTileEntity(xCoord, yCoord + 1 + i, zCoord), outputMap[i]);
 		return false;
+	}
+	
+	private void fillTower(TileEntityCrackingTower other, FluidStack resource){
+		other.getTank(0).fill(resource, true);
+		other.forceSync();
 	}
 
 	boolean checkMulitBlock() {

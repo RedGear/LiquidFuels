@@ -11,8 +11,8 @@ tile.RedGear.LiquidFuels.Machine.CrackingBase.name=Cracking Tower Base
 tile.RedGear.LiquidFuels.Machine.CrackingTower.name=Cracking Tower
 tile.RedGear.LiquidFuels.Machine.Dryer.name=Dryer
 	
-tile.RedGear.LiquidFuels.Blocks.BioReactorMulti.name=Bio Reactor Tank
-tile.RedGear.LiquidFuels.Blocks.Asphalt.name=Asphalt
+tile.BioReactorMulti.name=Bio Reactor Tank
+tile.Asphalt.name=Asphalt
 
 tile.OilSands.name=Oil Sands
 	

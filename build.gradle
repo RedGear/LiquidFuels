@@ -32,6 +32,10 @@ minecraft{
 		replace "@ModVersion@", project.version
 }
 
+jar{
+	exclude 'redgear.geocraft*'
+}
+
 processResources
 {
 	// replace stuff in mcmod.info, nothing else

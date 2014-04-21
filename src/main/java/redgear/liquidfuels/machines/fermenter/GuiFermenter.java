@@ -2,7 +2,7 @@ package redgear.liquidfuels.machines.fermenter;
 
 import net.minecraft.util.ResourceLocation;
 import redgear.core.render.GuiBase;
-import redgear.core.render.gui.element.ElementFluidTank;
+import redgear.core.render.gui.element.ElementFluidTankWithGlass;
 
 public class GuiFermenter extends GuiBase<ContainerFermenter>{
 	
@@ -18,8 +18,8 @@ public class GuiFermenter extends GuiBase<ContainerFermenter>{
 	public void initGui() {
 		super.initGui();
 
-		addElement(new ElementFluidTank(this, 27, 13, myContainer.myTile.inputTank));
-		addElement(new ElementFluidTank(this, 132, 13, myContainer.myTile.outputTank));
+		addElement(new ElementFluidTankWithGlass(this, 27, 13, myContainer.myTile.inputTank));
+		addElement(new ElementFluidTankWithGlass(this, 132, 13, myContainer.myTile.outputTank));
 	}
 
 	@Override

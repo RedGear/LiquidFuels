@@ -2,7 +2,7 @@ package redgear.liquidfuels.machines.tower;
 
 import net.minecraft.util.ResourceLocation;
 import redgear.core.render.GuiBase;
-import redgear.core.render.gui.element.ElementFluidTank;
+import redgear.core.render.gui.element.ElementFluidTankWithGlass;
 
 public class GuiCrackingBase extends GuiBase<ContainerCrackingBase>{
 	
@@ -18,8 +18,8 @@ public class GuiCrackingBase extends GuiBase<ContainerCrackingBase>{
 	public void initGui() {
 		super.initGui();
 
-		addElement(new ElementFluidTank(this, 48, 13, myContainer.myTile.steamTank).setGauge(1));
-		addElement(new ElementFluidTank(this, 97, 13, myContainer.myTile.oilTank).setGauge(1));
+		addElement(new ElementFluidTankWithGlass(this, 48, 13, myContainer.myTile.steamTank).setGauge(1));
+		addElement(new ElementFluidTankWithGlass(this, 97, 13, myContainer.myTile.oilTank).setGauge(1));
 	}
 
 	@Override
