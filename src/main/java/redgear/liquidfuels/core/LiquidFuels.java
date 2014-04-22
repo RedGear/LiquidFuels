@@ -151,6 +151,8 @@ public class LiquidFuels extends ModUtils {
 			MineOilSands.register();
 		else
 			GameRegistry.registerWorldGenerator(new OilSandsGenerator(), 0);
+		
+		this.logDebug("Found Geo: ", Mods.Geocraft.isIn());
 	}
 
 	@Override

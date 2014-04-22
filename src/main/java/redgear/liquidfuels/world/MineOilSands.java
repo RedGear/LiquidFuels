@@ -45,7 +45,7 @@ public class MineOilSands implements IMine {
 	public void generate(World world, Random rand, int chunkX, int chunkZ) {
 		generateSphere(
 				new WorldLocation(chunkX * 16 + rand.nextInt(16), rand.nextInt(64) + 8, chunkZ * 16 + rand.nextInt(16),
-						world), new SimpleItem(LiquidFuels.oilSands, 0), new SimpleItem(Blocks.stone, 0), rand,
+						world), new SimpleItem(LiquidFuels.oilSands), new SimpleItem(Blocks.stone), rand,
 				(int) getMineSize());
 	}
 

@@ -18,7 +18,7 @@ public class GuiBoiler extends GuiBase<ContainerBoiler>{
 	public void initGui() {
 		super.initGui();
 
-		addElement(new ElementFluidTankWithGlass(this, 40,  12, myContainer.myTile.waterTank).setGauge(1));
+		addElement(new ElementFluidTankWithGlass(this, 40,  12, myContainer.myTile.waterTank));
 		addElement(new ElementFluidTankWithGlass(this, 120, 12, myContainer.myTile.steamTank).setGauge(1));
 	}
 

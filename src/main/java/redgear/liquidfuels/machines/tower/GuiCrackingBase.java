@@ -19,7 +19,7 @@ public class GuiCrackingBase extends GuiBase<ContainerCrackingBase>{
 		super.initGui();
 
 		addElement(new ElementFluidTankWithGlass(this, 48, 13, myContainer.myTile.steamTank).setGauge(1));
-		addElement(new ElementFluidTankWithGlass(this, 97, 13, myContainer.myTile.oilTank).setGauge(1));
+		addElement(new ElementFluidTankWithGlass(this, 97, 13, myContainer.myTile.oilTank));
 	}
 
 	@Override
