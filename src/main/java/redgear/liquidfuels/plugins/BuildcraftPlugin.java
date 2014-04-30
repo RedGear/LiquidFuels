@@ -19,7 +19,7 @@ public class BuildcraftPlugin implements IPlugin {
 
 	@Override
 	public boolean shouldRun(ModUtils inst, ModState state) {
-		return Mods.BCCore.isIn();
+		return Mods.BCEnergy.isIn();
 	}
 
 	@Override

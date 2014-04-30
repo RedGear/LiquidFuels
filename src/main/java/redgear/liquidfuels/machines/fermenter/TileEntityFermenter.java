@@ -6,8 +6,8 @@ import net.minecraftforge.fluids.FluidStack;
 import redgear.core.fluids.AdvFluidTank;
 import redgear.core.inventory.TankSlot;
 import redgear.core.inventory.TransferRule;
-import redgear.liquidfuels.api.recipes.FermenterRecipe;
 import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
+import redgear.liquidfuels.recipes.FermenterRecipe;
 
 public class TileEntityFermenter extends TileEntityElectricFluidMachine {
 

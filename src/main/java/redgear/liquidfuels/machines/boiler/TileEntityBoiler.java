@@ -12,13 +12,14 @@ import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
 
 public class TileEntityBoiler extends TileEntityElectricFluidMachine {
 
-	final AdvFluidTank waterTank;
-	final AdvFluidTank steamTank;
+	public final AdvFluidTank waterTank;
+	public final AdvFluidTank steamTank;
 	final int slotWaterFull;
 	final int slotWaterEmpty;
-	final int waterRate = 4; // amount of water needed for each cycle
-	final int steamRate = 160; // amount of steam made each cycle
-	final int powerRatio = 80; // energy per mb of steam
+	public final int workRate = 10;
+	public final int waterRate = 4; // amount of water needed for each cycle
+	public final int steamRate = 160; // amount of steam made each cycle
+	public final int powerRatio = 160; // energy per mb of steam
 
 	public TileEntityBoiler() {
 		super(8);
@@ -44,25 +45,22 @@ public class TileEntityBoiler extends TileEntityElectricFluidMachine {
 
 	@Override
 	protected int checkWork() {
-		if(steamTank.getCapacity() >= steamRate){
-			if(waterTank.getAmount() >= waterRate){
-				waterTank.drain(waterRate, true);
-				return 1;
-			}
-		}
-		
+		if(steamTank.getCapacity() >= steamRate * workRate && waterTank.getAmount() >= waterRate * workRate)
+			return workRate;
+			
 		return 0;
 	}
 	
 	@Override
 	protected boolean doWork() {
-		return false;
+		waterTank.drain(waterRate, true);
+		steamTank.fill(new FluidStack(LiquidFuels.steamFluid, steamRate), true);
+		return true;
 	}
 
 	@Override
 	protected boolean doPostWork() {
-		steamTank.fill(new FluidStack(LiquidFuels.steamFluid, steamRate), true);
-		return true;
+		return false;
 	}
 
 	/**

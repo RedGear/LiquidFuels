@@ -9,8 +9,8 @@ import redgear.core.fluids.AdvFluidTank;
 import redgear.core.inventory.TankSlot;
 import redgear.core.inventory.TransferRule;
 import redgear.core.util.SimpleItem;
-import redgear.liquidfuels.api.recipes.MasherRecipe;
 import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
+import redgear.liquidfuels.recipes.MasherRecipe;
 
 public class TileEntityMasher extends TileEntityElectricFluidMachine {
 	final AdvFluidTank waterTank;

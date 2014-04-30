@@ -1,4 +1,4 @@
-package redgear.liquidfuels.api.recipes;
+package redgear.liquidfuels.recipes;
 
 import java.util.HashMap;
 import java.util.Map;

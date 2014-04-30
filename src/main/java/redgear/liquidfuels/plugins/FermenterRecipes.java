@@ -4,8 +4,8 @@ import net.minecraftforge.fluids.FluidStack;
 import cpw.mods.fml.common.LoaderState.ModState;
 import redgear.core.mod.IPlugin;
 import redgear.core.mod.ModUtils;
-import redgear.liquidfuels.api.recipes.FermenterRecipe;
 import redgear.liquidfuels.core.LiquidFuels;
+import redgear.liquidfuels.recipes.FermenterRecipe;
 
 public class FermenterRecipes implements IPlugin{
 

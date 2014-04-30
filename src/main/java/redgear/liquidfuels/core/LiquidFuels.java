@@ -8,6 +8,7 @@ import redgear.core.block.MetaTile;
 import redgear.core.block.SubTile;
 import redgear.core.block.SubTileMachine;
 import redgear.core.fluids.FluidUtil;
+import redgear.core.imc.IMCEventHandler;
 import redgear.core.item.MetaItem;
 import redgear.core.item.MetaItemBucket;
 import redgear.core.item.SubItem;
@@ -20,6 +21,7 @@ import redgear.liquidfuels.machines.bioreactor.TileFactoryBioReactor;
 import redgear.liquidfuels.machines.boiler.TileFactoryBoiler;
 import redgear.liquidfuels.machines.dryer.TileFactoryDryer;
 import redgear.liquidfuels.machines.fermenter.TileFactoryFermenter;
+import redgear.liquidfuels.machines.fluidboiler.TileFactoryFluidBoiler;
 import redgear.liquidfuels.machines.masher.TileFactoryMasher;
 import redgear.liquidfuels.machines.still.TileFactoryStill;
 import redgear.liquidfuels.machines.tower.TileFactoryCrackingBase;
@@ -28,28 +30,33 @@ import redgear.liquidfuels.machines.watergen.TileFactoryWaterGen;
 import redgear.liquidfuels.plugins.BuildcraftPlugin;
 import redgear.liquidfuels.plugins.CraftingRecipes;
 import redgear.liquidfuels.plugins.FermenterRecipes;
+import redgear.liquidfuels.plugins.FluidBoilerPlugin;
 import redgear.liquidfuels.plugins.IC2Plugin;
 import redgear.liquidfuels.plugins.MasherRecipes;
 import redgear.liquidfuels.plugins.RailcraftPlugin;
 import redgear.liquidfuels.plugins.ThermalExpansionPlugin;
+import redgear.liquidfuels.recipes.MessageHandlerBoiler;
+import redgear.liquidfuels.recipes.MessageHandlerFermenter;
+import redgear.liquidfuels.recipes.MessageHandlerMasher;
 import redgear.liquidfuels.world.MineOilSands;
 import redgear.liquidfuels.world.OilSandsGenerator;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms.IMCEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-@Mod(modid = "redgear_liquidfuels", name = "Liquid Fuels", version = "@ModVersion@", dependencies = "required-after:redgear_core;after:Forestry; after:BuildCraft|Core")
+@Mod(modid = "redgear_liquidfuels", name = "Liquid Fuels", version = "@ModVersion@", dependencies = "required-after:redgear_core;after:Forestry; after:BuildCraft|Energy")
 public class LiquidFuels extends ModUtils {
 
 	@Instance("redgear_liquidfuels")
 	public static ModUtils inst;
 
 	public static MetaTile machines;
-	public static MetaItem items;
+	public static MetaItem<SubItem> items;
 	public static MetaItemBucket buckets;
 	public static Block oilSands;
 
@@ -70,6 +77,7 @@ public class LiquidFuels extends ModUtils {
 	public static SimpleItem crackingBaseBlock;
 	public static SimpleItem crackingTowerBlock;
 	public static SimpleItem dryerBlock;
+	public static SimpleItem fluidBoilerBlock;
 
 	public static Fluid biomassFluid;
 	public static Fluid mashFluid;
@@ -84,6 +92,7 @@ public class LiquidFuels extends ModUtils {
 	public static Fluid gasolineFluid;
 
 	private static final String machineTexture = "Machine";
+	private static final IMCEventHandler imcHandler = new IMCEventHandler();
 
 	@Override
 	public void PreInit(FMLPreInitializationEvent event) {
@@ -94,8 +103,13 @@ public class LiquidFuels extends ModUtils {
 		addPlugin(new ThermalExpansionPlugin());
 		addPlugin(new IC2Plugin());
 		addPlugin(new BuildcraftPlugin());
-
-		items = new MetaItem("RedGear.LiquidFuels.Items");
+		addPlugin(new FluidBoilerPlugin());
+		
+		imcHandler.addHandler("MasherRecipe", new MessageHandlerMasher());
+		imcHandler.addHandler("FermenterRecipe", new MessageHandlerFermenter());
+		imcHandler.addHandler("BoilerFuelRecipe", new MessageHandlerBoiler());
+		
+		items = new MetaItem<SubItem>("RedGear.LiquidFuels.Items");
 		masherBlades = items.addMetaItem(new SubItem("masherBlades"));
 		ptCoke = items.addMetaItem(new SubItem("ptCoke"));
 
@@ -113,6 +127,7 @@ public class LiquidFuels extends ModUtils {
 		crackingBaseBlock = machines.addMetaBlock(new SubTileMachine("CrackingBase", machineTexture,new TileFactoryCrackingBase()));
 		crackingTowerBlock = machines.addMetaBlock(new SubTile("CrackingTower", new TileFactoryCrackingTower()));
 		dryerBlock = machines.addMetaBlock(new SubTileMachine("Dryer", machineTexture, new TileFactoryDryer()));
+		fluidBoilerBlock = machines.addMetaBlock(new SubTileMachine("Boiler", machineTexture, new TileFactoryFluidBoiler()));
 
 		biomassFluid = FluidUtil.createFluid("biomass");
 		mashFluid = FluidUtil.createFluid("Mash");
@@ -163,6 +178,11 @@ public class LiquidFuels extends ModUtils {
 	@Override
 	public void PostInit(FMLPostInitializationEvent event) {
 
+	}
+	
+	@EventHandler
+	public void IMC(IMCEvent event){
+		imcHandler.handle(event);
 	}
 
 	@Override
