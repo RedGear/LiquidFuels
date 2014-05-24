@@ -1,13 +1,19 @@
 package redgear.liquidfuels.machines;
 
+import redgear.core.api.tile.IFacedTile;
+import redgear.core.api.util.FacedTileHelper;
 import redgear.core.tile.TileEntityTank;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 
-public abstract class TileEntityElectricFluidMachine extends TileEntityTank implements IEnergyHandler {
+public abstract class TileEntityElectricFluidMachine extends TileEntityTank implements IEnergyHandler, IFacedTile {
 
+	ForgeDirection face;
 	protected EnergyStorage storage;
 	
 	public TileEntityElectricFluidMachine() {
@@ -21,6 +27,36 @@ public abstract class TileEntityElectricFluidMachine extends TileEntityTank impl
 	public TileEntityElectricFluidMachine(int idleRate, int powerCapacity) {
 		super(idleRate);
 		storage = new EnergyStorage(powerCapacity);
+	}
+	
+	@Override
+	public int getDirectionId() {
+		return face.ordinal();
+	}
+
+	@Override
+	public ForgeDirection getDirection() {
+		return face;
+	}
+
+	@Override
+	public boolean setDirection(int id) {
+		if (id >= 0 && id < 6) {
+			face = ForgeDirection.getOrientation(id);
+			return true;
+		} else
+			return false;
+	}
+
+	@Override
+	public boolean setDirection(ForgeDirection side) {
+		face = side;
+		return true;
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
+		face = FacedTileHelper.facePlayerFlat(entity);
 	}
 
 	/**
@@ -49,6 +85,7 @@ public abstract class TileEntityElectricFluidMachine extends TileEntityTank impl
 	public void writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
 		storage.writeToNBT(tag);
+		tag.setByte("face", (byte) face.ordinal());
 	}
 
 	/**
@@ -59,6 +96,7 @@ public abstract class TileEntityElectricFluidMachine extends TileEntityTank impl
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
 		storage.readFromNBT(tag);
+		face = ForgeDirection.getOrientation(tag.getByte("face"));
 	}
 
 	/**
@@ -97,6 +135,14 @@ public abstract class TileEntityElectricFluidMachine extends TileEntityTank impl
 	 * Returns true if the Handler functions on a given side - if a Tile Entity can receive or send energy on a given side, this should return true.
 	 */
 	@Override
+	public boolean canConnectEnergy(ForgeDirection from) {
+		return true;
+	}
+	
+	/**
+	 * Old CoFH energy connection check. Was updated to canConnectEnergy
+	 */
+	@Deprecated
 	public boolean canInterface(ForgeDirection from) {
 		return true;
 	}

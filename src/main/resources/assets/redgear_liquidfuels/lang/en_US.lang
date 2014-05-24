@@ -13,7 +13,6 @@ tile.RedGear.LiquidFuels.Machine.Dryer.name=Dryer
 	
 tile.BioReactorMulti.name=Bio Reactor Tank
 tile.Asphalt.name=Asphalt
-
 tile.OilSands.name=Oil Sands
 	
 item.RedGear.LiquidFuels.Buckets.bucketBiomass.name=Biomass Bucket

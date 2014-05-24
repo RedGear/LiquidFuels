@@ -14,10 +14,12 @@ import redgear.geocraft.api.MineManager;
 import redgear.liquidfuels.core.LiquidFuels;
 import cpw.mods.fml.common.Optional.Interface;
 import cpw.mods.fml.common.Optional.InterfaceList;
+import cpw.mods.fml.common.Optional.Method;
 
-@InterfaceList(value = {@Interface(iface = "IMine", modid = "redgear_geocraft") })
+@InterfaceList(value = {@Interface(iface = "redgear.geocraft.api.IMine", modid = "redgear_geocraft") })
 public class MineOilSands implements IMine {
 	
+	@Method(modid = "redgear_geocraft")
 	public static void register(){
 		MineManager.oreRegistry.registerMine(new MineOilSands());
 	}
@@ -33,12 +35,22 @@ public class MineOilSands implements IMine {
 
 	@Override
 	public float getMineRarity() {
-		return 1 * (isGeo() ? MineManager.oreRegistry.rarityModifier() : 1);
+		return 1 * (isGeo() ? rarityModifier() : 1);
+	}
+	
+	@Method(modid = "redgear_geocraft")
+	private float rarityModifier(){
+		return MineManager.oreRegistry.rarityModifier();
 	}
 
 	@Override
 	public float getMineSize() {
-		return 6 * (isGeo() ? MineManager.oreRegistry.volumeModifier() : 1);
+		return 6 * (isGeo() ? volumeModifier() : 1);
+	}
+	
+	@Method(modid = "redgear_geocraft")
+	private float volumeModifier(){
+		return MineManager.oreRegistry.volumeModifier();
 	}
 
 	@Override

@@ -1,15 +1,23 @@
 package redgear.liquidfuels.machines.watergen;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import redgear.core.api.tile.IFacedTile;
+import redgear.core.api.util.FacedTileHelper;
 import redgear.core.fluids.AdvFluidTank;
 import redgear.core.inventory.TankSlot;
 import redgear.core.inventory.TransferRule;
 import redgear.core.tile.TileEntityTank;
 
-public class TileEntityWaterGen extends TileEntityTank {
+public class TileEntityWaterGen extends TileEntityTank implements IFacedTile {
 
+	ForgeDirection face;
 	final AdvFluidTank tank;
 
 	final int waterInput;
@@ -55,4 +63,53 @@ public class TileEntityWaterGen extends TileEntityTank {
 		return true;
 	}
 
+	@Override
+	public int getDirectionId() {
+		return face.ordinal();
+	}
+
+	@Override
+	public ForgeDirection getDirection() {
+		return face;
+	}
+
+	@Override
+	public boolean setDirection(int id) {
+		if (id >= 0 && id < 6) {
+			face = ForgeDirection.getOrientation(id);
+			return true;
+		} else
+			return false;
+	}
+
+	@Override
+	public boolean setDirection(ForgeDirection side) {
+		face = side;
+		return true;
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
+		face = FacedTileHelper.facePlayerFlat(entity);
+	}
+
+	/**
+	 * Don't forget to override this function in all children if you want more
+	 * vars!
+	 */
+	@Override
+	public void writeToNBT(NBTTagCompound tag) {
+		super.writeToNBT(tag);
+		tag.setByte("face", (byte) face.ordinal());
+	}
+
+	/**
+	 * Don't forget to override this function in all children if you want more
+	 * vars!
+	 */
+	@Override
+	public void readFromNBT(NBTTagCompound tag) {
+		super.readFromNBT(tag);
+		face = ForgeDirection.getOrientation(tag.getByte("face"));
+	}
 }
