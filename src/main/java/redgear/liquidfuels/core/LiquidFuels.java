@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import redgear.core.block.BlockGeneric;
 import redgear.core.block.MetaTile;
@@ -72,6 +73,7 @@ public class LiquidFuels extends ModUtils {
 	public static BlockRubberSapling rubberSapling;
 	public static Block rubberWood;
 	public static Block rubberLeaves;
+	public static Block rubberPlanks;
 	
 	public static SimpleItem asphaltBucket;
 
@@ -177,6 +179,8 @@ public class LiquidFuels extends ModUtils {
 		rubberWood = new BlockRubberLog("RubberWood");
 		
 		rubberLeaves = new BlockRubberLeaves("RubberLeaves");
+		
+		rubberPlanks = new BlockGeneric(Material.wood, "RubberPlanks").setHardness(2.0F).setResistance(5.0F).setStepSound(Block.soundTypeWood);
 
 		if (Mods.Geocraft.isIn())
 			MineOilSands.register();
@@ -190,6 +194,11 @@ public class LiquidFuels extends ModUtils {
 
 	@Override
 	public void Init(FMLInitializationEvent event) {
+		
+		GameRegistry.addShapelessRecipe(new ItemStack(rubberPlanks, 4, 0), rubberWood);
+		
+		this.registerOre("logWood", new ItemStack(rubberWood, 1, 0));
+		this.registerOre("plankWood", new ItemStack(rubberPlanks, 1, 0));
 
 	}
 

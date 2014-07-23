@@ -52,5 +52,18 @@ public class BlockRubberLog extends BlockLog {
 	public String getUnlocalizedName() {
 		return "tile." + name;
 	}
+	
+	/**
+     * Determines the damage on the item the block drops. Used in cloth and wood.
+     */
+    public int damageDropped(int p_149692_1_)
+    {
+        return 0;
+    }
+    
+    public int func_150162_k(int p_150162_1_)
+    {
+        return 0;
+    }
 
 }
