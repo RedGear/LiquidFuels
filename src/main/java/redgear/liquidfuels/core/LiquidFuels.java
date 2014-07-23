@@ -2,6 +2,8 @@ package redgear.liquidfuels.core;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
 import net.minecraftforge.fluids.Fluid;
 import redgear.core.block.BlockGeneric;
 import redgear.core.block.MetaTile;
@@ -17,6 +19,9 @@ import redgear.core.mod.ModUtils;
 import redgear.core.mod.Mods;
 import redgear.core.util.CoreFuelHandler;
 import redgear.core.util.SimpleItem;
+import redgear.liquidfuels.block.BlockRubberLeaves;
+import redgear.liquidfuels.block.BlockRubberLog;
+import redgear.liquidfuels.block.BlockRubberSapling;
 import redgear.liquidfuels.machines.bioreactor.TileFactoryBioReactor;
 import redgear.liquidfuels.machines.boiler.TileFactoryBoiler;
 import redgear.liquidfuels.machines.dryer.TileFactoryDryer;
@@ -40,6 +45,7 @@ import redgear.liquidfuels.recipes.MessageHandlerFermenter;
 import redgear.liquidfuels.recipes.MessageHandlerMasher;
 import redgear.liquidfuels.world.MineOilSands;
 import redgear.liquidfuels.world.OilSandsGenerator;
+import redgear.liquidfuels.world.RubberTreeGenerator;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -62,7 +68,11 @@ public class LiquidFuels extends ModUtils {
 
 	public static Block bioReactorMulit;
 	public static Block asphaltBlock;
-
+	
+	public static BlockRubberSapling rubberSapling;
+	public static Block rubberWood;
+	public static Block rubberLeaves;
+	
 	public static SimpleItem asphaltBucket;
 
 	public static SimpleItem masherBlades;
@@ -161,6 +171,12 @@ public class LiquidFuels extends ModUtils {
 
 		oilSands = new BlockGeneric(Material.rock, "OilSands");
 		oilSands.setHardness(3f).setStepSound(Block.soundTypeStone).setHarvestLevel("pickaxe", 1);
+		
+		rubberSapling = new BlockRubberSapling("RubberSapling");
+		
+		rubberWood = new BlockRubberLog("RubberWood");
+		
+		rubberLeaves = new BlockRubberLeaves("RubberLeaves");
 
 		if (Mods.Geocraft.isIn())
 			MineOilSands.register();
@@ -168,6 +184,8 @@ public class LiquidFuels extends ModUtils {
 			GameRegistry.registerWorldGenerator(new OilSandsGenerator(), 0);
 		
 		this.logDebug("Found Geo: ", Mods.Geocraft.isIn());
+		
+		GameRegistry.registerWorldGenerator(new RubberTreeGenerator(), 10);
 	}
 
 	@Override

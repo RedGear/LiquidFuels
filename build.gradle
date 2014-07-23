@@ -41,9 +41,7 @@ archivesBaseName = mod_name
 
 minecraft{
 	version = "${minecraft_version}-${forge_version}"
-
-	assetDir = "run/assets"
-
+	
 	replace "@ModVersion@", project.version
 }
 
