@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import redgear.core.util.StringHelper;
-import redgear.liquidfuels.core.LiquidFuels;
 import redgear.liquidfuels.world.RubberTreeGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -28,7 +27,7 @@ public class BlockRubberSapling extends BlockSapling {
 		this.name = name;
 		modName = StringHelper.parseModAsset();
 		GameRegistry.registerBlock(this, ItemBlock.class, name);
-		this.setHardness(0.0F).setStepSound(soundTypeGrass);
+		setHardness(0.0F).setStepSound(soundTypeGrass);
 	}
 
 	/**
@@ -48,16 +47,14 @@ public class BlockRubberSapling extends BlockSapling {
 	public String getUnlocalizedName() {
 		return "tile." + name;
 	}
-	
+
 	@Override
-	public IIcon getIcon(int side, int metadata)
-	{
+	public IIcon getIcon(int side, int metadata) {
 		return blockIcon;
 	}
-	
+
 	@Override
-	public int damageDropped(int par1)
-	{
+	public int damageDropped(int par1) {
 		return 0;
 	}
 
@@ -66,26 +63,21 @@ public class BlockRubberSapling extends BlockSapling {
 	 */
 	@Override
 	public void func_149878_d(World world, int x, int y, int z, Random rand) {
-		LiquidFuels.inst.logDebug("Trying Tree Growth...");
-		
-		if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(world, rand, x, y, z)){
-			LiquidFuels.inst.logDebug("Tree failed to grow due to: Sapling Grow Event");
-			return;
-		}
 
-		if (world.isRemote){
-			LiquidFuels.inst.logDebug("Tree failed to grow due to: Client side");
+		if (!net.minecraftforge.event.terraingen.TerrainGen.saplingGrowTree(world, rand, x, y, z))
 			return;
-		}
+
+		if (world.isRemote)
+			return;
 
 		world.setBlockToAir(x, y, z);
-		if(!treeGen.growTree(world, x, y, z, rand))
+		if (!treeGen.growTree(world, x, y, z, rand))
 			world.setBlock(x, y, z, this, 0, 4);
 	}
-	
+
+	@Override
 	@SideOnly(Side.CLIENT)
-    public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_)
-    {
-        p_149666_3_.add(new ItemStack(p_149666_1_, 1, 0));
-    }
+	public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List p_149666_3_) {
+		p_149666_3_.add(new ItemStack(p_149666_1_, 1, 0));
+	}
 }

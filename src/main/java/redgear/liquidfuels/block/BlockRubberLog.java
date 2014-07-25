@@ -1,10 +1,14 @@
 package redgear.liquidfuels.block;
 
+import java.util.Random;
+
 import net.minecraft.block.BlockLog;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.IIcon;
 import redgear.core.util.StringHelper;
+import redgear.liquidfuels.core.LiquidFuels;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -52,18 +56,29 @@ public class BlockRubberLog extends BlockLog {
 	public String getUnlocalizedName() {
 		return "tile." + name;
 	}
-	
+
 	/**
-     * Determines the damage on the item the block drops. Used in cloth and wood.
-     */
-    public int damageDropped(int p_149692_1_)
-    {
-        return 0;
-    }
-    
-    public int func_150162_k(int p_150162_1_)
-    {
-        return 0;
-    }
+	 * Determines the damage on the item the block drops. Used in cloth and
+	 * wood.
+	 */
+	@Override
+	public int damageDropped(int p_149692_1_) {
+		return 0;
+	}
+
+	@Override
+	public int func_150162_k(int p_150162_1_) {
+		return 0;
+	}
+
+	@Override
+	public Item getItemDropped(int meta, Random rand, int fortune) {
+		return Item.getItemFromBlock(LiquidFuels.rubberWoodDrained);
+	}
+
+	@Override
+	protected boolean canSilkHarvest() {
+		return false;
+	}
 
 }

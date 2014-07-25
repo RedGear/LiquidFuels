@@ -2,8 +2,6 @@ package redgear.liquidfuels.core;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import redgear.core.block.BlockGeneric;
@@ -72,6 +70,7 @@ public class LiquidFuels extends ModUtils {
 	
 	public static BlockRubberSapling rubberSapling;
 	public static Block rubberWood;
+	public static Block rubberWoodDrained;
 	public static Block rubberLeaves;
 	public static Block rubberPlanks;
 	
@@ -79,6 +78,8 @@ public class LiquidFuels extends ModUtils {
 
 	public static SimpleItem masherBlades;
 	public static SimpleItem ptCoke;
+	public static SimpleItem rawRubber;
+	public static SimpleItem rubber;
 
 	public static SimpleItem masherBlock;
 	public static SimpleItem bioReactorBlock;
@@ -102,6 +103,9 @@ public class LiquidFuels extends ModUtils {
 	public static Fluid dieselFluid;
 	public static Fluid keroseneFluid;
 	public static Fluid gasolineFluid;
+	public static Fluid napthaFluid;
+	public static Fluid propaneFluid;
+	public static Fluid latexFluid;
 
 	private static final String machineTexture = "Machine";
 	private static final IMCEventHandler imcHandler = new IMCEventHandler();
@@ -121,13 +125,20 @@ public class LiquidFuels extends ModUtils {
 		imcHandler.addHandler("FermenterRecipe", new MessageHandlerFermenter());
 		imcHandler.addHandler("BoilerFuelRecipe", new MessageHandlerBoiler());
 		
-		items = new MetaItem<SubItem>("RedGear.LiquidFuels.Items");
+		items = new MetaItem<SubItem>("Items");
 		masherBlades = items.addMetaItem(new SubItem("masherBlades"));
 		ptCoke = items.addMetaItem(new SubItem("ptCoke"));
-
+		rawRubber = items.addMetaItem(new SubItem("rawRubber"));
+		rubber = items.addMetaItem(new SubItem("rubber"));
+		
+		
 		CoreFuelHandler.addFuel(ptCoke, 3200);
+		this.registerOre("fuelCoke", ptCoke);
+		
+		this.registerOre("itemRawRubber", rawRubber);
+		this.registerOre("itemRubber", rubber);
 
-		machines = new MetaTile(Material.iron, "RedGear.LiquidFuels.Machine");
+		machines = new MetaTile(Material.iron, "Machine");
 		machines.setHardness(5.0F).setResistance(10.0F).setStepSound(Block.soundTypeMetal);
 
 		masherBlock = machines.addMetaBlock(new SubTileMachine("Masher", machineTexture, new TileFactoryMasher()));
@@ -152,8 +163,11 @@ public class LiquidFuels extends ModUtils {
 		dieselFluid = FluidUtil.createFluid("Diesel");
 		keroseneFluid = FluidUtil.createFluid("Kerosene");
 		gasolineFluid = FluidUtil.createFluid("Gasoline");
+		napthaFluid = FluidUtil.createFluid("Naptha");
+		propaneFluid = FluidUtil.createFluid("Propane");
+		latexFluid = FluidUtil.createFluid("Latex");
 
-		buckets = new MetaItemBucket("RedGear.LiquidFuels.Buckets");
+		buckets = new MetaItemBucket("Buckets");
 		buckets.addMetaItem(new SubItemBucket("bucketBiomass", biomassFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketMash", mashFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketStillage", stillageFluid));
@@ -164,6 +178,7 @@ public class LiquidFuels extends ModUtils {
 		buckets.addMetaItem(new SubItemBucket("bucketDiesel", dieselFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketKerosene", keroseneFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketGasoline", gasolineFluid));
+		buckets.addMetaItem(new SubItemBucket("bucketLatex", latexFluid));
 		
 		bioReactorMulit = new BlockGeneric(Material.iron, "BioReactorMulti");
 		bioReactorMulit.setHardness(5.0F).setStepSound(Block.soundTypeMetal);
@@ -177,10 +192,12 @@ public class LiquidFuels extends ModUtils {
 		rubberSapling = new BlockRubberSapling("RubberSapling");
 		
 		rubberWood = new BlockRubberLog("RubberWood");
+		rubberWoodDrained = new BlockRubberLog("RubberWoodDrained");
 		
 		rubberLeaves = new BlockRubberLeaves("RubberLeaves");
 		
-		rubberPlanks = new BlockGeneric(Material.wood, "RubberPlanks").setHardness(2.0F).setResistance(5.0F).setStepSound(Block.soundTypeWood);
+		rubberPlanks = new BlockGeneric(Material.wood, "RubberPlanks");
+		rubberPlanks.setHardness(2.0F).setResistance(5.0F).setStepSound(Block.soundTypeWood).setHarvestLevel("axe", 0);
 
 		if (Mods.Geocraft.isIn())
 			MineOilSands.register();
@@ -195,9 +212,9 @@ public class LiquidFuels extends ModUtils {
 	@Override
 	public void Init(FMLInitializationEvent event) {
 		
-		GameRegistry.addShapelessRecipe(new ItemStack(rubberPlanks, 4, 0), rubberWood);
+		GameRegistry.addShapelessRecipe(new ItemStack(rubberPlanks, 4, 0), rubberWoodDrained);
 		
-		this.registerOre("logWood", new ItemStack(rubberWood, 1, 0));
+		this.registerOre("logWood", new ItemStack(rubberWoodDrained, 1, 0));
 		this.registerOre("plankWood", new ItemStack(rubberPlanks, 1, 0));
 
 	}

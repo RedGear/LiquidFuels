@@ -95,8 +95,7 @@ public class TileEntityDryer extends TileEntityTank implements IFacedTile {
 
 	@Override
 	public boolean setDirection(ForgeDirection side) {
-		face = side;
-		return true;
+		return setDirection(side.ordinal());
 	}
 
 	@Override

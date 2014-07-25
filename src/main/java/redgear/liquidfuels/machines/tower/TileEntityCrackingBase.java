@@ -13,7 +13,6 @@ public class TileEntityCrackingBase extends TileEntityElectricFluidMachine {
 
 	final AdvFluidTank steamTank;
 	final AdvFluidTank oilTank;
-	static final int towerHeight = 5;
 
 	static final int oilRate = 42;
 	static final int steamRate = 21;
@@ -21,7 +20,8 @@ public class TileEntityCrackingBase extends TileEntityElectricFluidMachine {
 	final int slotOutput;
 	static final FluidStack[] outputMap = {new FluidStack(LiquidFuels.asphaltFluid, 2),
 			new FluidStack(LiquidFuels.petroleumCokeFluid, 5), new FluidStack(LiquidFuels.dieselFluid, 10),
-			new FluidStack(LiquidFuels.keroseneFluid, 5), new FluidStack(LiquidFuels.gasolineFluid, 20), };
+			new FluidStack(LiquidFuels.keroseneFluid, 5), new FluidStack(LiquidFuels.gasolineFluid, 5), 
+			new FluidStack(LiquidFuels.napthaFluid, 10), new FluidStack(LiquidFuels.propaneFluid, 5)  };
 
 	static final MultiBlockMap multi;
 
@@ -43,8 +43,8 @@ public class TileEntityCrackingBase extends TileEntityElectricFluidMachine {
 	}
 
 	static {
-		multi = new MultiBlockMap(towerHeight);
-		for (int i = 1; i <= towerHeight; i++)
+		multi = new MultiBlockMap(outputMap.length);
+		for (int i = 1; i <= outputMap.length; i++)
 			multi.addLocation(0, i, 0, LiquidFuels.crackingTowerBlock);
 	}
 

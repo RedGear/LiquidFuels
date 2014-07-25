@@ -29,7 +29,6 @@ public class RubberTreeGenerator implements IWorldGenerator {
 	@Override
 	public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator,
 			IChunkProvider chunkProvider) {
-		LiquidFuels.inst.logDebug("Checking for tree gen.");
 		int minX = chunkX * 16;
 		int minZ = chunkZ * 16;
 
@@ -41,9 +40,7 @@ public class RubberTreeGenerator implements IWorldGenerator {
 		int y;
 		int z;
 
-		if (typeList.contains(Type.JUNGLE)) {
-			LiquidFuels.inst.logDebug("It's a Jungle, planting rubber saplings ....");
-
+		if (typeList.contains(Type.JUNGLE))
 			for (int tries = rand.nextInt(3) + 4; tries > 0; tries--) {
 				x = minX + rand.nextInt(16);
 				z = minZ + rand.nextInt(16);
@@ -60,18 +57,14 @@ public class RubberTreeGenerator implements IWorldGenerator {
 					}
 				}
 			}
-		}
 	}
 
 	public boolean growTree(World world, int x, int y, int z, Random rand) {
-		LiquidFuels.inst.logDebug("Growing a tree at: X: ", x, " Y: ", y, " Z: ", z);
 		int treeHeight = rand.nextInt(3) + 5;
 		int worldHeight = world.getHeight();
 
-		if (y < 1 || y + treeHeight + 1 >= worldHeight) {
-			LiquidFuels.inst.logDebug("Tree failed to grow due to: Hitting height limit");
+		if (y < 1 || y + treeHeight + 1 >= worldHeight)
 			return false;
-		}
 
 		Block block = world.getBlock(x, y - 1, z);
 
@@ -96,10 +89,8 @@ public class RubberTreeGenerator implements IWorldGenerator {
 						block = world.getBlock(x, yOffset, z);
 						if (!(block.isLeaves(world, x, yOffset, z) || block.isAir(world, x, yOffset, z)
 								|| block.isReplaceable(world, x, yOffset, z) || block.canBeReplacedByLeaves(world, x,
-										yOffset, z))) {
-							LiquidFuels.inst.logDebug("Tree failed to grow due to: Not enough vertical space");
+								yOffset, z)))
 							return false;
-						}
 					} else
 						for (xOffset = x - radius; xOffset <= x + radius; ++xOffset)
 							for (zOffset = z - radius; zOffset <= z + radius; ++zOffset) {
@@ -107,22 +98,16 @@ public class RubberTreeGenerator implements IWorldGenerator {
 
 								if (!(block.isLeaves(world, xOffset, yOffset, zOffset)
 										|| block.isAir(world, xOffset, yOffset, zOffset) || block
-										.canBeReplacedByLeaves(world, xOffset, yOffset, zOffset))) {
-									LiquidFuels.inst.logDebug("Tree failed to grow due to: Not enough lateral space");
+											.canBeReplacedByLeaves(world, xOffset, yOffset, zOffset)))
 									return false;
-								}
 							}
-				} else {
-					LiquidFuels.inst.logDebug("Tree failed to grow due to: World Height again");
+				} else
 					return false;
-				}
 			}
 
 			block = world.getBlock(x, y - 1, z);
-			if (!block.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, LiquidFuels.rubberSapling)) {
-				LiquidFuels.inst.logDebug("Tree failed to grow due to: Something went weird ....");
+			if (!block.canSustainPlant(world, x, y - 1, z, ForgeDirection.UP, LiquidFuels.rubberSapling))
 				return false; // abort, something went weird
-			}
 			block.onPlantGrow(world, x, y - 1, z, x, y, z);
 
 			for (yOffset = y - 3 + treeHeight; yOffset <= y + treeHeight; ++yOffset) {
@@ -130,20 +115,20 @@ public class RubberTreeGenerator implements IWorldGenerator {
 
 				for (xOffset = x - center; xOffset <= x + center; ++xOffset) {
 					int xPos = xOffset - x, t = xPos >> 31;
-					xPos = xPos + t ^ t;
+				xPos = xPos + t ^ t;
 
-					for (zOffset = z - center; zOffset <= z + center; ++zOffset) {
-						int zPos = zOffset - z;
-						zPos = zPos + (t = zPos >> 31) ^ t;
+				for (zOffset = z - center; zOffset <= z + center; ++zOffset) {
+					int zPos = zOffset - z;
+					zPos = zPos + (t = zPos >> 31) ^ t;
 
-						block = world.getBlock(xOffset, yOffset, zOffset);
+					block = world.getBlock(xOffset, yOffset, zOffset);
 
-						if ((xPos != center | zPos != center || rand.nextInt(2) != 0 && var12 != 0)
-							&& (block == null || block.isLeaves(world, xOffset, yOffset, zOffset)
-							|| block.isAir(world, xOffset, yOffset, zOffset) || block
-							.canBeReplacedByLeaves(world, xOffset, yOffset, zOffset)))
-							setBlock(world, xOffset, yOffset, zOffset, LiquidFuels.rubberLeaves, 0);
-					}
+					if ((xPos != center | zPos != center || rand.nextInt(2) != 0 && var12 != 0)
+								&& (block == null || block.isLeaves(world, xOffset, yOffset, zOffset)
+										|| block.isAir(world, xOffset, yOffset, zOffset) || block
+											.canBeReplacedByLeaves(world, xOffset, yOffset, zOffset)))
+						setBlock(world, xOffset, yOffset, zOffset, LiquidFuels.rubberLeaves, 0);
+				}
 				}
 			}
 
@@ -158,8 +143,6 @@ public class RubberTreeGenerator implements IWorldGenerator {
 			return true;
 
 		}
-
-		LiquidFuels.inst.logDebug("Tree failed to grow due to: Base can't sustain");
 
 		return false;
 	}
