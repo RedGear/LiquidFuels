@@ -6,9 +6,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 import cpw.mods.fml.common.IWorldGenerator;
 
-public class OilSandsGenerator implements IWorldGenerator {
+public class OilShaleGenerator implements IWorldGenerator {
 
-	private final MineOilSands mine = new MineOilSands();
+	private final MineOilShale mine = new MineOilShale();
 
 	@Override
 	public void generate(Random rand, int chunkX, int chunkZ, World world, IChunkProvider chunkGenerator,

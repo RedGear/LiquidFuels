@@ -17,11 +17,11 @@ import cpw.mods.fml.common.Optional.InterfaceList;
 import cpw.mods.fml.common.Optional.Method;
 
 @InterfaceList(value = {@Interface(iface = "redgear.geocraft.api.IMine", modid = "redgear_geocraft") })
-public class MineOilSands implements IMine {
+public class MineOilShale implements IMine {
 	
 	@Method(modid = "redgear_geocraft")
 	public static void register(){
-		MineManager.oreRegistry.registerMine(new MineOilSands());
+		MineManager.oreRegistry.registerMine(new MineOilShale());
 	}
 
 	private static final boolean isGeo() {
@@ -57,7 +57,7 @@ public class MineOilSands implements IMine {
 	public void generate(World world, Random rand, int chunkX, int chunkZ) {
 		generateSphere(
 				new WorldLocation(chunkX * 16 + rand.nextInt(16), rand.nextInt(64) + 8, chunkZ * 16 + rand.nextInt(16),
-						world), new SimpleItem(LiquidFuels.oilSands), new SimpleItem(Blocks.stone), rand,
+						world), new SimpleItem(LiquidFuels.oilShale), new SimpleItem(Blocks.stone), rand,
 				(int) getMineSize());
 	}
 
