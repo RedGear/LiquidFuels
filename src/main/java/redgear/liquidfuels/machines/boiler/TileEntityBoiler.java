@@ -13,8 +13,6 @@ public class TileEntityBoiler extends TileEntityElectricFluidMachine {
 
 	public final AdvFluidTank waterTank;
 	public final AdvFluidTank steamTank;
-	//final int slotWaterFull;
-	//final int slotWaterEmpty;
 	public final int workRate = 10;
 	public final int waterRate = 4; // amount of water needed for each cycle
 	public final int steamRate = 160; // amount of steam made each cycle
@@ -22,9 +20,6 @@ public class TileEntityBoiler extends TileEntityElectricFluidMachine {
 
 	public TileEntityBoiler() {
 		super(8);
-
-		//slotWaterFull = addSlot(new TankSlot(this, 63, 20, true, -1)); //water full
-		//slotWaterEmpty = addSlot(new TankSlot(this, 63, 48, false, 1)); //water empty
 
 		waterTank = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 4);
 		waterTank.addFluidMap(FluidRegistry.WATER, TransferRule.INPUT);
@@ -39,7 +34,7 @@ public class TileEntityBoiler extends TileEntityElectricFluidMachine {
 
 	@Override
 	protected boolean doPreWork() {
-		return /*fillTank(slotWaterFull, slotWaterEmpty, waterTank) ||*/ ejectFluidAllSides(steamTank);
+		return ejectFluidAllSides(steamTank);
 	}
 
 	@Override

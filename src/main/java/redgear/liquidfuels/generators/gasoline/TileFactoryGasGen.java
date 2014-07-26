@@ -1,19 +1,20 @@
-package redgear.liquidfuels.machines.tap;
+package redgear.liquidfuels.generators.gasoline;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
 import redgear.core.tile.ITileFactory;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class TileFactoryTap implements ITileFactory{
+public class TileFactoryGasGen implements ITileFactory{
 	
-	public TileFactoryTap(){
-		GameRegistry.registerTileEntity(TileEntityTap.class, "TileEntityTap");
+	
+	public TileFactoryGasGen() {
+		GameRegistry.registerTileEntity(TileEntityGasGen.class, "TileEntityGasGen");
 	}
 
 	@Override
 	public TileEntity createTile() {
-		return new TileEntityTap();
+		return new TileEntityGasGen();
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import redgear.core.fluids.AdvFluidTank;
-import redgear.core.inventory.TankSlot;
 import redgear.core.inventory.TransferRule;
 import redgear.core.util.SimpleItem;
 import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
@@ -15,12 +14,6 @@ import redgear.liquidfuels.recipes.MasherRecipe;
 public class TileEntityMasher extends TileEntityElectricFluidMachine {
 	final AdvFluidTank waterTank;
 	final AdvFluidTank biomassTank;
-
-	final int slotWaterFull;
-	final int slotWaterEmpty;
-
-	final int slotBiomassEmpty;
-	final int slotBiomassFull;
 
 	FluidStack output = null;
 
@@ -31,10 +24,6 @@ public class TileEntityMasher extends TileEntityElectricFluidMachine {
 		addSlot(62, 21); //masher left
 		addSlot(80, 21); //masher center
 		addSlot(98, 21); //masher right
-		slotWaterFull = addSlot(new TankSlot(this, 34, 21, true, -1)); //water full
-		slotWaterEmpty = addSlot(new TankSlot(this, 34, 49, false, 1)); //water empty
-		slotBiomassEmpty = addSlot(new TankSlot(this, 126, 21, false, -1)); //biomass empty
-		slotBiomassFull = addSlot(new TankSlot(this, 126, 49, true, 1)); //biomass full
 
 		waterTank = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 4).addFluidMap(
 				FluidRegistry.WATER, TransferRule.INPUT);
@@ -49,11 +38,7 @@ public class TileEntityMasher extends TileEntityElectricFluidMachine {
 
 	@Override
 	protected boolean doPreWork() {
-		boolean check = false;
-		check |= fillTank(slotWaterFull, slotWaterEmpty, waterTank);
-		check |= emptyTank(slotBiomassEmpty, slotBiomassFull, biomassTank);
-		check |= ejectFluidAllSides(biomassTank);
-		return check;
+		return ejectFluidAllSides(biomassTank);
 	}
 
 	@Override

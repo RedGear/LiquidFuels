@@ -4,7 +4,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import redgear.core.fluids.AdvFluidTank;
-import redgear.core.inventory.TankSlot;
 import redgear.core.inventory.TransferRule;
 import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
 import redgear.liquidfuels.recipes.FermenterRecipe;
@@ -13,20 +12,11 @@ public class TileEntityFermenter extends TileEntityElectricFluidMachine {
 
 	final AdvFluidTank inputTank;
 	final AdvFluidTank outputTank;
-	final int recipeInputSlot;
-	final int recipeOutputSlot;
-	final int stillageInputSlot;
-	final int stillageOutputSlot;
 
 	FluidStack output;
 
 	public TileEntityFermenter() {
 		super(10);
-
-		recipeInputSlot = addSlot(new TankSlot(this, 50, 21, true, -1)); //recipe input
-		recipeOutputSlot = addSlot(new TankSlot(this, 50, 49, false, 1)); //recipe output
-		stillageInputSlot = addSlot(new TankSlot(this, 104, 21, false, -1)); //stillage input
-		stillageOutputSlot = addSlot(new TankSlot(this, 104, 49, true, 1)); //stillage output
 
 		inputTank = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 4).addFluidMapIds(
 				FermenterRecipe.getFluidIds(), TransferRule.INPUT);
@@ -40,12 +30,7 @@ public class TileEntityFermenter extends TileEntityElectricFluidMachine {
 
 	@Override
 	protected boolean doPreWork() {
-		boolean check = false;
-		check |= fillTank(recipeInputSlot, recipeOutputSlot, 0);
-		check |= emptyTank(stillageInputSlot, stillageOutputSlot, 1);
-		check |= ejectAllFluids();
-
-		return check;
+		return ejectAllFluids();
 	}
 
 	@Override

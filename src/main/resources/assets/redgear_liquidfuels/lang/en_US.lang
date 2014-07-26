@@ -1,5 +1,7 @@
 item.Items.masherBlades.name=Masher Blades
 item.Items.ptCoke.name=Petroleum Coke
+item.Items.rawNaturalRubber.name=Raw Rubber
+item.Items.naturalRubber.name=Rubber
 	
 tile.Machine.Masher.name=Masher
 tile.Machine.BioReactor.name=BioReactor
@@ -10,10 +12,11 @@ tile.Machine.WaterGen.name=WaterGen
 tile.Machine.CrackingBase.name=Cracking Tower Base
 tile.Machine.CrackingTower.name=Cracking Tower
 tile.Machine.Dryer.name=Dryer
+tile.Machine.GasGen.name=Gasoline Generator
 	
 tile.BioReactorMulti.name=Bio Reactor Tank
 tile.Asphalt.name=Asphalt
-tile.OilSands.name=Oil Sands
+tile.OilShale.name=Oil Shale
 
 tile.RubberWood.name=Rubber Wood
 tile.RubberSapling.name=Rubber Sapling
@@ -44,6 +47,9 @@ fluid.Diesel=Diesel
 fluid.Kerosene=Kerosene
 fluid.Gasoline=Gasoline
 fluid.Latex=Liquid Latex
+fluid.Ethylene=Ethylene
+fluid.Isoprene=Isoprene
+fluid.Propane=Propane
 
 gui.bioreactor.title=Bio Reactor
 gui.boiler.title=Electric Boiler

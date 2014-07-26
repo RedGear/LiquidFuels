@@ -21,11 +21,11 @@ import redgear.core.util.SimpleItem;
 import redgear.liquidfuels.block.BlockRubberLeaves;
 import redgear.liquidfuels.block.BlockRubberLog;
 import redgear.liquidfuels.block.BlockRubberSapling;
+import redgear.liquidfuels.generators.gasoline.TileFactoryGasGen;
 import redgear.liquidfuels.machines.bioreactor.TileFactoryBioReactor;
 import redgear.liquidfuels.machines.boiler.TileFactoryBoiler;
 import redgear.liquidfuels.machines.dryer.TileFactoryDryer;
 import redgear.liquidfuels.machines.fermenter.TileFactoryFermenter;
-import redgear.liquidfuels.machines.fluidboiler.TileFactoryFluidBoiler;
 import redgear.liquidfuels.machines.masher.TileFactoryMasher;
 import redgear.liquidfuels.machines.still.TileFactoryStill;
 import redgear.liquidfuels.machines.tower.TileFactoryCrackingBase;
@@ -42,8 +42,8 @@ import redgear.liquidfuels.plugins.ThermalExpansionPlugin;
 import redgear.liquidfuels.recipes.MessageHandlerBoiler;
 import redgear.liquidfuels.recipes.MessageHandlerFermenter;
 import redgear.liquidfuels.recipes.MessageHandlerMasher;
-import redgear.liquidfuels.world.MineOilSands;
-import redgear.liquidfuels.world.OilSandsGenerator;
+import redgear.liquidfuels.world.MineOilShale;
+import redgear.liquidfuels.world.OilShaleGenerator;
 import redgear.liquidfuels.world.RubberTreeGenerator;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -63,23 +63,23 @@ public class LiquidFuels extends ModUtils {
 	public static MetaTile machines;
 	public static MetaItem<SubItem> items;
 	public static MetaItemBucket buckets;
-	public static Block oilSands;
+	public static Block oilShale;
 
 	public static Block bioReactorMulit;
 	public static Block asphaltBlock;
-	
+
 	public static BlockRubberSapling rubberSapling;
 	public static Block rubberWood;
 	public static Block rubberWoodDrained;
 	public static Block rubberLeaves;
 	public static Block rubberPlanks;
-	
+
 	public static SimpleItem asphaltBucket;
 
 	public static SimpleItem masherBlades;
 	public static SimpleItem ptCoke;
-	public static SimpleItem rawRubber;
-	public static SimpleItem rubber;
+	public static SimpleItem rawNaturalRubber;
+	public static SimpleItem naturalRubber;
 
 	public static SimpleItem masherBlock;
 	public static SimpleItem bioReactorBlock;
@@ -90,7 +90,7 @@ public class LiquidFuels extends ModUtils {
 	public static SimpleItem crackingBaseBlock;
 	public static SimpleItem crackingTowerBlock;
 	public static SimpleItem dryerBlock;
-	public static SimpleItem fluidBoilerBlock;
+	public static SimpleItem gasGen;
 
 	public static Fluid biomassFluid;
 	public static Fluid mashFluid;
@@ -103,7 +103,8 @@ public class LiquidFuels extends ModUtils {
 	public static Fluid dieselFluid;
 	public static Fluid keroseneFluid;
 	public static Fluid gasolineFluid;
-	public static Fluid napthaFluid;
+	public static Fluid ethyleneFluid;
+	public static Fluid isopreneFluid;
 	public static Fluid propaneFluid;
 	public static Fluid latexFluid;
 
@@ -120,37 +121,42 @@ public class LiquidFuels extends ModUtils {
 		addPlugin(new IC2Plugin());
 		addPlugin(new BuildcraftPlugin());
 		addPlugin(new FluidBoilerPlugin());
-		
+
 		imcHandler.addHandler("MasherRecipe", new MessageHandlerMasher());
 		imcHandler.addHandler("FermenterRecipe", new MessageHandlerFermenter());
 		imcHandler.addHandler("BoilerFuelRecipe", new MessageHandlerBoiler());
-		
+
 		items = new MetaItem<SubItem>("Items");
 		masherBlades = items.addMetaItem(new SubItem("masherBlades"));
 		ptCoke = items.addMetaItem(new SubItem("ptCoke"));
-		rawRubber = items.addMetaItem(new SubItem("rawRubber"));
-		rubber = items.addMetaItem(new SubItem("rubber"));
-		
-		
+		rawNaturalRubber = items.addMetaItem(new SubItem("rawNaturalRubber"));
+		naturalRubber = items.addMetaItem(new SubItem("naturalRubber"));
+
 		CoreFuelHandler.addFuel(ptCoke, 3200);
 		this.registerOre("fuelCoke", ptCoke);
-		
-		this.registerOre("itemRawRubber", rawRubber);
-		this.registerOre("itemRubber", rubber);
+
+		this.addSmelting(rawNaturalRubber, naturalRubber);
+
+		this.registerOre("itemRawRubber", rawNaturalRubber);
+		this.registerOre("itemRubber", naturalRubber);
 
 		machines = new MetaTile(Material.iron, "Machine");
 		machines.setHardness(5.0F).setResistance(10.0F).setStepSound(Block.soundTypeMetal);
 
 		masherBlock = machines.addMetaBlock(new SubTileMachine("Masher", machineTexture, new TileFactoryMasher()));
-		bioReactorBlock = machines.addMetaBlock(new SubTileMachine("BioReactor", machineTexture, new TileFactoryBioReactor()));
-		fermenterBlock = machines.addMetaBlock(new SubTileMachine("Fermenter", machineTexture, new TileFactoryFermenter()));
+		bioReactorBlock = machines.addMetaBlock(new SubTileMachine("BioReactor", machineTexture,
+				new TileFactoryBioReactor()));
+		fermenterBlock = machines.addMetaBlock(new SubTileMachine("Fermenter", machineTexture,
+				new TileFactoryFermenter()));
 		boilerBlock = machines.addMetaBlock(new SubTileMachine("Boiler", machineTexture, new TileFactoryBoiler()));
 		stillBlock = machines.addMetaBlock(new SubTileMachine("Still", machineTexture, new TileFactoryStill()));
-		waterGenBlock = machines.addMetaBlock(new SubTileMachine("WaterGen", machineTexture, new TileFactoryWaterGen()));
-		crackingBaseBlock = machines.addMetaBlock(new SubTileMachine("CrackingBase", machineTexture,new TileFactoryCrackingBase()));
+		waterGenBlock = machines
+				.addMetaBlock(new SubTileMachine("WaterGen", machineTexture, new TileFactoryWaterGen()));
+		crackingBaseBlock = machines.addMetaBlock(new SubTileMachine("CrackingBase", machineTexture,
+				new TileFactoryCrackingBase()));
 		crackingTowerBlock = machines.addMetaBlock(new SubTile("CrackingTower", new TileFactoryCrackingTower()));
 		dryerBlock = machines.addMetaBlock(new SubTileMachine("Dryer", machineTexture, new TileFactoryDryer()));
-		fluidBoilerBlock = machines.addMetaBlock(new SubTileMachine("Boiler", machineTexture, new TileFactoryFluidBoiler()));
+		gasGen = machines.addMetaBlock(new SubTileMachine("GasGen", machineTexture, new TileFactoryGasGen()));
 
 		biomassFluid = FluidUtil.createFluid("biomass");
 		mashFluid = FluidUtil.createFluid("Mash");
@@ -163,8 +169,9 @@ public class LiquidFuels extends ModUtils {
 		dieselFluid = FluidUtil.createFluid("Diesel");
 		keroseneFluid = FluidUtil.createFluid("Kerosene");
 		gasolineFluid = FluidUtil.createFluid("Gasoline");
-		napthaFluid = FluidUtil.createFluid("Naptha");
-		propaneFluid = FluidUtil.createFluid("Propane");
+		ethyleneFluid = FluidUtil.createFluid("Ethylene").setGaseous(true);
+		isopreneFluid = FluidUtil.createFluid("Isoprene").setGaseous(true);
+		propaneFluid = FluidUtil.createFluid("Propane").setGaseous(true);
 		latexFluid = FluidUtil.createFluid("Latex");
 
 		buckets = new MetaItemBucket("Buckets");
@@ -179,41 +186,41 @@ public class LiquidFuels extends ModUtils {
 		buckets.addMetaItem(new SubItemBucket("bucketKerosene", keroseneFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketGasoline", gasolineFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketLatex", latexFluid));
-		
+
 		bioReactorMulit = new BlockGeneric(Material.iron, "BioReactorMulti");
 		bioReactorMulit.setHardness(5.0F).setStepSound(Block.soundTypeMetal);
-		
-		asphaltBlock = new BlockGeneric(Material.rock,  "Asphalt");
+
+		asphaltBlock = new BlockGeneric(Material.rock, "Asphalt");
 		asphaltBlock.setHardness(5f).setStepSound(Block.soundTypeStone).setHarvestLevel("pickaxe", 1);
 
-		oilSands = new BlockGeneric(Material.rock, "OilSands");
-		oilSands.setHardness(3f).setStepSound(Block.soundTypeStone).setHarvestLevel("pickaxe", 1);
-		
+		oilShale = new BlockGeneric(Material.rock, "OilShale");
+		oilShale.setHardness(3f).setStepSound(Block.soundTypeStone).setHarvestLevel("pickaxe", 1);
+
 		rubberSapling = new BlockRubberSapling("RubberSapling");
-		
+
 		rubberWood = new BlockRubberLog("RubberWood");
 		rubberWoodDrained = new BlockRubberLog("RubberWoodDrained");
-		
+
 		rubberLeaves = new BlockRubberLeaves("RubberLeaves");
-		
+
 		rubberPlanks = new BlockGeneric(Material.wood, "RubberPlanks");
 		rubberPlanks.setHardness(2.0F).setResistance(5.0F).setStepSound(Block.soundTypeWood).setHarvestLevel("axe", 0);
 
 		if (Mods.Geocraft.isIn())
-			MineOilSands.register();
+			MineOilShale.register();
 		else
-			GameRegistry.registerWorldGenerator(new OilSandsGenerator(), 0);
-		
+			GameRegistry.registerWorldGenerator(new OilShaleGenerator(), 0);
+
 		this.logDebug("Found Geo: ", Mods.Geocraft.isIn());
-		
+
 		GameRegistry.registerWorldGenerator(new RubberTreeGenerator(), 10);
 	}
 
 	@Override
 	public void Init(FMLInitializationEvent event) {
-		
+
 		GameRegistry.addShapelessRecipe(new ItemStack(rubberPlanks, 4, 0), rubberWoodDrained);
-		
+
 		this.registerOre("logWood", new ItemStack(rubberWoodDrained, 1, 0));
 		this.registerOre("plankWood", new ItemStack(rubberPlanks, 1, 0));
 
@@ -223,9 +230,9 @@ public class LiquidFuels extends ModUtils {
 	public void PostInit(FMLPostInitializationEvent event) {
 
 	}
-	
+
 	@EventHandler
-	public void IMC(IMCEvent event){
+	public void IMC(IMCEvent event) {
 		imcHandler.handle(event);
 	}
 
