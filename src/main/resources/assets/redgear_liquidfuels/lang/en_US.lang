@@ -13,6 +13,7 @@ tile.Machine.CrackingBase.name=Cracking Tower Base
 tile.Machine.CrackingTower.name=Cracking Tower
 tile.Machine.Dryer.name=Dryer
 tile.Machine.GasGen.name=Gasoline Generator
+tile.Machine.TreeTap.name=Tree Tapper
 	
 tile.BioReactorMulti.name=Bio Reactor Tank
 tile.Asphalt.name=Asphalt

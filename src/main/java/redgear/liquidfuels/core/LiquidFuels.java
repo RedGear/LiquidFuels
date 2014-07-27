@@ -28,6 +28,7 @@ import redgear.liquidfuels.machines.dryer.TileFactoryDryer;
 import redgear.liquidfuels.machines.fermenter.TileFactoryFermenter;
 import redgear.liquidfuels.machines.masher.TileFactoryMasher;
 import redgear.liquidfuels.machines.still.TileFactoryStill;
+import redgear.liquidfuels.machines.tap.TileFactoryTap;
 import redgear.liquidfuels.machines.tower.TileFactoryCrackingBase;
 import redgear.liquidfuels.machines.tower.TileFactoryCrackingTower;
 import redgear.liquidfuels.machines.watergen.TileFactoryWaterGen;
@@ -91,6 +92,7 @@ public class LiquidFuels extends ModUtils {
 	public static SimpleItem crackingTowerBlock;
 	public static SimpleItem dryerBlock;
 	public static SimpleItem gasGen;
+	public static SimpleItem treeTap;
 
 	public static Fluid biomassFluid;
 	public static Fluid mashFluid;
@@ -157,6 +159,7 @@ public class LiquidFuels extends ModUtils {
 		crackingTowerBlock = machines.addMetaBlock(new SubTile("CrackingTower", new TileFactoryCrackingTower()));
 		dryerBlock = machines.addMetaBlock(new SubTileMachine("Dryer", machineTexture, new TileFactoryDryer()));
 		gasGen = machines.addMetaBlock(new SubTileMachine("GasGen", machineTexture, new TileFactoryGasGen()));
+		treeTap = machines.addMetaBlock(new SubTileMachine("TreeTap", machineTexture, new TileFactoryTap()));
 
 		biomassFluid = FluidUtil.createFluid("biomass");
 		mashFluid = FluidUtil.createFluid("Mash");
@@ -169,9 +172,9 @@ public class LiquidFuels extends ModUtils {
 		dieselFluid = FluidUtil.createFluid("Diesel");
 		keroseneFluid = FluidUtil.createFluid("Kerosene");
 		gasolineFluid = FluidUtil.createFluid("Gasoline");
-		ethyleneFluid = FluidUtil.createFluid("Ethylene").setGaseous(true);
-		isopreneFluid = FluidUtil.createFluid("Isoprene").setGaseous(true);
-		propaneFluid = FluidUtil.createFluid("Propane").setGaseous(true);
+		ethyleneFluid = FluidUtil.createFluid("Ethylene").setGaseous(true).setDensity(10);
+		isopreneFluid = FluidUtil.createFluid("Isoprene").setGaseous(true).setDensity(10);
+		propaneFluid = FluidUtil.createFluid("Propane").setGaseous(true).setDensity(10);
 		latexFluid = FluidUtil.createFluid("Latex");
 
 		buckets = new MetaItemBucket("Buckets");

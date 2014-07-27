@@ -67,7 +67,7 @@ public class TileEntityCrackingBase extends TileEntityTank implements IFacedTile
 				if (index < 0)
 					return 0;
 
-				WorldLocation loc = new WorldLocation(this);
+				WorldLocation loc = getLocation();
 				for (int i = 1; i <= tower; i++) {
 					TileEntityCrackingTower tile = (TileEntityCrackingTower) loc.translate(ForgeDirection.UP, i)
 							.getTile();
@@ -97,7 +97,7 @@ public class TileEntityCrackingBase extends TileEntityTank implements IFacedTile
 		if (index < 0)
 			return false;
 
-		WorldLocation loc = new WorldLocation(this);
+		WorldLocation loc = getLocation();
 		for (int i = 1; i <= tower; i++) {
 			TileEntityCrackingTower tile = (TileEntityCrackingTower) loc.translate(ForgeDirection.UP, i).getTile();
 
@@ -116,7 +116,7 @@ public class TileEntityCrackingBase extends TileEntityTank implements IFacedTile
 		int count = 0;
 
 		int index = getIndex();
-		WorldLocation loc = new WorldLocation(this);
+		WorldLocation loc = getLocation();
 
 		for (int i = 1; i < outputMap.size() - index; i++)
 			if (loc.translate(ForgeDirection.UP, i).check(TileEntityCrackingTower.class))
