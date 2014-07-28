@@ -27,6 +27,7 @@ import redgear.liquidfuels.machines.boiler.TileFactoryBoiler;
 import redgear.liquidfuels.machines.dryer.TileFactoryDryer;
 import redgear.liquidfuels.machines.fermenter.TileFactoryFermenter;
 import redgear.liquidfuels.machines.masher.TileFactoryMasher;
+import redgear.liquidfuels.machines.mixer.TileFactoryMixer;
 import redgear.liquidfuels.machines.still.TileFactoryStill;
 import redgear.liquidfuels.machines.tap.TileFactoryTap;
 import redgear.liquidfuels.machines.tower.TileFactoryCrackingBase;
@@ -93,6 +94,7 @@ public class LiquidFuels extends ModUtils {
 	public static SimpleItem dryerBlock;
 	public static SimpleItem gasGen;
 	public static SimpleItem treeTap;
+	public static SimpleItem mixer;
 
 	public static Fluid biomassFluid;
 	public static Fluid mashFluid;
@@ -109,6 +111,8 @@ public class LiquidFuels extends ModUtils {
 	public static Fluid isopreneFluid;
 	public static Fluid propaneFluid;
 	public static Fluid latexFluid;
+	public static Fluid plasticFluid;
+	public static Fluid rubberFluid;
 
 	private static final String machineTexture = "Machine";
 	private static final IMCEventHandler imcHandler = new IMCEventHandler();
@@ -160,6 +164,7 @@ public class LiquidFuels extends ModUtils {
 		dryerBlock = machines.addMetaBlock(new SubTileMachine("Dryer", machineTexture, new TileFactoryDryer()));
 		gasGen = machines.addMetaBlock(new SubTileMachine("GasGen", machineTexture, new TileFactoryGasGen()));
 		treeTap = machines.addMetaBlock(new SubTileMachine("TreeTap", machineTexture, new TileFactoryTap()));
+		mixer = machines.addMetaBlock(new SubTileMachine("Mixer", machineTexture, new TileFactoryMixer()));
 
 		biomassFluid = FluidUtil.createFluid("biomass");
 		mashFluid = FluidUtil.createFluid("Mash");
@@ -176,6 +181,8 @@ public class LiquidFuels extends ModUtils {
 		isopreneFluid = FluidUtil.createFluid("Isoprene").setGaseous(true).setDensity(10);
 		propaneFluid = FluidUtil.createFluid("Propane").setGaseous(true).setDensity(10);
 		latexFluid = FluidUtil.createFluid("Latex");
+		plasticFluid = FluidUtil.createFluid("Plastic").setTemperature(600);
+		rubberFluid = FluidUtil.createFluid("Rubber").setTemperature(600);
 
 		buckets = new MetaItemBucket("Buckets");
 		buckets.addMetaItem(new SubItemBucket("bucketBiomass", biomassFluid));
@@ -188,7 +195,12 @@ public class LiquidFuels extends ModUtils {
 		buckets.addMetaItem(new SubItemBucket("bucketDiesel", dieselFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketKerosene", keroseneFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketGasoline", gasolineFluid));
+		buckets.addMetaItem(new SubItemBucket("bucektEthylene", ethyleneFluid));
+		buckets.addMetaItem(new SubItemBucket("bucektIsoprene", isopreneFluid));
+		buckets.addMetaItem(new SubItemBucket("bucektPropane", propaneFluid));
 		buckets.addMetaItem(new SubItemBucket("bucketLatex", latexFluid));
+		buckets.addMetaItem(new SubItemBucket("bucektPlastic", plasticFluid));
+		buckets.addMetaItem(new SubItemBucket("bucektRubber", rubberFluid));
 
 		bioReactorMulit = new BlockGeneric(Material.iron, "BioReactorMulti");
 		bioReactorMulit.setHardness(5.0F).setStepSound(Block.soundTypeMetal);
