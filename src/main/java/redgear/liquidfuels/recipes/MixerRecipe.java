@@ -3,6 +3,7 @@ package redgear.liquidfuels.recipes;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
 import redgear.liquidfuels.core.LiquidFuels;
 
@@ -13,11 +14,17 @@ public class MixerRecipe {
 	public final FluidStack firstInput, secondInput, output;
 
 	static {
-		addRecipe(new FluidStack(LiquidFuels.ethyleneFluid, 100), new FluidStack(LiquidFuels.propaneFluid, 50),
-				new FluidStack(LiquidFuels.plasticFluid, 100));
+		
+		FluidStack whitePlastic = new FluidStack(LiquidFuels.plasticFluid, 100);
+		whitePlastic.tag = new NBTTagCompound();
+		whitePlastic.tag.setInteger("color", 0xF0F0F0);
+		
+		addRecipe(new FluidStack(LiquidFuels.ethyleneFluid, 100), new FluidStack(LiquidFuels.propaneFluid, 50), whitePlastic);
 		
 		addRecipe(new FluidStack(LiquidFuels.isopreneFluid, 100), new FluidStack(LiquidFuels.propaneFluid, 50),
 				new FluidStack(LiquidFuels.rubberFluid, 100));
+		
+		
 	}
 
 	private MixerRecipe(FluidStack firstInput, FluidStack secondInput, FluidStack output) {

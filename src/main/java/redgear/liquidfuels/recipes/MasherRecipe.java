@@ -1,24 +1,25 @@
 package redgear.liquidfuels.recipes;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import redgear.core.api.item.ISimpleItem;
 import redgear.core.util.SimpleItem;
 
 public class MasherRecipe {
 
-	private static Set<MasherRecipe> recipes = new HashSet<MasherRecipe>();
+	private static List<MasherRecipe> recipes = new ArrayList<MasherRecipe>();
 
 	public final int power;
 	public final int water;
 	public final int work;
-	public final SimpleItem item;
+	public final ISimpleItem item;
 	public final FluidStack output;
 
-	public MasherRecipe(SimpleItem item, int water, int power, int work, FluidStack output) {
+	public MasherRecipe(ISimpleItem item, int water, int power, int work, FluidStack output) {
 		this.item = item;
 		this.water = water;
 		this.power = power;
@@ -47,7 +48,7 @@ public class MasherRecipe {
 		addMasherRecipe(new SimpleItem(item), water, power, work, new FluidStack(output, amount));
 	}
 
-	public static void addMasherRecipe(SimpleItem item, int water, int power, int work, Fluid output, int amount) {
+	public static void addMasherRecipe(ISimpleItem item, int water, int power, int work, Fluid output, int amount) {
 		 addMasherRecipe(item, water, power, work, new FluidStack(output, amount));
 	}
 
@@ -55,15 +56,15 @@ public class MasherRecipe {
 		 addMasherRecipe(new SimpleItem(item), water, power, work, output);
 	}
 
-	public static void addMasherRecipe(SimpleItem item, int water, int power, int work, FluidStack output) {
+	public static void addMasherRecipe(ISimpleItem item, int water, int power, int work, FluidStack output) {
 		if (item != null && water > 0 && work > 0 && output != null && output.amount > 0)
 			 addMasherRecipe(new MasherRecipe(item, water, power, work, output));
 
 	}
 
-	public static MasherRecipe getMasherRecipe(SimpleItem input) {
+	public static MasherRecipe getMasherRecipe(ISimpleItem input) {
 		for (MasherRecipe entry : recipes)
-			if (entry.item.equals(input))
+			if (entry.item.isItemEqual(input, false))
 				return entry;
 		return null;
 	}

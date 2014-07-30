@@ -3,7 +3,7 @@ item.Items.ptCoke.name=Petroleum Coke
 item.Items.rawNaturalRubber.name=Raw Rubber
 item.Items.naturalRubber.name=Rubber
 	
-tile.Machine.Masher.name=Masher
+tile.Machine.Masher.name=Blender
 tile.Machine.BioReactor.name=BioReactor
 tile.Machine.Fermenter.name=Fermenter
 tile.Machine.Boiler.name=Boiler
@@ -14,6 +14,7 @@ tile.Machine.CrackingTower.name=Cracking Tower
 tile.Machine.Dryer.name=Dryer
 tile.Machine.GasGen.name=Gasoline Generator
 tile.Machine.TreeTap.name=Tree Tapper
+tile.Machine.Mixer.name=Mixer
 	
 tile.BioReactorMulti.name=Bio Reactor Tank
 tile.Asphalt.name=Asphalt
@@ -35,6 +36,9 @@ item.Buckets.bucketDiesel.name=Diesel Bucket
 item.Buckets.bucketKerosene.name=Kerosene Bucket
 item.Buckets.bucketGasoline.name=Gasoline Bucket
 item.Buckets.bucketLatex.name=Liquid Latex Bucket
+item.Buckets.bucketEthylene=Ethylene Bucket
+item.Buckets.bucketIsoprene=Isoprene Bucket
+item.Buckets.bucketPropane=Propane Bucket
 	
 fluid.biomass=Biomass
 fluid.Mash=Mash
@@ -51,6 +55,10 @@ fluid.Latex=Liquid Latex
 fluid.Ethylene=Ethylene
 fluid.Isoprene=Isoprene
 fluid.Propane=Propane
+fluid.Plastic=Molten # Plastic
+fluid.Dye=Liquid # Dye
+
+
 
 gui.bioreactor.title=Bio Reactor
 gui.boiler.title=Electric Boiler
@@ -58,6 +66,23 @@ gui.cracking.base.title=Cracking Tower
 gui.cracking.tower.title=Cracking Tower
 gui.dryer.title=Dryer
 gui.fermenter.title=Fermenter
-gui.masher.title=Fermenter
+gui.masher.title=Blender
 gui.still.title=Still
 gui.watergen.title=Water Generator
+
+tooltip.liquidfuels.color.1e1b1b=Black
+tooltip.liquidfuels.color.b3312c=Red
+tooltip.liquidfuels.color.3b511a=Green
+tooltip.liquidfuels.color.51301a=Brown
+tooltip.liquidfuels.color.253192=Blue
+tooltip.liquidfuels.color.7b2fbe=Purple
+tooltip.liquidfuels.color.287697=Cyan
+tooltip.liquidfuels.color.ababab=Light Gray
+tooltip.liquidfuels.color.434343=Gray
+tooltip.liquidfuels.color.d88198=Pink
+tooltip.liquidfuels.color.41cd34=Lime
+tooltip.liquidfuels.color.decf2a=Yellow
+tooltip.liquidfuels.color.6689d3=Light Blue
+tooltip.liquidfuels.color.c354cd=Magenta
+tooltip.liquidfuels.color.eb8844=Orange
+tooltip.liquidfuels.color.f0f0f0=White
