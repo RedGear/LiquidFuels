@@ -2,8 +2,11 @@ package redgear.liquidfuels.core;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import redgear.core.api.item.ISimpleItem;
 import redgear.core.block.BlockGeneric;
 import redgear.core.block.MetaTile;
 import redgear.core.block.SubTile;
@@ -17,7 +20,6 @@ import redgear.core.item.SubItemBucket;
 import redgear.core.mod.ModUtils;
 import redgear.core.mod.Mods;
 import redgear.core.util.CoreFuelHandler;
-import redgear.core.util.SimpleItem;
 import redgear.liquidfuels.block.BlockRubberLeaves;
 import redgear.liquidfuels.block.BlockRubberLog;
 import redgear.liquidfuels.block.BlockRubberSapling;
@@ -30,6 +32,7 @@ import redgear.liquidfuels.machines.dryer.TileFactoryDryer;
 import redgear.liquidfuels.machines.fermenter.TileFactoryFermenter;
 import redgear.liquidfuels.machines.masher.TileFactoryMasher;
 import redgear.liquidfuels.machines.mixer.TileFactoryMixer;
+import redgear.liquidfuels.machines.molder.TileFactoryMolder;
 import redgear.liquidfuels.machines.still.TileFactoryStill;
 import redgear.liquidfuels.machines.tap.TileFactoryTap;
 import redgear.liquidfuels.machines.tower.TileFactoryCrackingBase;
@@ -79,25 +82,30 @@ public class LiquidFuels extends ModUtils {
 	public static Block rubberLeaves;
 	public static Block rubberPlanks;
 
-	public static SimpleItem asphaltBucket;
+	public static ISimpleItem asphaltBucket;
 
-	public static SimpleItem masherBlades;
-	public static SimpleItem ptCoke;
-	public static SimpleItem rawNaturalRubber;
-	public static SimpleItem naturalRubber;
+	public static ISimpleItem masherBlades;
+	public static ISimpleItem ptCoke;
+	public static ISimpleItem rawNaturalRubber;
+	public static ISimpleItem naturalRubber;
+	public static ISimpleItem rawSyntheticRubber;
+	public static ISimpleItem sytheticRubber;
+	public static ISimpleItem rubberGear;
+	public static ISimpleItem plasticGear;
 
-	public static SimpleItem masherBlock;
-	public static SimpleItem bioReactorBlock;
-	public static SimpleItem fermenterBlock;
-	public static SimpleItem boilerBlock;
-	public static SimpleItem stillBlock;
-	public static SimpleItem waterGenBlock;
-	public static SimpleItem crackingBaseBlock;
-	public static SimpleItem crackingTowerBlock;
-	public static SimpleItem dryerBlock;
-	public static SimpleItem gasGen;
-	public static SimpleItem treeTap;
-	public static SimpleItem mixer;
+	public static ISimpleItem masherBlock;
+	public static ISimpleItem bioReactorBlock;
+	public static ISimpleItem fermenterBlock;
+	public static ISimpleItem boilerBlock;
+	public static ISimpleItem stillBlock;
+	public static ISimpleItem waterGenBlock;
+	public static ISimpleItem crackingBaseBlock;
+	public static ISimpleItem crackingTowerBlock;
+	public static ISimpleItem dryerBlock;
+	public static ISimpleItem gasGen;
+	public static ISimpleItem treeTap;
+	public static ISimpleItem mixer;
+	public static ISimpleItem molder;
 
 	public static Fluid biomassFluid;
 	public static Fluid mashFluid;
@@ -141,14 +149,24 @@ public class LiquidFuels extends ModUtils {
 		ptCoke = items.addMetaItem(new SubItem("ptCoke"));
 		rawNaturalRubber = items.addMetaItem(new SubItem("rawNaturalRubber"));
 		naturalRubber = items.addMetaItem(new SubItem("naturalRubber"));
+		rawSyntheticRubber = items.addMetaItem(new SubItem("rawSyntheticRubber"));
+		sytheticRubber = items.addMetaItem(new SubItem("sytheticRubber"));
+		rubberGear = items.addMetaItem(new SubItem("rubberGear"));
+		plasticGear = items.addMetaItem(new SubItem("plasticGear"));
 
 		CoreFuelHandler.addFuel(ptCoke, 3200);
 		this.registerOre("fuelCoke", ptCoke);
 
 		this.addSmelting(rawNaturalRubber, naturalRubber);
+		this.addSmelting(rawSyntheticRubber, sytheticRubber);
 
 		this.registerOre("itemRawRubber", rawNaturalRubber);
 		this.registerOre("itemRubber", naturalRubber);
+		this.registerOre("itemRawRubber", rawSyntheticRubber);
+		this.registerOre("itemRubber", sytheticRubber);
+		
+		
+		GameRegistry.addRecipe(new ShapedOreRecipe(rubberGear.getStack(), " R ", "RIR", " R ", 'R', "itemRubber", 'I', Items.iron_ingot));
 
 		machines = new MetaTile(Material.iron, "Machine");
 		machines.setHardness(5.0F).setResistance(10.0F).setStepSound(Block.soundTypeMetal);
@@ -169,6 +187,7 @@ public class LiquidFuels extends ModUtils {
 		gasGen = machines.addMetaBlock(new SubTileMachine("GasGen", machineTexture, new TileFactoryGasGen()));
 		treeTap = machines.addMetaBlock(new SubTileMachine("TreeTap", machineTexture, new TileFactoryTap()));
 		mixer = machines.addMetaBlock(new SubTileMachine("Mixer", machineTexture, new TileFactoryMixer()));
+		molder = machines.addMetaBlock(new SubTileMachine("Molder", machineTexture, new TileFactoryMolder()));
 
 		biomassFluid = FluidUtil.createFluid("biomass");
 		mashFluid = FluidUtil.createFluid("Mash");

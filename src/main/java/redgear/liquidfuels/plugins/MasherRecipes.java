@@ -15,6 +15,7 @@ import redgear.core.util.SimpleItem;
 import redgear.core.util.SimpleOre;
 import redgear.liquidfuels.core.LiquidFuels;
 import redgear.liquidfuels.recipes.MixerRecipe;
+import redgear.liquidfuels.recipes.MolderRecipe;
 import cpw.mods.fml.common.LoaderState.ModState;
 
 public class MasherRecipes implements IPlugin {
@@ -76,6 +77,10 @@ public class MasherRecipes implements IPlugin {
 
 		for (int i = 0; i < 16; i++)
 			addDye("dye" + dyes[i], ItemDye.field_150922_c[i]);
+		
+		
+		
+		MolderRecipe.addRecipe(LiquidFuels.rubberGear, new FluidStack(LiquidFuels.plasticFluid, 1000), LiquidFuels.plasticGear.getStack());
 	}
 
 	@Override

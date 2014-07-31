@@ -30,8 +30,8 @@ public class TileEntityDryer extends TileEntityTank implements IFacedTile {
 		addSlot(133, 49); //dryer bottom right
 		
 		for(InvSlot slot : this.getSlots()){
-			slot.setPlayerPressure(true);
-			slot.setPressure(TransferRule.OUTPUT);
+			slot.setMachineRule(TransferRule.OUTPUT);
+			slot.setPlayerRule(TransferRule.OUTPUT);
 		}
 
 		tank = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 4);

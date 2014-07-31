@@ -2,13 +2,20 @@ package redgear.liquidfuels.machines.molder;
 
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
+import redgear.core.network.CoreGuiHandler;
 import redgear.core.tile.ITileFactory;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class TileFactoryMolder implements ITileFactory {
+	static int guiId = -1;
 
 	public TileFactoryMolder() {
-		GameRegistry.registerTileEntity(TileEntityMolder.class, "TileEntityMolder");
+		if (guiId == -1) {
+			guiId = CoreGuiHandler.addGuiMap(this);
+			GameRegistry.registerTileEntity(TileEntityMolder.class, "TileEntityMolder");
+		}
 	}
 
 	@Override
@@ -18,21 +25,28 @@ public class TileFactoryMolder implements ITileFactory {
 
 	@Override
 	public boolean hasGui() {
-		return false;
+		return true;
 	}
 
 	@Override
 	public int guiId() {
-		return 0;
+		return guiId;
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public Object createGui(InventoryPlayer inventoryPlayer, TileEntity tile) {
-		return null;
+		if (tile instanceof TileEntityMolder)
+			return new GuiMolder(new ContainerMolder(inventoryPlayer, (TileEntityMolder) tile));
+		else
+			return null;
 	}
 
 	@Override
 	public Object createContainer(InventoryPlayer inventoryPlayer, TileEntity tile) {
-		return null;
+		if (tile instanceof TileEntityMolder)
+			return new ContainerMolder(inventoryPlayer, (TileEntityMolder) tile);
+		else
+			return null;
 	}
 }
