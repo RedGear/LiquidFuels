@@ -2,6 +2,10 @@ item.Items.masherBlades.name=Masher Blades
 item.Items.ptCoke.name=Petroleum Coke
 item.Items.rawNaturalRubber.name=Raw Rubber
 item.Items.naturalRubber.name=Rubber
+item.Items.rawSyntheticRubber.name=Raw Synthetic Rubber
+item.Items.sytheticRubber.name=Synthetic Rubber
+item.Items.rubberGear.name=Rubber Gear
+item.Items.plasticGear.name=Plastic Gear
 	
 tile.Machine.Masher.name=Blender
 tile.Machine.BioReactor.name=BioReactor
@@ -69,6 +73,7 @@ gui.fermenter.title=Fermenter
 gui.masher.title=Blender
 gui.still.title=Still
 gui.watergen.title=Water Generator
+gui.molder.title=Molder
 
 tooltip.liquidfuels.color.1e1b1b=Black
 tooltip.liquidfuels.color.b3312c=Red

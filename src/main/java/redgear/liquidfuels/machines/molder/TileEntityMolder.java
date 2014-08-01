@@ -35,7 +35,7 @@ public class TileEntityMolder extends TileEntityElectricFluidMachine {
 
 	@Override
 	protected int checkWork() {
-		MolderRecipe recipe = MolderRecipe.getRecipe(new SimpleItem(getStackInSlot(outputSlot)), tank.getFluid());
+		MolderRecipe recipe = MolderRecipe.getRecipe(new SimpleItem(getStackInSlot(moldSlot)), tank.getFluid());
 
 		LiquidFuels.inst.logDebug("Recipe is null? = ", recipe == null);
 		

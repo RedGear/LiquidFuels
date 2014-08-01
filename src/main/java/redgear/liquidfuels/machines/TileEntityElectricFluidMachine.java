@@ -31,27 +31,30 @@ public abstract class TileEntityElectricFluidMachine extends TileEntityTank impl
 	
 	@Override
 	public int getDirectionId() {
-		return face.ordinal();
+		return getDirection().ordinal();
 	}
 
 	@Override
 	public ForgeDirection getDirection() {
-		return face;
+		if(face == null)
+			return ForgeDirection.SOUTH;
+		else
+			return face;
 	}
 
 	@Override
 	public boolean setDirection(int id) {
-		if (id >= 0 && id < 6) {
-			face = ForgeDirection.getOrientation(id);
-			return true;
-		} else
-			return false;
+		return setDirection(ForgeDirection.getOrientation(id));
 	}
 
 	@Override
 	public boolean setDirection(ForgeDirection side) {
-		face = side;
-		return true;
+		if(side != null && side != ForgeDirection.UNKNOWN){
+			face = side;
+			return true;
+		}
+		else
+			return false;
 	}
 
 	@Override
@@ -85,7 +88,7 @@ public abstract class TileEntityElectricFluidMachine extends TileEntityTank impl
 	public void writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
 		storage.writeToNBT(tag);
-		tag.setByte("face", (byte) face.ordinal());
+		tag.setByte("face", (byte) getDirectionId());
 	}
 
 	/**

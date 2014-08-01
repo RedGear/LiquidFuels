@@ -12,7 +12,7 @@ public class TileFactoryTap implements ITileFactory{
 	}
 
 	@Override
-	public TileEntity createTile() {
+	public TileEntityTap createTile() {
 		return new TileEntityTap();
 	}
 

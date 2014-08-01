@@ -12,7 +12,7 @@ public class TileFactoryMixer implements ITileFactory {
 	}
 
 	@Override
-	public TileEntity createTile() {
+	public TileEntityMixer createTile() {
 		return new TileEntityMixer();
 	}
 

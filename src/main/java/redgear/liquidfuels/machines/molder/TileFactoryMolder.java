@@ -19,7 +19,7 @@ public class TileFactoryMolder implements ITileFactory {
 	}
 
 	@Override
-	public TileEntity createTile() {
+	public TileEntityMolder createTile() {
 		return new TileEntityMolder();
 	}
 
