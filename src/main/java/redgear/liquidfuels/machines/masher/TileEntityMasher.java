@@ -6,12 +6,14 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import redgear.core.fluids.AdvFluidTank;
+import redgear.core.inventory.InvSlot;
 import redgear.core.inventory.TransferRule;
+import redgear.core.tile.TileEntityElectricFluidMachine;
 import redgear.core.util.SimpleItem;
-import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
 import redgear.liquidfuels.recipes.MasherRecipe;
 
 public class TileEntityMasher extends TileEntityElectricFluidMachine {
+	
 	final AdvFluidTank waterTank;
 	final AdvFluidTank biomassTank;
 
@@ -29,6 +31,9 @@ public class TileEntityMasher extends TileEntityElectricFluidMachine {
 				FluidRegistry.WATER, TransferRule.INPUT);
 		biomassTank = new AdvFluidTank(FluidContainerRegistry.BUCKET_VOLUME * 4).addFluidMap(-1,
 				TransferRule.OUTPUT);
+		
+		for(InvSlot slot : this.getSlots())
+			slot.setMachineRule(TransferRule.INPUT);
 
 		addTank(waterTank);//, 11, 13, 16, 60
 		addTank(biomassTank);//, 149, 13, 16, 60
@@ -37,12 +42,12 @@ public class TileEntityMasher extends TileEntityElectricFluidMachine {
 	}
 
 	@Override
-	protected boolean doPreWork() {
+	public boolean doPreWork() {
 		return ejectFluidAllSides(biomassTank);
 	}
 
 	@Override
-	protected int checkWork() {
+	public int checkWork() {
 		MasherRecipe currRecipe;
 		ItemStack stack;
 		for (int i = 0; i <= 3; i++) {
@@ -55,7 +60,7 @@ public class TileEntityMasher extends TileEntityElectricFluidMachine {
 
 			if (currRecipe != null && waterTank.canDrain(currRecipe.water)
 					&& biomassTank.canFill(currRecipe.output, true)) {
-				setEnergyRate(currRecipe.power / currRecipe.work);
+				energyRate_$eq(currRecipe.power / currRecipe.work);
 				decrStackSize(i, 1);
 				waterTank.drain(currRecipe.water, true);// use water
 				output = currRecipe.output;
@@ -68,7 +73,7 @@ public class TileEntityMasher extends TileEntityElectricFluidMachine {
 	}
 
 	@Override
-	protected boolean doPostWork() {
+	public boolean doPostWork() {
 		biomassTank.fill(output, true);
 		output = null;
 		return true;
@@ -95,7 +100,7 @@ public class TileEntityMasher extends TileEntityElectricFluidMachine {
 	}
 
 	@Override
-	protected boolean doWork() {
+	public boolean doWork() {
 		return false;
 	}
 }

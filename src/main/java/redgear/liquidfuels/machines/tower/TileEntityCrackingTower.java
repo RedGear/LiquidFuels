@@ -18,28 +18,23 @@ public class TileEntityCrackingTower extends TileEntityTank {
 	}
 
 	@Override
-	protected boolean doPreWork() {
+	public boolean doPreWork() {
 		return false;
 	}
 
 	@Override
-	protected int checkWork() {
+	public int checkWork() {
 		return 0;
 	}
 
 	@Override
-	protected boolean doPostWork() {
+	public boolean doPostWork() {
 		return false;
 	}
 
 	@Override
-	protected boolean doWork() {
+	public boolean doWork() {
 		return false;
-	}
-
-	@Override
-	protected boolean tryUseEnergy(int energy) {
-		return true;
 	}
 
 }

@@ -4,17 +4,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import redgear.core.fluids.AdvFluidTank;
+import redgear.core.inventory.InvSlot;
 import redgear.core.inventory.TransferRule;
+import redgear.core.tile.TileEntityElectricFluidMachine;
 import redgear.core.util.SimpleItem;
 import redgear.liquidfuels.core.LiquidFuels;
-import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
 import redgear.liquidfuels.recipes.MolderRecipe;
 
 public class TileEntityMolder extends TileEntityElectricFluidMachine {
 
 	final AdvFluidTank tank;
-	final int moldSlot;
-	final int outputSlot;
+	final InvSlot moldSlot;
+	final InvSlot outputSlot;
 	ItemStack output;
 
 	TileEntityMolder() {
@@ -24,41 +25,41 @@ public class TileEntityMolder extends TileEntityElectricFluidMachine {
 		addTank(tank);
 
 		moldSlot = this.addSlot(new MoldSlot(this, 92, 13).setMachineRule(TransferRule.NEITHER).setStackLimit(1));
-		outputSlot = this.addSlot(92, 57);
-		getSlot(outputSlot).setMachineRule(TransferRule.OUTPUT).setPlayerRule(TransferRule.OUTPUT);
+		outputSlot = this.addSlot(92, 57).setMachineRule(TransferRule.OUTPUT).setPlayerRule(TransferRule.OUTPUT);
 	}
 
 	@Override
-	protected boolean doPreWork() {
+	public boolean doPreWork() {
 		return false;
 	}
 
 	@Override
-	protected int checkWork() {
-		MolderRecipe recipe = MolderRecipe.getRecipe(new SimpleItem(getStackInSlot(moldSlot)), tank.getFluid());
+	public int checkWork() {
+		if (moldSlot.isEmpty())
+			return 0;
+		
+		MolderRecipe recipe = MolderRecipe.getRecipe(new SimpleItem(moldSlot.getStack()), tank.getFluid());
 
 		LiquidFuels.inst.logDebug("Recipe is null? = ", recipe == null);
-		
+
 		if (recipe != null)
-			if (this.canAddStack(outputSlot, recipe.output)) {
+			if (outputSlot.canAddStack(recipe.output)) {
 				tank.drain(recipe.fluid.amount, true);
 				output = recipe.output.copy();
 				return 80;
 			}
-
 		return 0;
 	}
 
 	@Override
-	protected boolean doWork() {
+	public boolean doWork() {
 		return false;
 	}
 
 	@Override
-	protected boolean doPostWork() {
-		this.addStack(outputSlot, output);
+	public boolean doPostWork() {
+		outputSlot.addStack(output);
 		output = null;
-
 		return false;
 	}
 

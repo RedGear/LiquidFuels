@@ -1,14 +1,9 @@
 package redgear.liquidfuels.generators.gasoline;
 
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
-import redgear.core.api.tile.IFacedTile;
-import redgear.core.api.util.FacedTileHelper;
 import redgear.core.fluids.AdvFluidTank;
 import redgear.core.inventory.TransferRule;
 import redgear.core.tile.TileEntityTank;
@@ -18,14 +13,13 @@ import cofh.api.energy.EnergyStorage;
 import cofh.api.energy.IEnergyHandler;
 import cofh.api.tileentity.IEnergyInfo;
 
-public class TileEntityGasGen extends TileEntityTank implements IEnergyHandler, IEnergyInfo, IFacedTile {
+public class TileEntityGasGen extends TileEntityTank implements IEnergyHandler, IEnergyInfo {
 
 	final AdvFluidTank tank;
 	final EnergyStorage energy = new EnergyStorage(500000);
 	final int ticksPerMiliBucket = 20;
 	final int energyPerTick = 80;
 	final int maxHeat = 40;
-	ForgeDirection face;
 	int heatUp = 0;
 
 	public TileEntityGasGen() {
@@ -38,10 +32,10 @@ public class TileEntityGasGen extends TileEntityTank implements IEnergyHandler, 
 	}
 
 	@Override
-	protected boolean doPreWork() {
+	public boolean doPreWork() {
 		boolean check = false;
 
-		if (work == 0) {
+		if (work() == 0) {
 			heatUp--;
 			check = true;
 		}
@@ -50,7 +44,7 @@ public class TileEntityGasGen extends TileEntityTank implements IEnergyHandler, 
 	}
 
 	@Override
-	protected int checkWork() {
+	public int checkWork() {
 		if (tank.getAmount() > 0 && energy.getEnergyStored() < energy.getMaxEnergyStored()) {
 			tank.drain(1, true);
 			return ticksPerMiliBucket;
@@ -59,7 +53,7 @@ public class TileEntityGasGen extends TileEntityTank implements IEnergyHandler, 
 	}
 
 	@Override
-	protected boolean doWork() {
+	public boolean doWork() {
 		if (heatUp++ >= maxHeat) {
 			heatUp = maxHeat; // Don't let it get any higher.
 			energy.receiveEnergy(energyPerTick, false);
@@ -93,12 +87,7 @@ public class TileEntityGasGen extends TileEntityTank implements IEnergyHandler, 
 	}
 
 	@Override
-	protected boolean tryUseEnergy(int energy) {
-		return true;
-	}
-
-	@Override
-	protected boolean doPostWork() {
+	public boolean doPostWork() {
 		return false;
 	}
 
@@ -129,7 +118,7 @@ public class TileEntityGasGen extends TileEntityTank implements IEnergyHandler, 
 
 	@Override
 	public int getInfoEnergyPerTick() {
-		return work > 0 ? energyPerTick : 0;
+		return work() > 0 ? energyPerTick : 0;
 	}
 
 	@Override
@@ -138,43 +127,13 @@ public class TileEntityGasGen extends TileEntityTank implements IEnergyHandler, 
 	}
 
 	@Override
-	public int getInfoEnergy() {
+	public int getInfoEnergyStored() {
 		return energy.getEnergyStored();
 	}
 
 	@Override
-	public int getInfoMaxEnergy() {
+	public int getInfoMaxEnergyStored() {
 		return energy.getMaxEnergyStored();
-	}
-
-	@Override
-	public int getDirectionId() {
-		return face.ordinal();
-	}
-
-	@Override
-	public ForgeDirection getDirection() {
-		return face;
-	}
-
-	@Override
-	public boolean setDirection(int id) {
-		if (id >= 0 && id < 6) {
-			face = ForgeDirection.getOrientation(id);
-			return true;
-		} else
-			return false;
-	}
-
-	@Override
-	public boolean setDirection(ForgeDirection side) {
-		face = side;
-		return true;
-	}
-
-	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack stack) {
-		face = FacedTileHelper.facePlayerFlat(entity);
 	}
 
 	/**
@@ -185,7 +144,6 @@ public class TileEntityGasGen extends TileEntityTank implements IEnergyHandler, 
 	public void writeToNBT(NBTTagCompound tag) {
 		super.writeToNBT(tag);
 		energy.writeToNBT(tag);
-		tag.setByte("face", (byte) face.ordinal());
 		tag.setInteger("heatUp", heatUp);
 	}
 
@@ -197,7 +155,6 @@ public class TileEntityGasGen extends TileEntityTank implements IEnergyHandler, 
 	public void readFromNBT(NBTTagCompound tag) {
 		super.readFromNBT(tag);
 		energy.readFromNBT(tag);
-		face = ForgeDirection.getOrientation(tag.getByte("face"));
 		heatUp = tag.getInteger("heatUp");
 	}
 

@@ -4,8 +4,8 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import redgear.core.fluids.AdvFluidTank;
 import redgear.core.inventory.TransferRule;
+import redgear.core.tile.TileEntityElectricFluidMachine;
 import redgear.liquidfuels.core.LiquidFuels;
-import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
 
 public class TileEntityStill extends TileEntityElectricFluidMachine {
 
@@ -31,16 +31,16 @@ public class TileEntityStill extends TileEntityElectricFluidMachine {
 		ethanolTank.addFluidMap(LiquidFuels.ethanolFluid, TransferRule.OUTPUT);
 		addTank(ethanolTank);//, 132, 13, 16, 60
 
-		setEnergyRate(26);
+		energyRate_$eq(26);
 	}
 
 	@Override
-	protected boolean doPreWork() {
+	public boolean doPreWork() {
 		return ejectFluidAllSides(ethanolTank);
 	}
 
 	@Override
-	protected int checkWork() {
+	public int checkWork() {
 		if (ethanolTank.canFill(ethanolRatio) && steamTank.canDrain(steamRatio)
 				&& stillageTank.canDrain(stillageRatio * ethanolRatio))
 			return 20;
@@ -49,7 +49,7 @@ public class TileEntityStill extends TileEntityElectricFluidMachine {
 	}
 
 	@Override
-	protected boolean doPostWork() {
+	public boolean doPostWork() {
 		ethanolTank.fill(new FluidStack(LiquidFuels.ethanolFluid, ethanolRatio), true);
 		steamTank.drain(steamRatio, true);
 		stillageTank.drain(stillageRatio * ethanolRatio, true);
@@ -57,7 +57,7 @@ public class TileEntityStill extends TileEntityElectricFluidMachine {
 	}
 
 	@Override
-	protected boolean doWork() {
+	public boolean doWork() {
 		return false;
 	}
 }

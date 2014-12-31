@@ -5,7 +5,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import redgear.core.fluids.AdvFluidTank;
 import redgear.core.inventory.TransferRule;
-import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
+import redgear.core.tile.TileEntityElectricFluidMachine;
 import redgear.liquidfuels.recipes.FermenterRecipe;
 
 public class TileEntityFermenter extends TileEntityElectricFluidMachine {
@@ -29,12 +29,12 @@ public class TileEntityFermenter extends TileEntityElectricFluidMachine {
 	}
 
 	@Override
-	protected boolean doPreWork() {
+	public boolean doPreWork() {
 		return ejectAllFluids();
 	}
 
 	@Override
-	protected int checkWork() {
+	public int checkWork() {
 		if (!inputTank.isEmpty()) {
 			FermenterRecipe currRecipe = FermenterRecipe.getFermenterRecipe(inputTank.getFluid());
 
@@ -43,7 +43,7 @@ public class TileEntityFermenter extends TileEntityElectricFluidMachine {
 			else if (inputTank.canDrain(currRecipe.input, true) && outputTank.canFill(currRecipe.output, true)) {
 				inputTank.drain(currRecipe.input.amount, true);
 				output = currRecipe.output;
-				setEnergyRate(currRecipe.power / currRecipe.work);
+				energyRate_$eq(currRecipe.power / currRecipe.work);
 				return currRecipe.work;
 			}
 		}
@@ -52,7 +52,7 @@ public class TileEntityFermenter extends TileEntityElectricFluidMachine {
 	}
 
 	@Override
-	protected boolean doPostWork() {
+	public boolean doPostWork() {
 		outputTank.fill(output, true);
 		return true;
 	}
@@ -78,7 +78,7 @@ public class TileEntityFermenter extends TileEntityElectricFluidMachine {
 	}
 
 	@Override
-	protected boolean doWork() {
+	public boolean doWork() {
 		return false;
 	}
 

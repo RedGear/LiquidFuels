@@ -6,8 +6,8 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import redgear.core.fluids.AdvFluidTank;
 import redgear.core.inventory.TransferRule;
+import redgear.core.tile.TileEntityElectricFluidMachine;
 import redgear.liquidfuels.core.LiquidFuels;
-import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
 
 public class TileEntityBoiler extends TileEntityElectricFluidMachine {
 
@@ -29,16 +29,16 @@ public class TileEntityBoiler extends TileEntityElectricFluidMachine {
 		steamTank.addFluidMap(LiquidFuels.steamFluid, TransferRule.OUTPUT);
 		addTank(steamTank);//, 120, 12, 16, 60
 		
-		this.setEnergyRate(powerRatio);
+		this.energyRate_$eq(powerRatio);
 	}
 
 	@Override
-	protected boolean doPreWork() {
+	public boolean doPreWork() {
 		return ejectFluidAllSides(steamTank);
 	}
 
 	@Override
-	protected int checkWork() {
+	public int checkWork() {
 		if(steamTank.getCapacity() >= steamRate * workRate && waterTank.getAmount() >= waterRate * workRate)
 			return workRate;
 			
@@ -46,14 +46,14 @@ public class TileEntityBoiler extends TileEntityElectricFluidMachine {
 	}
 	
 	@Override
-	protected boolean doWork() {
+	public boolean doWork() {
 		waterTank.drain(waterRate, true);
 		steamTank.fill(new FluidStack(LiquidFuels.steamFluid, steamRate), true);
 		return true;
 	}
 
 	@Override
-	protected boolean doPostWork() {
+	public boolean doPostWork() {
 		return false;
 	}
 

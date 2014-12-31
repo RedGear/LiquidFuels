@@ -7,7 +7,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import redgear.core.fluids.AdvFluidTank;
 import redgear.core.inventory.TransferRule;
-import redgear.liquidfuels.machines.TileEntityElectricFluidMachine;
+import redgear.core.tile.TileEntityElectricFluidMachine;
 import redgear.liquidfuels.recipes.MixerRecipe;
 
 public class TileEntityMixer extends TileEntityElectricFluidMachine {
@@ -36,16 +36,16 @@ public class TileEntityMixer extends TileEntityElectricFluidMachine {
 			secondInput.addFluidMap(recipe.secondInput.fluidID, TransferRule.INPUT);
 		}
 		
-		this.setEnergyRate(10);
+		energyRate_$eq(10);
 	}
 
 	@Override
-	protected boolean doPreWork() {
+	public boolean doPreWork() {
 		return false;
 	}
 
 	@Override
-	protected int checkWork() {
+	public int checkWork() {
 		if(firstInput.isEmpty() || secondInput.isEmpty())
 			return 0;
 		
@@ -65,12 +65,12 @@ public class TileEntityMixer extends TileEntityElectricFluidMachine {
 	}
 
 	@Override
-	protected boolean doWork() {
+	public boolean doWork() {
 		return false;
 	}
 
 	@Override
-	protected boolean doPostWork() {
+	public boolean doPostWork() {
 		output.fill(inProgress, true);
 		return true;
 	}
